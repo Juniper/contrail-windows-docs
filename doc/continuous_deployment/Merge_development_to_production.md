@@ -25,7 +25,7 @@ Run production pipeline on `development` branch
 
 ## Merge development to production
 
-1. Update production branch
+1. Update production branch (following git operations require administrative privileges on GitHub)
 
     ```bash
     git fetch --all --prune
@@ -47,7 +47,7 @@ Run production pipeline on `development` branch
     # apply patch to ansible/roles/zuul/defaults/main.yml with production url/key/user
     # - gerrit_server
     # - gerrit_user
-    # - gerrit_keynam
+    # - gerrit_keyname
     winci-mgmt $ cd ansible
     winci-mgmt $ ansible-playbook -i ~/ji/ansible.hosts play.yml --vault-password-file ~/.ansible-vault
     ```
