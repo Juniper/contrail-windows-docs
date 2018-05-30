@@ -86,7 +86,7 @@ The following chapter contains a list of HNS errors encountered throughout devel
 
 ### Reproduction:
 
-Try to create multiple transparent HNS networks in a loop simultaneously with multiple processes.
+Try to create multiple HNS networks in a loop simultaneously with multiple processes.
 
 ## 2. HNS Invalid Parameter
 
