@@ -87,6 +87,7 @@ The following chapter contains a list of HNS errors encountered throughout devel
 ### Reproduction:
 
 Try to create multiple HNS networks in a loop simultaneously with multiple processes.
+We suspect that this error occurs during a high load.
 
 ## 2. HNS Invalid Parameter
 
