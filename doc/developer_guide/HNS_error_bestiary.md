@@ -125,3 +125,15 @@ New-ContainerNetwork foo
 ### Reproduction:
 
 TODO
+
+## 5. Container creation fails with error: CreateContainer: failure in a Windows system call
+
+### Natural habitat:
+
+This error happens occasionally when Docker tries to create a container.
+
+The container is actually created (it enters CREATED state), but can not be run (Docker doesn't start it automatically and manual start fails). Such a faulty container can be removed. Then one may try to create container again - this is expected to succeed (no case has been observed, when second attempt failed).
+
+### Reproduction:
+
+There's no obvious correlation with any special circumstances. On a VM that's not heavily loaded, it is expected that hundreds of tries might be needed to reproduce this error. Creating and removing containers in a loop is enough.
