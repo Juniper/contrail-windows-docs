@@ -63,6 +63,13 @@ from the Windows Store][wsl-ubuntu-store]. (18.04 version is
 needed for the ansible 2.4 to be available. On the older
 version you can probably install ansible using pip)
 
+> Note: Alternatively, you can install ansible and its dependencies also
+> using [this python-requirements.txt file][ansible-requirements-txt]
+> from [contrail-windows-ci] repository with
+> `pip install -r python-requirements.txt`
+
+[ansible-requirements-txt]: https://github.com/Juniper/contrail-windows-ci/blob/development/ansible/python-requirements.txt
+
 Install ansible >= 2.4 using `apt`:
 
 ```bash
