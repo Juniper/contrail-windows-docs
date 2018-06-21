@@ -10,7 +10,10 @@ From high-level perspective steps are as follows:
 Performing steps described below correctly should result in a configured devenv consiting of:
 
 - 2 virtual machines configured as Windows Contrail compute, named `[INITIALS]-tb1` and `[INITIALS]-tb2`
+    - Windows will have vRouter dependencies installed
+    - vRouter/vRouter Agent/Docker Driver will not be installed
 - 1 virtual machine configured as Contrail Controller node named `[INITIALS]-ctrl`
+    - Contrail Controller will be fully installed and configured
 
 ## Prerequisites
 
@@ -54,7 +57,7 @@ In this scenario:
 
 - `Network Adapter 1` corresponds to management adapter (Contrail's mgmt plane)
     - On Windows - `Ethernet1`
-    - On CentOS - `ens190`
+    - On CentOS - `ens192`
 - `Network Adapter 2` corresponds to control adapter (Contrail's control and data plane)
     - On Windows - `Ethernet2`
     - On CentOS - `ens224`
@@ -159,6 +162,14 @@ In this scenario:
         Restart-Computer
         ```
 
+    - Check IP address of `Ethernet0` adapter
+
+        ```
+        Get-NetIPAddress -InterfaceAlias Ethernet0 -AddressFamily IPv4
+        ```
+
+        - Note down shown address; It will be required to connect to this virtual machine using Ansible
+
     - Press `Ctrl+Alt` to escape VMware Remote Console
     - Close VMware Remote Console
 
@@ -166,39 +177,182 @@ Now repeat these steps to create a second testbed `[INITIALS]-tb2`
 
 ## Controller setup
 
-1. Clone 1 VM from `centos7.4-bare` template
-2. Login through VMware remote console
-    - change hostname
-    - configure static IP address od data plane adapter
-    - reboot
+1. Clone virtual machine from `Codilime/__Templates/windows/centos7.4-bare` template
+    - Steps are the same as in _Clone virtual machine from `Codilime/__Templates/windows/win2016core-bare` template_
+    - This time use `[INITIALS]-ctrl`
+3. Configure virtual machine
+    - Select `VMs and Templates` tab in navigation pane on the left
+    - Traverse to `Codilime/Dev/[DESTINATION]` folder
+    - Left click on `[INITIALS]-ctrl`
+    - On virtual machine preview click a gear icon and select `Launch Remote Console`
+    - Click on the interior to passthrough mouse and keyboard to the virtual machine
+        - If nothing is shown, start typing
+    - Login using provided credentials
+    - Change hostname
 
-## Setup inventory
+        ```
+        # hostnamectl set-hostname "[INITIALS]-ctrl"
+        ```
 
-1. Copy `inventory.testenv` to `my-inventory`
-2. Add Windows virtual machines to `testbed` group
+    - Configure static addressing on `ens224` adapter (`Network Adapter 2` from addressing scheme)
+        - Edit file `/etc/sysconfig/network-scripts` to include following entries
+
+            ```
+            BOOTPROTO=static
+            DEFROUTE=no
+            IPADDR=172.16.0.10
+            NETMASK=255.255.255.0
+            ```
+
+        - Restart networking
+
+            ```
+            systemctl restart network
+            ```
+
+        - Verify address configuration
+
+            ```
+            ip addr show
+            ```
+
+        - Check `ens192` address
+
+            ```
+            ip addr show ens192
+            ```
+
+            - Note down shown address; It will be required to connect to this virtual machine using Ansible
+
+    - Reboot virtual machine
+
+        ```
+        systemctl reboot
+        ```
+
+## Run Ansible playbook
+
+This section assumes the reader has Windows Subsystem for Linux (WSL) installed and configured.
+If not, please refer to [this][WSL] document for install and configuration details.
+
+All steps below should be done from WSL.
+
+1. Install required packages
+
+    ```
+    sudo apt install python3 python3-pip python3-virtualenv sshpass
+    ```
+
+1. Clone `contrail-windows-ci` git repository from [https://github.com/Juniper/contrail-windows-ci](https://github.com/Juniper/contrail-windows-ci)
+
+    ```
+    mkdir ~/dev
+    cd ~/dev
+    git clone https://github.com/Juniper/contrail-windows-ci.git
+    ```
+
+1. Checkout `local-testenv` branch
+
+    ```
+    cd ./contrail-windows-ci
+    git branch local-testenv origin/local-testenv
+    git checkout local-testenv
+    ```
+
+1. Traverse to `contrail-windows-ci/ansible` directory
+
+    ```
+    cd ./ansible
+    ```
+
+1. Create virtualenv for Python
+
+    ```
+    python3 -m virtualenv -p /usr/bin/python3 venv
+    ```
+
+1. Active virtualenv
+    - shell prompt should change to indicate that virtualenv is activated
+
+    ```
+    $ . venv/bin/activate
+    (venv) $
+    ```
+
+1. Install Python dependencies
+
+    ```
+    pip install -r python-requirements.txt
+    ```
+
+1. Create a file for a provided Ansible vault key
+
+    ```
+    touch ~/ansible-vault-key
+    vi ~/ansible-vault-key
+    # Enter vault key
+    ```
+
+1. Copy `inventory.testenv` file to `inventory`
+
+    ```
+    cp inventory.testenv inventory
+    ```
+
+1. Add Windows virtual machines to `testbed` group
 
     ```
     [testbed]
-    MGMT_IP_TB01
-    MGMT_IP_TB02
+    [INITIALS]-tb1 ansible_host=MGMT_IP_TB1
+    [INITIALS]-tb2 ansible_host=MGMT_IP_TB2
     ```
 
-3. Add Controller virtual machine to `controller` group
+    - `MGMT_IP_TB1`, `MGMT_IP_TB2` are addresses of `Ethernet0` adapters we checked earlier
+
+1. Add Controller virtual machine to `controller` group
 
     ```
     [controller]
-    MGMT_IP_CTRL ansible_user=root ansible_ssh_pass=PASSWORD
+    [INITIALS]-tb2 ansible_host=MGMT_IP_CTRL ansible_user=PROVIDED_USER ansible_ssh_pass=PROVIDED_PASSWORD
     ```
 
-## Run playbook
+    - `MGMT_IP_CTRL` is an address of `ens192` adapter we checked earlier
+    - `PROVIDED_USER` and `PROVIDED_PASSWORD` are provided credentials for CentOS
 
-1. Setup Ansible environment
-2. Run `configure-local-testenv.yml`
+1. Test network connection to devenv virtual machines
+
+    ```
+    ping MGMT_IP_TB1
+    ping MGMT_IP_TB2
+    ping MGMT_IP_CTRL
+    ```
+
+1. Test Ansible connectivity to Windows virtual machines
+
+    ```
+    ansible -i inventory testbed -m win_ping
+    ```
+
+1. Test Ansible connectivity to Controller virtual machine
+
+    ```
+    ansible -i inventory controller -m ping
+    ```
+
+1. Run `configure-local-testenv.yml`
 
     ```
     ansible-playbook -i my-inventory configure-local-testenv.yml --skip-tags yum-repos
     ```
 
+    - Playbook should take at least an hour to complete
+
+1. Verify if Contrail Controller is accessible
+    - Access `https://MGMT_IP_CTRL:8143`
+
 ## To do
 
 - Changes in `controller` role required to provision Linux compute node.
+- Merge `local-testenv` to main branch in `contrail-windows-ci` repository
+
+[WSL]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
