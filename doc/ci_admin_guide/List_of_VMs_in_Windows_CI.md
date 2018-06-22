@@ -93,6 +93,19 @@
                 * logs server ssh keys
                 * github deploy ssh key
             * VMware HA
+    * `winci-registry` – Created manually @ 10.84.12.27 –
+      Docker registry with `kolla` and `contrail-openstack-*` images
+      from `ci-repo.englab.juniper.net:5000`.
+      We're mirroring, because we may use some older snapshot
+      of images, that are already removed from `ci-repo` registry.
+        * impact if down:
+            * ABSOLUTELY CRITICAL (cannot create testenvs)
+            * In some cases we can switch back to ci-repo.
+        * fix cost:
+            * Manual provisioning using [provisioning manual][docker-registry-provisioning]
+            * Backup
+                * Images removed from `ci-repo` may be unavailable, another registry?
+            * VMware HA
     * `winci-vyos-mgmt`
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot deploy contrail controllers)
@@ -137,3 +150,5 @@
     * TODO: Backup procedure?
     * TODO: DR procedure for critical VMs?
     * TODO: hardware monitoring?
+
+[docker-registry-provisioning]: Docker_registry_provisioning.md
