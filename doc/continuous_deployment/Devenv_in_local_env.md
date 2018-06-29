@@ -22,6 +22,7 @@ Performing steps described below correctly should result in a configured devenv 
 Because of lacking infrastructure and licensing we simulate private networks based on PVLANs, using VMware's standard virtual switches.
 This limits a communication in this private network to a single ESXi host.
 Thus each virtual machine from a single devenv must be placed on a single ESXi host.
+There are two ESXi hosts at this moment: `10.5.88.85` and `10.5.88.86`
 
 These private networks are named `vS-DevEnvX-Y`.
 `X` is an identifier of the host.
@@ -195,7 +196,7 @@ Now repeat these steps to create a second testbed `[INITIALS]-tb2`
         ```
 
     - Configure static addressing on `ens224` adapter (`Network Adapter 2` from addressing scheme)
-        - Edit file `/etc/sysconfig/network-scripts` to include following entries
+        - Edit file `/etc/sysconfig/network-scripts/ifcfg-ens224` to include following entries
 
             ```
             BOOTPROTO=static
@@ -299,7 +300,7 @@ All steps below should be done from WSL.
     cp inventory.testenv inventory
     ```
 
-1. Add Windows virtual machines to `testbed` group
+1. Add Windows virtual machines to `testbed` group by editing the `inventory` file
 
     ```
     [testbed]
@@ -313,7 +314,7 @@ All steps below should be done from WSL.
 
     ```
     [controller]
-    [INITIALS]-tb2 ansible_host=MGMT_IP_CTRL ansible_user=PROVIDED_USER ansible_ssh_pass=PROVIDED_PASSWORD
+    [INITIALS]-ctrl ansible_host=MGMT_IP_CTRL ansible_user=PROVIDED_USER ansible_ssh_pass=PROVIDED_PASSWORD
     ```
 
     - `MGMT_IP_CTRL` is an address of `ens192` adapter we checked earlier
@@ -342,7 +343,7 @@ All steps below should be done from WSL.
 1. Run `configure-local-testenv.yml`
 
     ```
-    ansible-playbook -i my-inventory configure-local-testenv.yml --skip-tags yum-repos
+    ansible-playbook -i inventory configure-local-testenv.yml --skip-tags yum-repos
     ```
 
     - Playbook should take at least an hour to complete
