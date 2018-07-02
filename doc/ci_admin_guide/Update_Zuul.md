@@ -6,14 +6,15 @@ This procedure updates configuration using `development` branch from [contrail-w
 ## Prerequisites
 
 - Ubuntu 16.04 or Windows Subsystem for Linux with Ubuntu
+    - It will serve as Ansible control maching
 - User's public SSH key installed on Zuulv2 instance
-    - Please contact with Windows CI team
+    - Please contact Windows CI team
 - Access to ansible vault key
-    - Please contact with Windows CI team
+    - Please contact Windows CI team
 
 ## Steps
 
-1.  Install required `apt` dependencies
+1.  Install required `apt` dependencies on Ansible control machine
 
     ```bash
     apt-get install git python3 python3-pip python3-virtualenv
@@ -27,10 +28,22 @@ This procedure updates configuration using `development` branch from [contrail-w
     cd contrail-windows-ci
     ```
 
-1.  Make sure `development` branch contains correct PRs
+1.  Verify that `development` branch contains PRs with required changes to Zuul configuration
+
+    - Assuming `PR#2` and `PR#1` are required PRs, run the following command:
 
     ```bash
-    git log  # verify commit log
+    git log --oneline
+    ```
+
+    - Output will contain a list of merged PRs, from newest to oldest. Required PRs should be at the top:
+
+    ```
+    abcdabc PR#2
+    abcd123 PR#1
+    e8691f5 Some other PR
+    3af841e Some other PR, part 2
+    # ... omitted
     ```
 
 1.  Move to `ansible` directory
@@ -43,7 +56,7 @@ This procedure updates configuration using `development` branch from [contrail-w
 
     ```bash
     python3 -m virtualenv -p /usr/bin/python3 venv
-    source venv/bin/active
+    source venv/bin/activate
     pip install -r python-requirements.txt
     ```
 
@@ -68,7 +81,8 @@ This procedure updates configuration using `development` branch from [contrail-w
     ansible-playbook -i inventory.prod --private-key=YOUR_PRIVATE_KEY setup-zuul-server.yml
     ```
 
-    If a playbook run completed successfully, then output should be following:
+    Verify that the run completed successfully.
+    The output should be following and `failed` task count must equal zero.
 
     ```
     #
