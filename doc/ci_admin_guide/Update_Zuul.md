@@ -6,7 +6,7 @@ This procedure updates configuration using `development` branch from [contrail-w
 ## Prerequisites
 
 - Ubuntu 16.04 or Windows Subsystem for Linux with Ubuntu
-    - It will serve as Ansible control maching
+    - It will serve as Ansible control machine
 - User's public SSH key installed on Zuulv2 instance
     - Please contact Windows CI team
 - Access to ansible vault key
