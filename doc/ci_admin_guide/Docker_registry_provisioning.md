@@ -18,7 +18,7 @@ Log in using ssh and change the IP configuration to manual, by modifying the fol
 BOOTPROTO=static
 ```
 
-and add the following lines:
+and add the following lines at the end of that file:
 
 ```ini
 IPADDR=10.84.12.27
@@ -30,7 +30,12 @@ DNS3=8.8.8.8
 DOMAIN="contrail.juniper.net englab.juniper.net juniper.net jnpr.net"
 ```
 
+This IP is used by the `controller` role in our CI,
+[as a `docker_registry` parameter][controller-docker-registry-param]
+
 Then reboot the machine and log in using the new IP.
+
+[controller-docker-registry-param]: https://github.com/Juniper/contrail-windows-ci/blob/development/ansible/roles/controller/defaults/main.yml#L1
 
 ## Installing docker
 
@@ -122,6 +127,11 @@ docker run -d -p 5000:5000 --restart=always --name registry registry:2
 ```
 
 Then, we need to tag the images we've pulled and push them to the registry:
+
+Note: this example uses the `ocata` and `ocata-master-91` tags
+(see the example `pullme` list above).
+You need to replace occurrences of `ocata` and `ocata-master-91`
+in the following scripts, according to the images you've pulled.
 
 Kolla images:
 
