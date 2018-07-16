@@ -38,15 +38,7 @@ Run production pipeline on `development` branch
 
 2. Update Zuul configuration
 
-    ```bash
-    localhost $ ssh winci-mgmt # with provided credentials; current address 10.84.12.25
-    winci-mgmt $ cd ~/ji/juniper-contrail-windows-ci
-    winci-mgmt $ git checkout production
-    winci-mgmt $ git pull
-    winci-mgmt $ git log
-    winci-mgmt $ cd ansible
-    winci-mgmt $ ansible-playbook -i ~/ji/ansible.hosts play.yml --vault-password-file ~/.ansible-vault
-    ```
+    - Refer to [Update Windows CI Zuulv2][update-zuulv2] documentation
 
 
 ### Zuul update playbook
@@ -66,7 +58,7 @@ Run production pipeline on `development` branch
 1. Check Zuul services:
     - `zuul-merger`
     - `zuul-server`
-    
+
     ```bash
     localhost $ ssh winci-zuulv2-production # with provided credentials; current address 10.84.12.75
     systemctl status zuul-merger.service # should be active (running)
@@ -82,3 +74,5 @@ Run production pipeline on `development` branch
 
 - Slave VM templates creation and promotion
 - Builder/tester deployment
+
+[update-zuulv2]: https://github.com/Juniper/contrail-windows-docs/blob/master/doc/ci_admin_guide/Update_Zuul.md
