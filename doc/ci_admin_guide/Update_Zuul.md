@@ -28,13 +28,21 @@ This procedure updates configuration using `development` or `production` branch 
     cd contrail-windows-ci
     ```
 
-1. **[ONLY IF UPDATING FROM `production` branch]** Checkout `production` branch
+1. Checkout branch that you want to use for configuring Zuul. For example:
 
-    ```bash
-    git fetch --all
-    git branch production origin/production
-    git checkout production
-    ```
+    - to checkout `development` branch:
+
+        ```bash
+        git checkout development
+        ```
+
+    - to checkout `production` branch:
+
+        ```bash
+        git fetch --all
+        git branch production origin/production
+        git checkout production
+        ```
 
 1.  Verify that `development` (or `production`) branch contains PRs with required changes to Zuul configuration
 
