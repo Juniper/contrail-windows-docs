@@ -17,7 +17,7 @@ Run production pipeline on `development` branch
         - `ZUUL_PROJECT=Juniper/contrail-controller`
         - `ZUUL_BRANCH=master`
         - `ZUUL_REF=None` (it should literally be `None`)
-        - `ZUUL_URL=http://10.84.12.75/merge-warrior`
+        - `ZUUL_URL=http://10.84.12.30/merge-warrior`
         - `ZUUL_UUID=$someRandomUUID` (e.g. $commitId with the first 8 characters replaced by `deadbeef`)
         - `ZUUL_CHANGE=` (can be left empty)
         - `ZUUL_PATCHSET=` (can be left empty)
