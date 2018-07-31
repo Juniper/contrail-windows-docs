@@ -18,6 +18,12 @@
       * Set `WINDOWS_PHYSICAL_INTERFACE` to dataplane interface alias
       * Specify `WINDOWS_ENABLE_TEST_SIGNING` if you want to install untrusted artifacts (this is needed at this moment)
       * Set `WINDOWS_DEBUG_DLLS_PATH` to path on Ansible machine containing MSVC 2015 debug dlls, specifically: `msvcp140d.dll`, `ucrtbased.dll` and `vcruntime140d.dll`
+      * For now `configure_instances` playbook gets stuck on `Start docker daemon` task, because the deployer doesn't create `/etc/docker/daemon.json` file. If this happens, do the following:
+        * On controller:
+          * Create this file with `bip` variable set to some address e.g. `172.0.0.1/16`
+          * Restart docker service
+          * If needed, restart network interfaces
+        * Rerun the playbook on the ansible machine
     * To deploy a controller for windows compute nodes:
       * Configure as it would be a controller node for a linux ecosystem
       * For now docker driver on windows needs keystone set up on controller:
