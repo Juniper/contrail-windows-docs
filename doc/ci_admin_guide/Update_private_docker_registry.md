@@ -8,45 +8,79 @@ The update of local docker registry is required when the version of Controller u
 
 ### How to update Contrail images
 
-1. Choose Contrail version tag you want to be cached in private docker registry. All available tags can be found [here](https://hub.docker.com/r/opencontrailnightly/contrail-vrouter-agent/tags/).
-2. Log into `winci-registry` VM as root. Check if there is `update-docker-registry.py` script in root directory.
-3. If there is no such script, copy it there. The script itself can be found [here](https://github.com/Juniper/contrail-windows-ci/tree/development/utility/update_docker_registry).
-4. Run the script with Contrail version tag as parameter, for example:
+1. Choose Contrail version tag you want to be cached in private docker registry:
+    - all available tags can be found [here](https://hub.docker.com/r/opencontrailnightly/contrail-vrouter-agent/tags/).
+
+2. Log into `winci-registry`:
+    - please contact Windows CI team for access.
+
+3. Check if there is `update-docker-registry.py` script in root directory.
+
+4. If there is no such script:
+    - download it from [here](https://github.com/Juniper/contrail-windows-ci/tree/development/utility/update_docker_registry):
+
+        ```
+        curl https://raw.githubusercontent.com/Juniper/contrail-windows-ci/development/utility/update_docker_registry/update-docker-registry.py --output update-docker-registry.py
+        ```
+
+    - make it executable:
+
+        ```
+        chmod +x ./update-docker-registry.py
+        ```
+
+5. Run the script with Contrail version tag as parameter, for example:
 
     ```
     ./update-docker-registry.py ocata-master-206
     ```
 
-5. If new version of Contrail Ansible Deployer uses more images than listed in `update-docker-registry.py` script, please update this list with new images (please update both versions - the one on `winci-registry` VM as well as the one in the repository) and run it again to cache new images.
+6. If new version of Contrail Ansible Deployer uses more images than listed in `update-docker-registry.py` script:
+    - update images list in the script locally,
+    - open up a PR with updated images list to contrail-windows-ci.
 
 
 ### How to update Openstack images
 
 New version of Contrail Ansible Deployer may also use some new Openstack images. Currently there is no script that does this automatically. For caching Openstack images manually please do the folowing:
 
-1. Log into `winci-registry` VM as root.
-2. Pull required image (where `<IMAGE-NAME>` is the name of the image):
+1. Log into `winci-registry`:
+    - please contact Windows CI team for access.
+
+2. Set the name of required image in local variable (replace `<IMAGE-NAME>` with proper value:
 
     ```
-    docker image pull ci-repo.englab.juniper.net:5000/kolla/<IMAGE-NAME>:ocata
+    image_name=<IMAGE-NAME>
     ```
 
-3. Check the Image ID of previously pulled image:
+3. Pull the image:
 
     ```
-    docker image ls | grep kolla | grep <IMAGE-NAME>
+    docker image pull ci-repo.englab.juniper.net:5000/kolla/${image_name}:ocata
     ```
 
-4. Tag the image (replace `<IMAGE-ID>` and `<IMAGE-NAME>` with proper values):
+4. Get the Image ID of previously pulled image:
 
     ```
-    docker tag <IMAGE-ID> localhost:5000/kolla/<IMAGE-NAME>:ocata
+    image_id=$(docker image ls | grep kolla | grep ${image_name} | awk '{ print $3 }' | uniq)
     ```
 
-5. Push the image to local repository:
+    - verify the ID:
+
+        ```
+        echo "$image_id"
+        ```
+
+5. Tag the image:
 
     ```
-    docker push localhost:5000/kolla/<IMAGE-NAME>:ocata
+    docker tag ${image_id} localhost:5000/kolla/${image_name}:ocata
     ```
 
-6. Repeat steps 2-5 for all other required images.
+6. Push the image to local repository:
+
+    ```
+    docker push localhost:5000/kolla/${image_name}:ocata
+    ```
+
+7. Repeat steps 2-6 for all other required images.
