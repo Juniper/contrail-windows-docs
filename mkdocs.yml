@@ -1,5 +1,6 @@
 site_name: Tungsten Fabric for Windows Documentation
-theme: readthedocs
+theme: material
 docs_dir: doc
 extra_css: [highlight.css, theme.css, theme_extra.css]
+markdown_extensions: [fenced_code]
 

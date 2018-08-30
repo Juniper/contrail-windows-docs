@@ -17,7 +17,18 @@ Documentation is stored on master branch of Juniper/contrail-windows-docs reposi
 
 ## How to install MkDocs (procedure for administrator and developer)
 
-MkDocs requires Python (both Python 2 and Python 3 are supported) and PIP. Follow instructions on [http://www.mkdocs.org/#installation](http://www.mkdocs.org/#installation). Basically `pip install mkdocs` should work. It may also be useful to use virtualenv to keep mkdocs and its dependencies in one isolated place.
+MkDocs requires Python (both Python 2 and Python 3 are supported) and PIP. Follow instructions on [http://www.mkdocs.org/#installation](http://www.mkdocs.org/#installation).
+
+1. Create a virtualenv
+```
+mkdir venv
+virtualenv venv
+source venv/bin/activate
+```
+1. Install requirements
+```
+pip install -r requirements.txt
+```
 
 ## How to deploy modifications (procedure for administrator)
 
