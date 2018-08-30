@@ -33,8 +33,8 @@
     * Proceed with running Ansible playbooks:
         * If you have already deployed the controller:
 
-                sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/configure_instances.yml
-                sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/install_contrail.yml
+                sudo -H ansible-playbook -i inventory/ playbooks/configure_instances.yml
+                sudo -H ansible-playbook -i inventory/ playbooks/install_contrail.yml
 
         * If you don't have the controller:
 
