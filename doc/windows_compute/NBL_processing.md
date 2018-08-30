@@ -20,7 +20,7 @@
 **Scenario**: Packet is fragmented in container, before reaching vRouter
 
 - Extension receives a single `NET_BUFFER_LIST` with a set of `NET_BUFFER` structures
-- Each `NET_BUFFER` must be in its own `NET_BUFFER_LIST`
+- Each `NET_BUFFER` should be in its own `NET_BUFFER_LIST` to fulfill single network packet - `vr_packet` relationship required by dp-core
 
 ## Fragmenting egress tunneled packets
 
@@ -33,3 +33,5 @@
     - Add fragmentation info to IP headers
     - Fix packet headers (e.g. header checksums)
 - Note: vRouter on Linux fragments the inner packet
+    - As a result each fragment is encapsulated separately
+    - vRouter on Windows implements the same behaviour
