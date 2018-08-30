@@ -32,10 +32,12 @@
             * Add openstack-* roles to the controller node and set `CLOUD_ORCHESTRATOR` to `openstack`
             * Fill keystone credentials and kolla config. Check `config/instances.yaml.openstack_example`
     * Proceed with running Ansible playbooks:
-
-            sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/configure_instances.yml
-            sudo -H ansible-playbook -i inventory playbooks/install_openstack.yml
-            sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/install_contrail.yml
-
+        * If you have already deployed the controller:
+                sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/configure_instances.yml
+                sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/install_contrail.yml
+        * If you don't have the controller:
+                sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/configure_instances.yml
+                sudo -H ansible-playbook -i inventory playbooks/install_openstack.yml
+                sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/install_contrail.yml
 ## Testing the new setup
 Refer to [this document](../user_guide/connection_scenarios.md)
