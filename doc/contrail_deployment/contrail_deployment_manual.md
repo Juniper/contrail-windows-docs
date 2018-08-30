@@ -8,7 +8,6 @@
 - On each of the Windows hosts:
 
         Invoke-WebRequest https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
-
         .\ConfigureRemotingForAnsible.ps1 -DisableBasicAuth -EnableCredSSP -ForceNewSSLCert -SkipNetworkProfileCheck
 
 * On the Ansible machine:
@@ -33,11 +32,15 @@
             * Fill keystone credentials and kolla config. Check `config/instances.yaml.openstack_example`
     * Proceed with running Ansible playbooks:
         * If you have already deployed the controller:
+
                 sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/configure_instances.yml
                 sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/install_contrail.yml
+
         * If you don't have the controller:
+
                 sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/configure_instances.yml
                 sudo -H ansible-playbook -i inventory playbooks/install_openstack.yml
                 sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/install_contrail.yml
+
 ## Testing the new setup
 Refer to [this document](../user_guide/connection_scenarios.md)
