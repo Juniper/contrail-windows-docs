@@ -123,51 +123,35 @@ In this scenario:
     - Start PowerShell console
     - Change hostname
 
-        ```
-        Rename-Computer "[INITIALS]-tb1"
-        ```
+            Rename-Computer "[INITIALS]-tb1"
 
     - Disable DHCP on Ethernet1 and preserve address on restart
 
-        ```
-        Set-NetIPInterface -InterfaceAlias Ethernet1 -Dhcp Disabled -PolicyStore PersistentStore
-        ```
+            Set-NetIPInterface -InterfaceAlias Ethernet1 -Dhcp Disabled -PolicyStore PersistentStore
 
     - Restart Ethernet1
 
-        ```
-        Restart-NetAdapter -InterfaceAlias Ethernet1
-        ```
+            Restart-NetAdapter -InterfaceAlias Ethernet1
 
     - Set static IP address on dataplane adater Ethernet1 (based on addressing scheme from _Virtual machines addressing_)
 
-        ```
-        New-NetIPAddress -InterfaceAlias Ethernet1 -IPAddress "172.16.0.1" -PrefixLength 24
-        ```
+            New-NetIPAddress -InterfaceAlias Ethernet1 -IPAddress "172.16.0.1" -PrefixLength 24
 
     - Verify if IP address is configured correctly
 
-        ```
-        Get-NetIPAddress -InterfaceAlias Ethernet1
-        ```
+            Get-NetIPAddress -InterfaceAlias Ethernet1
 
     - Turn off the firewall
 
-        ```
-        Set-NetFirewallProfile -Enabled false
-        ```
+            Set-NetFirewallProfile -Enabled false
 
     - Restart virtual machine
 
-        ```
-        Restart-Computer
-        ```
+            Restart-Computer
 
     - Check IP address of `Ethernet0` adapter
 
-        ```
-        Get-NetIPAddress -InterfaceAlias Ethernet0 -AddressFamily IPv4
-        ```
+            Get-NetIPAddress -InterfaceAlias Ethernet0 -AddressFamily IPv4
 
         - Note down shown address; It will be required to connect to this virtual machine using Ansible
 
@@ -191,45 +175,33 @@ Now repeat these steps to create a second testbed `[INITIALS]-tb2`
     - Login using provided credentials
     - Change hostname
 
-        ```
-        # hostnamectl set-hostname "[INITIALS]-ctrl"
-        ```
+            # hostnamectl set-hostname "[INITIALS]-ctrl"
 
     - Configure static addressing on `ens224` adapter (`Network Adapter 2` from addressing scheme)
         - Edit file `/etc/sysconfig/network-scripts/ifcfg-ens224` to include following entries
 
-            ```
-            BOOTPROTO=static
-            DEFROUTE=no
-            IPADDR=172.16.0.10
-            NETMASK=255.255.255.0
-            ```
+                BOOTPROTO=static
+                DEFROUTE=no
+                IPADDR=172.16.0.10
+                NETMASK=255.255.255.0
 
         - Restart networking
 
-            ```
-            systemctl restart network
-            ```
+                systemctl restart network
 
         - Verify address configuration
 
-            ```
-            ip addr show
-            ```
+                ip addr show
 
         - Check `ens192` address
 
-            ```
-            ip addr show ens192
-            ```
+                ip addr show ens192
 
             - Note down shown address; It will be required to connect to this virtual machine using Ansible
 
     - Reboot virtual machine
 
-        ```
-        systemctl reboot
-        ```
+            systemctl reboot
 
 ## Run Ansible playbook
 
@@ -240,111 +212,81 @@ All steps below should be done from WSL.
 
 1. Install required packages
 
-    ```
-    sudo apt install python3 python3-pip python3-virtualenv sshpass
-    ```
+        sudo apt install python3 python3-pip python3-virtualenv sshpass
 
 1. Clone `contrail-windows-ci` git repository from [https://github.com/Juniper/contrail-windows-ci](https://github.com/Juniper/contrail-windows-ci)
 
-    ```
-    mkdir ~/dev
-    cd ~/dev
-    git clone https://github.com/Juniper/contrail-windows-ci.git
-    ```
+        mkdir ~/dev
+        cd ~/dev
+        git clone https://github.com/Juniper/contrail-windows-ci.git
 
 1. Checkout `local-testenv` branch
 
-    ```
-    cd ./contrail-windows-ci
-    git branch local-testenv origin/local-testenv
-    git checkout local-testenv
-    ```
+        cd ./contrail-windows-ci
+        git branch local-testenv origin/local-testenv
+        git checkout local-testenv
 
 1. Traverse to `contrail-windows-ci/ansible` directory
 
-    ```
-    cd ./ansible
-    ```
+        cd ./ansible
 
 1. Create virtualenv for Python
 
-    ```
-    python3 -m virtualenv -p /usr/bin/python3 venv
-    ```
+        python3 -m virtualenv -p /usr/bin/python3 venv
 
 1. Active virtualenv
     - shell prompt should change to indicate that virtualenv is activated
 
-    ```
-    $ . venv/bin/activate
-    (venv) $
-    ```
+            $ . venv/bin/activate
+            (venv) $
 
 1. Install Python dependencies
 
-    ```
-    pip install -r python-requirements.txt
-    ```
+        pip install -r python-requirements.txt
 
 1. Create a file for a provided Ansible vault key
 
-    ```
-    touch ~/ansible-vault-key
-    vi ~/ansible-vault-key
-    # Enter vault key
-    ```
+        touch ~/ansible-vault-key
+        vi ~/ansible-vault-key
+        # Enter vault key
 
 1. Copy `inventory.testenv` file to `inventory`
 
-    ```
-    cp inventory.testenv inventory
-    ```
+        cp inventory.testenv inventory
 
 1. Add Windows virtual machines to `testbed` group by editing the `inventory` file
 
-    ```
-    [testbed]
-    [INITIALS]-tb1 ansible_host=MGMT_IP_TB1
-    [INITIALS]-tb2 ansible_host=MGMT_IP_TB2
-    ```
+        [testbed]
+        [INITIALS]-tb1 ansible_host=MGMT_IP_TB1
+        [INITIALS]-tb2 ansible_host=MGMT_IP_TB2
 
     - `MGMT_IP_TB1`, `MGMT_IP_TB2` are addresses of `Ethernet0` adapters we checked earlier
 
 1. Add Controller virtual machine to `controller` group
 
-    ```
-    [controller]
-    [INITIALS]-ctrl ansible_host=MGMT_IP_CTRL ansible_user=PROVIDED_USER ansible_ssh_pass=PROVIDED_PASSWORD
-    ```
+        [controller]
+        [INITIALS]-ctrl ansible_host=MGMT_IP_CTRL ansible_user=PROVIDED_USER ansible_ssh_pass=PROVIDED_PASSWORD
 
     - `MGMT_IP_CTRL` is an address of `ens192` adapter we checked earlier
     - `PROVIDED_USER` and `PROVIDED_PASSWORD` are provided credentials for CentOS
 
 1. Test network connection to devenv virtual machines
 
-    ```
-    ping MGMT_IP_TB1
-    ping MGMT_IP_TB2
-    ping MGMT_IP_CTRL
-    ```
+        ping MGMT_IP_TB1
+        ping MGMT_IP_TB2
+        ping MGMT_IP_CTRL
 
 1. Test Ansible connectivity to Windows virtual machines
 
-    ```
-    ansible -i inventory testbed -m win_ping
-    ```
+        ansible -i inventory testbed -m win_ping
 
 1. Test Ansible connectivity to Controller virtual machine
 
-    ```
-    ansible -i inventory controller -m ping
-    ```
+        ansible -i inventory controller -m ping
 
 1. Run `configure-local-testenv.yml`
 
-    ```
-    ansible-playbook -i inventory configure-local-testenv.yml --skip-tags yum-repos
-    ```
+        ansible-playbook -i inventory configure-local-testenv.yml --skip-tags yum-repos
 
     - Playbook should take at least an hour to complete
 

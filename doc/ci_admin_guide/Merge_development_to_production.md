@@ -27,14 +27,12 @@ Run production pipeline on `development` branch
 
 1. Update production branch (following git operations require administrative privileges on GitHub)
 
-    ```bash
-    git fetch --all --prune
-    git checkout development
-    git pull
-    git checkout production
-    git merge development
-    git push
-    ```
+        git fetch --all --prune
+        git checkout development
+        git pull
+        git checkout production
+        git merge development
+        git push
 
 2. Update Zuul configuration
 
@@ -43,14 +41,12 @@ Run production pipeline on `development` branch
 
 ### Zuul update playbook
 
-```yaml
----
-- hosts: zuul
-  remote_user: ciadmin
-  become: yes
-  roles:
-  - zuul
-```
+    ---
+    - hosts: zuul
+      remote_user: ciadmin
+      become: yes
+      roles:
+      - zuul
 
 
 ## Post checks
@@ -59,11 +55,9 @@ Run production pipeline on `development` branch
     - `zuul-merger`
     - `zuul-server`
 
-    ```bash
-    localhost $ ssh winci-zuulv2-production # with provided credentials; current address 10.84.12.75
-    systemctl status zuul-merger.service # should be active (running)
-    systemctl status zuul-server.service # should be active (running)
-    ```
+          localhost $ ssh winci-zuulv2-production # with provided credentials; current address 10.84.12.75
+          systemctl status zuul-merger.service # should be active (running)
+          systemctl status zuul-server.service # should be active (running)
 
 2. Trigger Zuul job
     - Create a dummy PR on Gerrit

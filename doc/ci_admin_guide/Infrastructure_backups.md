@@ -118,26 +118,18 @@ To update backup scripts perform the following steps:
 
 1. Clone `contrail-windows-ci` repository and enter `backups/` directory
 
-    ```powershell
-    PS C:\Users\user> git clone https://github.com/Juniper/contrail-windows-ci.git
-    PS C:\Users\user> cd contrail-windows-ci\backups
-    PS C:\Users\user\contrail-windows-ci\backups>
-    ```
+        PS C:\Users\user> git clone https://github.com/Juniper/contrail-windows-ci.git
+        PS C:\Users\user> cd contrail-windows-ci\backups
+        PS C:\Users\user\contrail-windows-ci\backups>
 
 1. Establish a PowerShell session with `winci-veeam` server
 
-    ```powershell
-    PS C:\Users\user\contrail-windows-ci\backups> $session = New-PSSession -ComputerName 10.84.12.29 -Credentials $(Get-Credential)
-    ```
+        PS C:\Users\user\contrail-windows-ci\backups> $session = New-PSSession -ComputerName 10.84.12.29 -Credentials $(Get-Credential)
 
 1. Copy `backups` directory's contents to `winci-veeam` server, to `C:\BackupScripts` directory
 
-    ```powershell
-    PS C:\Users\user\contrail-windows-ci\backups> Copy-Item .\* C:\BackupScripts -ToSession $session
-    ```
+        PS C:\Users\user\contrail-windows-ci\backups> Copy-Item .\* C:\BackupScripts -ToSession $session
 
 1. Close PowerShell session
 
-    ```powershell
-    PS C:\Users\user\contrail-windows-ci\backups> Remove-PSSession $session
-    ```
+        PS C:\Users\user\contrail-windows-ci\backups> Remove-PSSession $session
