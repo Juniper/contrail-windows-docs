@@ -66,3 +66,9 @@ New version of Contrail Ansible Deployer may also use some new Openstack images.
         docker push localhost:5000/kolla/${image_name}:ocata
 
 7. Repeat steps 2-6 for all other required images.
+
+## References
+
+1. [Deploy a registry server — Docker Documentation][docker-registry-deploying]
+
+[docker-registry-deploying]: https://docs.docker.com/registry/deploying/
