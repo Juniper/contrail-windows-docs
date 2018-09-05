@@ -77,7 +77,7 @@ If we try to use it anyway by setting appropriate NBL Info, the packet gets reje
 
 The documentation on [Encapsulated Packet Offload][ms-nvgre] page suggests
 that this feature can only be used with NVGRE tunneling.
-It never excplicitely states it cannot be used with other kinds of tunneling though.
+It never explicitly states it cannot be used with other kinds of tunneling though.
 
 On the other hand, the fields of [the union that describes the parameters for EPO][supplemental-struct]
 allow specifying arbitrary offsets between outer and inner headers,
