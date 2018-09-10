@@ -3,7 +3,7 @@
 1. VMware:
     * `ci-vc`
         * vCenter Server on Windows
-        * Critical
+        * CRITICAL
         * __REQUIRES BACKUP__
     * `ci-vc-um`
         * vCenter Update Manager
@@ -38,6 +38,7 @@
     * `builders` - Ansible, Jenkins job
     * `testers` - Ansible, Jenkins job
     * `mgmt-dhcp` - Created manually, DHCP server + configuration (172.17.0.0/24)
+        * CRITICAL
         * impact if down:
             * will cause failure in all production CI jobs due to lack of dhcp for testbed machines
             * will not affect demo-env, dev-env and other machines in public network
@@ -69,6 +70,7 @@
         * fix cost:
             * TODO
     * `winci-jenkins` - Created manually, plugins + configuration
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL
         * fix cost:
@@ -81,6 +83,7 @@
             * Automate configuration
             * VMware HA
     * `winci-mgmt` - Created manually, Python requirements.txt have to be installed
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot create testenvs)
         * fix cost:
@@ -94,6 +97,7 @@
                 * github deploy ssh key
             * VMware HA
     * `winci-vyos-mgmt`
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot deploy contrail controllers)
         * fix cost:
@@ -101,6 +105,7 @@
             * Document configuration
             * VMware HA
     * `winci-zuulv2-production` - Created manually with Ansible script
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot run jobs)
         * fix cost:
@@ -111,6 +116,7 @@
                 * jenkins ssh keys
             * VMware HA
     * `winci-purgatory` - Probably created manually? What is installed there?
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot run jobs)
         * fix cost:

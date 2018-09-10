@@ -43,18 +43,26 @@ Requirements for a reconnected host:
     - In the middle pane select `VMs` tab.
     - In the VM table, click `Name` header to sort VMs by name in ascending order.
     - For each VM perform a following process:
-        - If a VM is marked as `Orphaned` and it is not critical to CI functioning:
+        - Determine if the VM is critical.
+            - Refer to [List of all important VMs in Windows CI][list-of-vms] and check if this VM is on the list marked as `CRITICAL`.
+                - In case of any doubts, please contact Contrail Windows CI team.
+        - If the VM is marked as `Orphaned` and it is not critical to CI functioning:
             - Left click on the VM.
             - In the middle pane, scroll down to `Related Objects` window and check if VM is still located on local datastore.
             - If it is the VM must be reregistered and then removed.
-                - Please follow steps in [reregistering-a-vm](asd) to reregister the VM.
+                - Please follow steps in [Reregistering a VM](#reregistering-a-vm) to reregister the VM.
                 - Right click on the VM and select `Delete from disk` option.
             - If it is not, the VM can be safely removed from inventory.
                 - Right click on the VM.
                 - Select `All Virtual Infrastructure Actions > Remove from Inventory` option.
         - If a VM is marked as `Orphaned` and it is critical to CI functioning:
-            - Please follow steps in [reregistering-a-vm](asd) reregister the VM.
-            - Power on the VM.
+            - Left click on the VM.
+            - In the middle pane, scroll down to `Related Objects` window and check if VM is still located on local datastore.
+            - If it is the VM must be reregistered.
+                - Please follow steps in [Reregistering a VM](#reregistering-a-vm) reregister the VM.
+                - Power on the VM.
+            - If it is not, the VM must be restored from backups.
+                - Please refer to [Infrastructure backups][backups].
 1. Assign host's datastores to datastore clusters.
     - In the middle pane select `Datastores` tab.
     - Please contact a Contrail Windows CI team regarding datastore - cluster association and perform the following steps:
@@ -62,6 +70,8 @@ Requirements for a reconnected host:
         - Select `Move to` option.
         - In the `Move To...` window select a datastore cluster based on information from Contrail Windows CI team.
 
+
+## Appendices
 
 ### Reregistering a VM
 
@@ -82,3 +92,6 @@ This guide assumes that the user is located in the VM window.
     - In the `Host / Cluster` step select a `WinCI` cluster.
     - Click `Next`.
     - In the `Ready to Complete` step click `Finish` button.
+
+[backups]: https://github.com/Juniper/contrail-windows-docs/blob/master/doc/ci_admin_guide/Infrastructure_backups.md
+[list-of-vms]: https://github.com/Juniper/contrail-windows-docs/blob/master/doc/ci_admin_guide/List_of_VMs_in_Windows_CI.md
