@@ -1,13 +1,9 @@
 # List of all important VMs in Windows CI
 
 1. VMware:
-    * `ci-vc`
-        * vCenter Server on Windows
+    * `ci-vc` - vCenter Server on Windows
         * CRITICAL
-        * __REQUIRES BACKUP__
-    * `ci-vc-um`
-        * vCenter Update Manager
-        * __REQUIRES BACKUP__
+    * `ci-vc-um` - vCenter Update Manager
 
 2. Base OS templates:
     * `Windows` - Install OS (manually) + instruction (manually)
@@ -56,19 +52,6 @@
             * this process is not documented to this degree of detail (no list of dependencies)
             * Before automation, backup
             * VMware HA
-    * `winci-graphite` - Created manually
-        * impact if down:
-            * no impact on production CI
-            * degrades CI monitoring
-        * fix cost:
-            * Automate VM provisioning
-            * Automate configuration and dashboard deployment
-            * Backup needed to preserve historical data
-    * `winci-monitoring` - Created manually
-        * impact if down:
-            * TODO: does this affect production job (namely - post stage will fail, right?)
-        * fix cost:
-            * TODO
     * `winci-jenkins` - Created manually, plugins + configuration
         * CRITICAL
         * impact if down:
@@ -129,17 +112,14 @@
             * backup konfiguracji
     * SSD/SATA drivers
         * fix cost:
-            * TODO: Determine if servers can into RAID
-            * Maintenance to configure RAID
+            * RAID on physical servers:
+                * Not possible due to lack of hardware support
             * If not RAID, then shared storage for critical VMs is needed
                 * Preferrably some storage array with RAID configured
     * NICs
         * we lack redundancy in case of main NIC failure
 
 6. Backup:
-    * Additional storage space for backup, independent of VMware storage
-    * TODO: Backup method?
-    * TODO: Backup tool?
-    * TODO: Backup procedure?
-    * TODO: DR procedure for critical VMs?
-    * TODO: hardware monitoring?
+    * Refer to [Infrastructure Backups][backups]
+
+[backups]: https://github.com/Juniper/contrail-windows-docs/blob/master/doc/ci_admin_guide/Infrastructure_backups.md
