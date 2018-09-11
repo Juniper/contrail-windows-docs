@@ -34,7 +34,7 @@ a real network card?).
 
 To sidestep this uneven-offload-support issue, VMSwitch **always**
 advertises on all its ports that most offloads are supported.
-Therefore, the vRouter must be prepared to handle NBLs
+Therefore, any VMSwitch Extension must be prepared to handle NBLs
 with these offloads requested.
 
 The offloads that are always supported are:
@@ -45,7 +45,7 @@ The offloads that are always supported are:
     itself will set appropriate flags that mark the validity of checksums
     in _incoming_ packets).
 
-So yes, we must handle all these offload requests.
+So yes, we — vRouter VMSwitch Extension — must handle all these offload requests.
 But this relationship is symmetric — when sending packets
 we can rely on support for these offloads on all vPorts!
 
