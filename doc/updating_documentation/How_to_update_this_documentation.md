@@ -22,7 +22,7 @@ MkDocs requires Python (both Python 2 and Python 3 are supported) and PIP. Follo
 1. Create a virtualenv
 ```
 mkdir venv
-virtualenv venv
+virtualenv --python=python2 venv
 source venv/bin/activate
 ```
 1. Install requirements
