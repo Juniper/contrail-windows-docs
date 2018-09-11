@@ -1,13 +1,9 @@
 # List of all important VMs in Windows CI
 
 1. VMware:
-    * `ci-vc`
-        * vCenter Server on Windows
-        * Critical
-        * __REQUIRES BACKUP__
-    * `ci-vc-um`
-        * vCenter Update Manager
-        * __REQUIRES BACKUP__
+    * `ci-vc` - vCenter Server on Windows
+        * CRITICAL
+    * `ci-vc-um` - vCenter Update Manager
 
 2. Base OS templates:
     * `Windows` - Install OS (manually) + instruction (manually)
@@ -38,6 +34,7 @@
     * `builders` - Ansible, Jenkins job
     * `testers` - Ansible, Jenkins job
     * `mgmt-dhcp` - Created manually, DHCP server + configuration (172.17.0.0/24)
+        * CRITICAL
         * impact if down:
             * will cause failure in all production CI jobs due to lack of dhcp for testbed machines
             * will not affect demo-env, dev-env and other machines in public network
@@ -55,20 +52,8 @@
             * this process is not documented to this degree of detail (no list of dependencies)
             * Before automation, backup
             * VMware HA
-    * `winci-graphite` - Created manually
-        * impact if down:
-            * no impact on production CI
-            * degrades CI monitoring
-        * fix cost:
-            * Automate VM provisioning
-            * Automate configuration and dashboard deployment
-            * Backup needed to preserve historical data
-    * `winci-monitoring` - Created manually
-        * impact if down:
-            * TODO: does this affect production job (namely - post stage will fail, right?)
-        * fix cost:
-            * TODO
     * `winci-jenkins` - Created manually, plugins + configuration
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL
         * fix cost:
@@ -81,6 +66,7 @@
             * Automate configuration
             * VMware HA
     * `winci-mgmt` - Created manually, Python requirements.txt have to be installed
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot create testenvs)
         * fix cost:
@@ -107,6 +93,7 @@
                 * Images removed from `ci-repo` may be unavailable, another registry?
             * VMware HA
     * `winci-vyos-mgmt`
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot deploy contrail controllers)
         * fix cost:
@@ -114,6 +101,7 @@
             * Document configuration
             * VMware HA
     * `winci-zuulv2-production` - Created manually with Ansible script
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot run jobs)
         * fix cost:
@@ -124,6 +112,7 @@
                 * jenkins ssh keys
             * VMware HA
     * `winci-purgatory` - Probably created manually? What is installed there?
+        * CRITICAL
         * impact if down:
             * ABSOLUTELY CRITICAL (cannot run jobs)
         * fix cost:
@@ -136,19 +125,14 @@
             * backup konfiguracji
     * SSD/SATA drivers
         * fix cost:
-            * TODO: Determine if servers can into RAID
-            * Maintenance to configure RAID
+            * RAID on physical servers:
+                * Not possible due to lack of hardware support
             * If not RAID, then shared storage for critical VMs is needed
                 * Preferrably some storage array with RAID configured
     * NICs
         * we lack redundancy in case of main NIC failure
 
 6. Backup:
-    * Additional storage space for backup, independent of VMware storage
-    * TODO: Backup method?
-    * TODO: Backup tool?
-    * TODO: Backup procedure?
-    * TODO: DR procedure for critical VMs?
-    * TODO: hardware monitoring?
+    * Refer to [Infrastructure Backups][backups]
 
-[docker-registry-provisioning]: Docker_registry_provisioning.md
+[backups]: https://github.com/Juniper/contrail-windows-docs/blob/master/doc/ci_admin_guide/Infrastructure_backups.md
