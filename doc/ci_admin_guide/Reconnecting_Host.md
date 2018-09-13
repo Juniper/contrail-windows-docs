@@ -58,6 +58,24 @@ Requirements for a reconnected host:
     - Click `OK`.
 1. In `Navigator` pane select `Hosts and clusters` tab.
 1. Find a host entry representing a being reconnected and click on it.
+1. Reconfiguring ESXi logs location to a remote location.
+    - In the middle pane select `Configure` tab.
+    - Select `Advanced System Settings` from the list on the left.
+    - Click `Edit` button in the upper right corner.
+    - Type in `logDir` in the `Filter` input box and press Enter.
+    - Change the value of `Syslog.global.logDir` to `[NFS-Datastore] logs`.
+    - Mark the `Enabled` checkbox in `Syslog.global.logDirUnique`.
+    - Click `Ok` button.
+    - Type in `logDir` in the `Filter` input box and press Enter.
+    - Look through the filtered list and verify that provided options are saved.
+    - To verify that logs are stored in remote location, perform the following steps:
+        - In the `Navigator` pane select `Storage` tab.
+        - Click on `NFS-Datastore`.
+        - In the main pane select `Files` tab.
+        - Navigate to `logs` directory.
+        - Navigate to a directory named with host's hostname.
+        - ESXi logs should be stored in this directory.
+        - Go back to host's entry in `Hosts and clusters` tab in `Navigator` pane.
 1. Cleanup of orphaned VMs must be performed.
     - In the middle pane select `VMs` tab.
     - In the VM table, click `Name` header to sort VMs by name in ascending order.
