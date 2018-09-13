@@ -220,11 +220,10 @@ All steps below should be done from WSL.
         cd ~/dev
         git clone https://github.com/Juniper/contrail-windows-ci.git
 
-1. Checkout `local-testenv` branch
+1. Checkout `development` branch
 
         cd ./contrail-windows-ci
-        git branch local-testenv origin/local-testenv
-        git checkout local-testenv
+        git checkout development
 
 1. Traverse to `contrail-windows-ci/ansible` directory
 
@@ -296,6 +295,5 @@ All steps below should be done from WSL.
 ## To do
 
 - Changes in `controller` role required to provision Linux compute node.
-- Merge `local-testenv` to main branch in `contrail-windows-ci` repository
 
 [WSL]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
