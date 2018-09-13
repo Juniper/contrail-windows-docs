@@ -28,8 +28,27 @@ Requirements for a reconnected host:
 1. Expand `WinCI` cluster entry.
 1. Find a host entry representing a being reconnected.
     - If a host cannot be found, it is not connected to vCenter. In that case, please contact infrastructure team.
+    - if a host is connected to vCenter, but is not a part of `WinCI` cluster:
+        - Right click on the host and select `Move To...` option.
+        - In the `Move To...` window, expand `CI-DC` datacenter.
+        - Click on `WinCI` cluster.
+        - Click `OK` button.
+        - If a dialog `Move Host into This Cluster` comes up, select `Put all of this host's virtual machines in the cluster's root resource pool` option.
+        - Click `Ok`.
 1. If a host is marked as being in `maintenance mode`:
     - Right click on a host entry and select `Maintenance mode > Exit maintenance mode`.
+1. Click on the host entry.
+1. Host networking reconfiguration:
+    - In the middle pane select `Configure` tab.
+    - Select `Virtual switches` from the list on the left.
+    - Select `vSwitch0` from the virtual switches list.
+    - Click on `VM Network` port group in the bottom.
+    - Click `Edit settings` button.
+    - Type in `VM-Network` in the `Network label` input and click `Ok` button.
+    - Select `VMkernel adapters` from the list on the left.
+    - Select on `vmk0` adapter from the adapter list.
+    - Click `Edit settings` button.
+    - In `Port properties` wizard page, check `vMotion` checkbox. Click `Ok` button.
 1. In `Navigator` pane select `Storage` tab.
     - Right click on `NFS-Datastore` and select `Mount Datastore to Additional Hosts`.
     - Mark a checkbox next to a host entry representing a being reconnected.
