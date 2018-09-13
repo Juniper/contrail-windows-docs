@@ -90,6 +90,14 @@ Requirements for a reconnected host:
         - In the `Move To...` window select a datastore cluster based on information from Contrail Windows CI team.
 
 
+## After reconnecting
+
+After host is reconnected to Contrail Windows CI cluster, please consider the following:
+
+- Migrate some of `ci-builder-*` nodes to this new host.
+    - TODO: document
+
+
 ## Appendices
 
 ### Reregistering a VM
