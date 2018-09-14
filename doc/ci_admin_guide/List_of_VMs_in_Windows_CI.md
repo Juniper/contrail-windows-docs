@@ -136,3 +136,4 @@
     * Refer to [Infrastructure Backups][backups]
 
 [backups]: https://github.com/Juniper/contrail-windows-docs/blob/master/doc/ci_admin_guide/Infrastructure_backups.md
+[docker-registry-provisioning]: Docker_registry_provisioning.md
