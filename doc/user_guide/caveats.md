@@ -7,7 +7,7 @@
 ## Deployment
 
 * Nano Server running as Compute Node is currently not supported, as it lacks the ability to install Hyper-V networking extensions.
-* Windows 10 is not supported dueto it having a different version of Docker (Community, instead of Enterprise).
+* Windows 10 is not supported due to it having a different version of Docker (Community, instead of Enterprise).
 
 ## Container networking
 
