@@ -1,7 +1,18 @@
-# Known issues
+# Limitations and known issues
 
-* On Windows Server 2016, NAT network on compute node must be disabled in order for IP packet
-fragmentation to work.
+## Workarounds
+
+* On Windows Server 2016, NAT network on compute node must be disabled in order for IP packet fragmentation to work. 
+
+## Deployment
+
+* Nano Server running as Compute Node is currently not supported, as it lacks the ability to install Hyper-V networking extensions.
+* Windows 10 is not supported dueto it having a different version of Docker (Community, instead of Enterprise).
+
+## Container networking
+
+* Currently only Windows Server containers are supported, due to differences in network handling with Hyper-V Containers. 
+* Multiple config nodes not supported in Docker Driver.
 * Multiple endpoints per container are not supported.
 * Multiple IPs/networks per container endpoint are not supported.
 * `docker network inspect` on Contrail network does not show correct IPAM subnet, if subnet was not specified on creation
