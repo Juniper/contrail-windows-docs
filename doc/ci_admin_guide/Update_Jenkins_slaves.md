@@ -49,7 +49,7 @@ The upgrade procedure consists of:
             Set-Service jenkins_swarm_client -StartupType Manual
             ```
 
-        1. __NOTE__: Auto start of `jenkins_swarm_client` after a reboot removes the `Mark this node as temporarily offline` status from the slave.
+        1. __NOTE__: `jenkins_swarm_client` must be disabled, since a reboot removes the `Mark this node as temporarily offline` status from the slave. After the update procedure completes, you should re-enable this service to reconnect the builder to Jenkins.
         1. Add a tag to every task that needs to be executed.
     1. Prepare inventory file.
         1. Edit file `inventory.devel/groups`.
