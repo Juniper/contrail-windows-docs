@@ -1,7 +1,7 @@
 # How to deploy Contrail with Windows compute nodes
 
 ## Prerequisites
-* Machine with CentOS 7.4 installed
+* Machine with CentOS 7.5 installed
 * Machine(s) with Windows Server 2016 and updates installed
 * Machine for running Ansible playbooks (Linux or Windows with WSL)
 ## Steps
