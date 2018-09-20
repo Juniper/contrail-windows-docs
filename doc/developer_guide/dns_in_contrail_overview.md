@@ -4,10 +4,11 @@ This document describes DNS modes in Contrail and gives some hints about trouble
 
 ## DNS Modes In Contrail
 DNS queries from specific VM located on Contrail compute node can be handled differently depending on chosen DNS mode in configuration of IPAM in which the VM resides. There are 3 available DNS modes in Contrail:
-  * None - No DNS support for VMs
-  * Default - DNS requests from VMs are resolved via the fabric name servers
-  * Tenant - DNS requests from VMs are resolved via DNS servers deployed on tenant’s VMs
-  * Virtual - provides virtual DNS server which resolves DNS requests from VMs
+
+* None - No DNS support for VMs
+* Default - DNS requests from VMs are resolved via the fabric name servers
+* Tenant - DNS requests from VMs are resolved via DNS servers deployed on tenant’s VMs
+* Virtual - provides virtual DNS server which resolves DNS requests from VMs
 
 ## How to specify DNS mode in Contrail
 
