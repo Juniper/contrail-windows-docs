@@ -57,10 +57,10 @@ This document supports the following addressing scheme for the devenv:
 In this scenario:
 
 - `Network Adapter 1` corresponds to management adapter (Contrail's mgmt plane)
-    - On Windows - `Ethernet1`
+    - On Windows - `Ethernet0`
     - On CentOS - `ens192`
 - `Network Adapter 2` corresponds to control adapter (Contrail's control and data plane)
-    - On Windows - `Ethernet2`
+    - On Windows - `Ethernet1`
     - On CentOS - `ens224`
 
 
