@@ -3,7 +3,7 @@
 ## Creating virtual network(s), containers and interactive sessions
 
 * Via Contrail WebUI:
-    1. Create a policy with the following rule:
+    1. Create a networking policy (Configuration->Networking->Policies) with the following rule:
 
            pass protocol any network any ports any <> network any ports any
 
