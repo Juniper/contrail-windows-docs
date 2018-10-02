@@ -1,4 +1,4 @@
-# A few words about contrail deployment in Windows CI
+# Contrail deployment in Windows CI
 
 ## Environment
 

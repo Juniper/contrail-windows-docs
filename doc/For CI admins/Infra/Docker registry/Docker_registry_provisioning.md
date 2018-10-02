@@ -1,4 +1,4 @@
-# How to provision Docker registry
+# Docker registry provisioning
 
 > Note. This document describes provisioning procedure.
 > If you want just to update the images, see the [updating manual][winci-registry-update].

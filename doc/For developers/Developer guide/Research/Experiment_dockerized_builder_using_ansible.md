@@ -1,4 +1,4 @@
-# Dockerized builder using ansible
+# Failed experiment: dockerized builder using ansible
 
 This document describes what _would_ be needed create
 a builder docker image (for building vrouter agent and extension)

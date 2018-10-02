@@ -1,4 +1,4 @@
-# How to update private docker registry
+# Updating private docker registry
 
 ## When is the update needed? What need to be updated?
 

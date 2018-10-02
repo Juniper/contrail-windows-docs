@@ -1,4 +1,4 @@
-# How to deploy Contrail with Windows compute nodes
+# Deploying Contrail with Windows compute nodes
 
 ## Prerequisites
 * Machine with CentOS 7.5 installed
@@ -45,4 +45,4 @@
 
 
 ## Testing the new setup
-Refer to [this document](../user_guide/connection_scenarios.md)
+Refer to [this document](./connection_scenarios.md)

@@ -1,4 +1,4 @@
-# Connection scenarios
+# Supported connection scenarios
 
 ## Creating virtual network(s), containers and interactive sessions
 

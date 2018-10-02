@@ -1,4 +1,5 @@
-# Nightly builds in Windows CI description
+# Nightly builds in Windows CI
+
 This document describes how nightly builds are done in Contrail Windows CI.
 ## Jenkins jobs: ci-contrail-windows-nightly-*
 * There are two jobs responsible for the builds in CI:
