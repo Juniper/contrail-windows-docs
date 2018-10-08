@@ -63,13 +63,13 @@ Everything is lost. All we can do wipe all devices and hope that the contaminati
     // perform as single command because you will lose connectivity during netcfg -D
     netcfg -D; Restart-Computer -force
 
-# HNS error specimen list
+# HNS error list
 
-The following chapter contains a list of HNS errors encountered throughout development, along with reproduction methods and natural habitat.
+The following chapter contains a list of HNS errors encountered throughout development, along with steps to reproduce and occurence scenarios.
 
 ## 1. HNS Unspecified Error
 
-### Natural habitat
+### When it happens
 
 1. When attempting to create a transparent HNS network
     * when creation of another network or VMSwitch is already in progress
@@ -77,36 +77,36 @@ The following chapter contains a list of HNS errors encountered throughout devel
 
     We can work around this bug by retrying after a few seconds.
 
-### Reproduction
+### Steps to reproduce
 
 Try to create multiple HNS networks in a loop simultaneously with multiple processes.
 We suspect that this error occurs during a high load.
 
 ## 2. HNS Invalid Parameter
 
-### Natural habitat
+### When it happens
 
 TODO
 
-### Reproduction
+### Steps to reproduce
 
 TODO
 
 ## 3. HNS Element not found
 
-### Natural habitat
+### When it happens
 
 1. [Hypothesis] When attempting to create a transparent docker network
     * when no other transparent docker network exists and
     * Ethernet adapter to be used by the transparent networks has no IP address or it's invalid.
 
-### Reproduction
+### Steps to reproduce
 
 See <https://github.com/Microsoft/hcsshim/issues/95>
 
 ## 4. HNS failed with error : {Object Exists} An attempt was made to create an object and the object name already exists
 
-### Natural habitat
+### When it happens
 
 This error probably happens when docker tries to create NAT network, but HNS left over some trash after last NAT network.
 
@@ -114,18 +114,18 @@ Cleanup everything as explained in the Decontamination Procedures chapter. If th
 
     New-ContainerNetwork foo
 
-### Reproduction
+### Steps to reproduce
 
 TODO
 
 ## 5. Container creation fails with error: CreateContainer: failure in a Windows system call
 
-### Natural habitat
+### When it happens
 
 This error happens occasionally when Docker tries to create a container.
 
 The container is actually created (it enters CREATED state), but can not be run (Docker doesn't start it automatically and manual start fails). Such a faulty container can be removed. Then one may try to create container again - this is expected to succeed (no case has been observed, when second attempt failed).
 
-### Reproduction
+### Steps to reproduce
 
 There's no obvious correlation with any special circumstances. On a VM that's not heavily loaded, it is expected that hundreds of tries might be needed to reproduce this error. Creating and removing containers in a loop is enough.
