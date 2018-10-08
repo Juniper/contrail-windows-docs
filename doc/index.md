@@ -2,6 +2,8 @@
 
 Windows Contrail provides support for Windows Containers to Contrail.
 
+Windows Contrail provides support for Windows Containers to Contrail.
+
 Please use the panel on the left to select topic.
 
 Quick links:
