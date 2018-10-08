@@ -1,9 +1,17 @@
-# Limitations and known issues
+# Limitations, known issues and workarounds
 
 ## Workarounds
 
 * On Windows Server 2016, NAT network on compute node must be disabled in order for IP packet fragmentation to work.
 * Container must be restarted when `Get-NetAdapter`, `Get-NetIpInterface` or other `Get-Net*` command - invoked inside the container - hangs.
+* After finished deployment vRouter extension sometimes enters state when it is enabled but not running. To check run:
+
+        get-vmswitch | get-vmswitchextension -name "vRouter forwarding extension" | select enabled,running
+
+    Workaround requires uninstalling and installing vRouter (possibly few times).
+
+        msiexec /x vRouter.msi
+        msiexec /i vRouter.msi
 
 ## Deployment
 
