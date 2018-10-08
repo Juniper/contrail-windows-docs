@@ -2,7 +2,8 @@
 
 ## Workarounds
 
-* On Windows Server 2016, NAT network on compute node must be disabled in order for IP packet fragmentation to work. 
+* On Windows Server 2016, NAT network on compute node must be disabled in order for IP packet fragmentation to work.
+* Container must be restarted when `Get-NetAdapter`, `Get-NetIpInterface` or other `Get-Net*` command - invoked inside the container - hangs.
 
 ## Deployment
 
@@ -11,7 +12,7 @@
 
 ## Container networking
 
-* Currently only Windows Server containers are supported, due to differences in network handling with Hyper-V Containers. 
+* Currently only Windows Server containers are supported, due to differences in network handling with Hyper-V Containers.
 * Multiple config nodes not supported in Docker Driver.
 * Multiple endpoints per container are not supported.
 * Multiple IPs/networks per container endpoint are not supported.
