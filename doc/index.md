@@ -1,4 +1,4 @@
-# Windows Contrail documentation
+# Home
 
 Windows Contrail provides support for Windows Containers to Contrail.
 
@@ -7,8 +7,9 @@ Please use the panel on the left to select topic.
 Quick links:
 
 * [Deployment](./Quick_start/deployment.md)
+* [Usage](./Quick_start/usage.md)
 * [Troubleshooting](./Known_issues/Troubleshooting.md)
-* **TODO** Examples. For now, please refer to [Test scenarios](./Quick_start/connection_scenarios.md).
+* [Test scenarios](./Quick_start/connection_scenarios.md)
 
 ## Platforms
 
