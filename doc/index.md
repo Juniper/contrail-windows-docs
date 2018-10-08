@@ -9,14 +9,17 @@ Windows Contrail provides support for Windows Containers to Contrail
 ## Platforms
 
 Docker:
+
 * Docker EE 17.06
 
 Compute node OS:
+
 * Windows Server 2016
 * **Not supported** Nano server
 * **Not supported** Windows 10
 
 Instance types:
+
 * Windows Server containers
 * **Not supported** Hyper-V isolation level containers
 * **Not supported** Linux on Windows containers
