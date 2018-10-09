@@ -1,17 +1,35 @@
 # Deploying Contrail with Windows compute nodes
 
 ## Prerequisites
-* Machine with CentOS 7.5 installed
-* Machine(s) with Windows Server 2016 and updates installed
-* Machine for running Ansible playbooks (Linux or Windows with WSL)
-## Steps
-- On each of the Windows hosts:
 
+* Machine with CentOS 7.5 installed,
+* Machine(s) with Windows Server 2016 (please see requirements below),
+* Machine for running Ansible playbooks (Linux or Windows with WSL).
+
+Requirements for Windows Server 2016 machine:
+
+* Minimum hardware requirements:
+    * 2 CPU,
+    * 4 GB RAM,
+    * 60 GB HDD.
+* Virtualization support must be enabled:
+    * in case of a bare metal - enable VT-x in BIOS,
+    * in case of a virtual machine - enable nested virtualization.
+* Newest Windows updates should be installed.
+* Windows machines should have different hostnames.
+* Windows machines should be accessible using the same set of credentials.
+
+## Steps
+
+- On each of the Windows hosts enable Ansible remoting:
+
+        # PowerShell
         Invoke-WebRequest https://raw.githubusercontent.com/ansible/ansible/devel/examples/scripts/ConfigureRemotingForAnsible.ps1 -OutFile ConfigureRemotingForAnsible.ps1
         .\ConfigureRemotingForAnsible.ps1 -DisableBasicAuth -EnableCredSSP -ForceNewSSLCert -SkipNetworkProfileCheck
 
 * On the Ansible machine:
 
+        # bash
         git clone git@github.com:Juniper/contrail-ansible-deployer.git
         cd contrail-ansible-deployer
         vim config/instances.yaml
@@ -23,9 +41,9 @@
     * More precise explanation of the required fields:
         * For Windows computes use `bms_win` dict instead of regular `bms`
         * Roles supported on Windows are `vrouter` and `win_docker_driver` - specify them
-        * Set `WINDOWS_PHYSICAL_INTERFACE` to dataplane interface alias
-        * Specify `WINDOWS_ENABLE_TEST_SIGNING` if you want to install untrusted artifacts (this is needed at this moment)
-        * Set `WINDOWS_DEBUG_DLLS_PATH` to path on Ansible machine containing MSVC 2015 debug dlls, specifically: `msvcp140d.dll`, `ucrtbased.dll` and `vcruntime140d.dll`
+        * Set `WINDOWS_PHYSICAL_INTERFACE` to dataplane interface name (run `Get-NetAdapter` from PowerShell to list available interfaces on Windows compute node)
+        * Add `WINDOWS_ENABLE_TEST_SIGNING` option and leave it empty, if you want to install untrusted artifacts (this is needed at this moment)
+        * Set `WINDOWS_DEBUG_DLLS_PATH` to path on Ansible machine containing MSVC 2015 debug dlls, specifically: `msvcp140d.dll`, `ucrtbased.dll` and `vcruntime140d.dll`. DLLs can be obtained by installing Windows SDK on Windows and copying DLLs to Ansible machine.
     * To deploy a controller for windows compute nodes:
         * Configure as it would be a controller node for a linux ecosystem
         * If you wish to use keystone as authentication service on controller:
@@ -45,4 +63,5 @@
 
 
 ## Testing the new setup
+
 Refer to [this document](./connection_scenarios.md)
