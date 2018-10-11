@@ -5,7 +5,7 @@ From high-level perspective steps are as follows:
 
 1. Provision Windows and Linux virtual machines with suitable configuration in CodiLime VMware lab.
 2. Configure Networking on Windows and Linux virtual machines using VMware console.
-3. Run Ansible playbook to deploy Windows Contrail compute and Contrail Controller nodes.
+3. Deploy Windows Compute and Controller nodes using an Ansible playbook
 
 Performing steps described below correctly should result in a configured devenv consiting of:
 
@@ -15,7 +15,18 @@ Performing steps described below correctly should result in a configured devenv 
 - 1 virtual machine configured as Contrail Controller node named `[INITIALS]-ctrl`
     - Contrail Controller will be fully installed and configured
 
-## Prerequisites
+# Steps 1 and 2: Provisioning and configuration
+
+This can be achieved in two ways:
+1. Automated (uses internal script - **TODO** publish it)
+2. Manual
+
+## Automated setup
+
+Refer to https://github.com/codilime/juniper-windows-internal/tree/master/dev-envs.
+Then, move straight to `Deployment` section.
+
+## Manual setup
 
 ### Select private network for devenv
 
@@ -203,7 +214,7 @@ Now repeat these steps to create a second testbed `[INITIALS]-tb2`
 
             systemctl reboot
 
-## Run Ansible playbook
+# Step 3. Deployment
 
 This section assumes the reader has Windows Subsystem for Linux (WSL) installed and configured.
 If not, please refer to [this][WSL] document for install and configuration details.
