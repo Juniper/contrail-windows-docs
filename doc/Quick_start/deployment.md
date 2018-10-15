@@ -41,9 +41,18 @@ Requirements for Windows Server 2016 machine:
     * More precise explanation of the required fields:
         * For Windows computes use `bms_win` dict instead of regular `bms`
         * Roles supported on Windows are `vrouter` and `win_docker_driver` - specify them
-        * Set `WINDOWS_PHYSICAL_INTERFACE` to dataplane interface name (run `Get-NetAdapter` from PowerShell to list available interfaces on Windows compute node)
-        * Add `WINDOWS_ENABLE_TEST_SIGNING` option and leave it empty, if you want to install untrusted artifacts (this is needed at this moment)
-        * Set `WINDOWS_DEBUG_DLLS_PATH` to path on Ansible machine containing MSVC 2015 debug dlls, specifically: `msvcp140d.dll`, `ucrtbased.dll` and `vcruntime140d.dll`. DLLs can be obtained by installing Windows SDK on Windows and copying DLLs to Ansible machine.
+        * Set `WINDOWS_PHYSICAL_INTERFACE` to dataplane interface name (run `Get-NetAdapter` from PowerShell to list available interfaces on Windows compute node).
+          If interface name contains spaces, enclose it between quotation marks.
+    * As of October 2018, only unsigned and debug builds of Contrail components are available. As a result, the following configuration is also required:
+        * Add `WINDOWS_ENABLE_TEST_SIGNING` option and leave it empty. This option configures Windows Server to allow installation of unsigned drivers.
+        * Set `WINDOWS_DEBUG_DLLS_PATH` to path on Ansible machine containing MSVC 2015 debug dlls. Since user space Contrail components are build in debug mode, to run them on Windows Server the following dlls are required:
+            * `msvcp140d.dll`,
+            * `ucrtbased.dll`,
+            * `vcruntime140d.dll`
+        * MSVC 2015 debug DLLs can be obtained by installing Visual Studio 2015. After installing Visual Studio they should be located in:
+            * `mscvp140d.dll` and `vcruntime140d.dll` - `C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\debug_nonredist\x64\Microsoft.VC140.DebugCRT`,
+            * `ucrtbased.dll` - `C:\Program Files (x86)\Windows Kits\10\bin\x64\ucrt`.
+        * You should copy them to the `~/dll` directory on your Ansible machine and point `WINDOWS_DEBUG_DLLS_PATH` variable to this directory.
     * To deploy a controller for windows compute nodes:
         * Configure as it would be a controller node for a linux ecosystem
         * If you wish to use keystone as authentication service on controller:
