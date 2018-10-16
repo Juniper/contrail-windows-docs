@@ -2,7 +2,7 @@
 
 ## Troubleshooting
 
-**Note**: if you encounter any problems during during or after deployment,
+**Note**: if you encounter any problems during or after deployment,
 see [troubleshooting section](../Known_issues/Troubleshooting.md).
 
 ## Prerequisites
@@ -80,12 +80,15 @@ Requirements for Windows Server 2016 machine:
 1. Run `Invoke-DiagnosticCheck.ps1` script from [tools repository](https://github.com/Juniper/contrail-windows-tools).
     If deployment went correctly, all checks should pass.
 
-    **Note**: to quickly have the ability to run this script on your Windows machine, you can
+    **Note**: to quickly have the ability to run this script on your Windows machine, you can use the following snippet:
+    
+        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+        Invoke-WebRequest -UseBasicParsing  https://github.com/Juniper/contrail-windows-tools/archive/master.zip -OutFile master.zip
+        Expand-Archive .\master.zip
+        cd .\contrail-windows-tools-master\
 
-    1. download git `choco install git` (it will be downloaded to `C:/Program Files/Git`)
-    1. clone the repository `git clone https://github.com/Juniper/contrail-windows-tools`,
-    1. move into the directory, read the README on how to configure the diagnostic script (the script is safe to run, so
-        don't worry about misconfiguration), and run it.
+    Consult the README on how to configure the diagnostic script (it's safe to run, so don't worry about
+    misconfiguration), and run it.
 
 1. Refer to [usage documentation](./usage.md) to learn how to create networks and containers.
 1. You can run manual connection dev tests. Refer to [this document](./connection_scenarios.md).
