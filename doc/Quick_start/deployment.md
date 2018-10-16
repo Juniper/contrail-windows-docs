@@ -1,5 +1,10 @@
 # Deploying Contrail with Windows compute nodes
 
+## Troubleshooting
+
+**Note**: if you encounter any problems during during or after deployment,
+see [troubleshooting section](../Known_issues/Troubleshooting.md).
+
 ## Prerequisites
 
 * Machine with CentOS 7.5 installed,
@@ -70,7 +75,17 @@ Requirements for Windows Server 2016 machine:
                 sudo -H ansible-playbook -i inventory playbooks/install_openstack.yml
                 sudo -H ansible-playbook -e orchestrator=openstack -i inventory/ playbooks/install_contrail.yml
 
+## Next steps
 
-## Testing the new setup
+1. Run `Invoke-DiagnosticCheck.ps1` script from [tools repository](https://github.com/Juniper/contrail-windows-tools).
+    If deployment went correctly, all checks should pass.
 
-Refer to [this document](./connection_scenarios.md)
+    **Note**: to quickly have the ability to run this script on your Windows machine, you can
+
+    1. download git `choco install git` (it will be downloaded to `C:/Program Files/Git`)
+    1. clone the repository `git clone https://github.com/Juniper/contrail-windows-tools`,
+    1. move into the directory, read the README on how to configure the diagnostic script (the script is safe to run, so
+        don't worry about misconfiguration), and run it.
+
+1. Refer to [usage documentation](./usage.md) to learn how to create networks and containers.
+1. You can run manual connection dev tests. Refer to [this document](./connection_scenarios.md).
