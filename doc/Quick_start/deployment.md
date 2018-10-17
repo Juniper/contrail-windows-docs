@@ -82,13 +82,10 @@ Requirements for Windows Server 2016 machine:
 
     **Note**: to quickly have the ability to run this script on your Windows machine, you can use the following snippet:
     
-        [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-        Invoke-WebRequest -UseBasicParsing  https://github.com/Juniper/contrail-windows-tools/archive/master.zip -OutFile master.zip
-        Expand-Archive .\master.zip
-        cd .\contrail-windows-tools-master\
+        Invoke-WebRequest  https://raw.githubusercontent.com/Juniper/contrail-windows-tools/master/Invoke-DiagnosticCheck.ps1 -OutFile Invoke-DiagnosticCheck.ps1
 
     Consult the README on how to configure the diagnostic script (it's safe to run, so don't worry about
-    misconfiguration), and run it.
+    misconfiguration).
 
 1. Refer to [usage documentation](./usage.md) to learn how to create networks and containers.
 1. You can run manual connection dev tests. Refer to [this document](./connection_scenarios.md).
