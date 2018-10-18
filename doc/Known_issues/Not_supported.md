@@ -9,6 +9,7 @@
 
 * On Windows Server 2016, NAT network on compute node must be disabled in order for IP packet fragmentation to work.
 * IPv6 in overlay is not supported.
+* For DNS to work in containers DHCP has to be turned on in Contrail network.
 
 ## Containers
 
