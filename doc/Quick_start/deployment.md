@@ -44,7 +44,7 @@ On the Ansible machine:
         # Note: for now, please use CodiLime fork - there are changes pending to official Juniper repository.
         #       We expect them to be incorporated soon. When that happens, we will update this documentation section
         #       and you will be asked to use the command below instead.
-        git clone https://Juniper/contrail-ansible-deployer
+        # git clone https://Juniper/contrail-ansible-deployer
         git clone https://CodiLime/contrail-ansible-deployer
         cd contrail-ansible-deployer
         vim config/instances.yaml
