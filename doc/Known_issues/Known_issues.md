@@ -22,6 +22,15 @@ Stop-Service winnat                             # Stop WinNAT service
 Set-Service -StartupType Disabled -Name winnat  # Disable autostart of WinNAT upon reboot
 ```
 
+If you alread have some HNS networks, you will probably need to remove them as well (**Warning** this will remove all
+container networks present on the Compute node):
+
+```
+# Remove all container networks twice for good measure, because HNS sometimes fails
+Get-ContainerNetwork | Remove-ContainerNetwork -ErrorAction SilentlyContinue -Force
+Get-ContainerNetwork | Remove-ContainerNetwork -Force   
+```
+
 You also need to edit Docker config file located at `C:\ProgramData\Docker\config\daemon.json` to contain
 `"bridge": "none"` entry, like so:
 ```
