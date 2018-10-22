@@ -1,4 +1,4 @@
-# Usage examples and scenarios
+# Examples and scenarios
 
 ## Creating virtual network(s), containers and interactive sessions
 

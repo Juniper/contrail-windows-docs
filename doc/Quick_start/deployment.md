@@ -1,6 +1,7 @@
-# Deploying Contrail with Windows compute nodes
+# Heterogenous Contrail Deployment: Linux + Windows
 
-## 0. Troubleshooting
+The following procedure allows the operator to bring up heterogenous Contrail deployment. It will consist of at least
+one Contrail Controller (CentOS machine) and at least one Windows Compute node.
 
 **Note**: if you encounter any problems during or after deployment,
 see [troubleshooting section](../Known_issues/Troubleshooting.md).
@@ -140,3 +141,7 @@ Proceed with running Ansible playbooks:
 
 1. Refer to [usage documentation](./usage.md) to learn how to create networks and containers.
 1. (Optional) Refer to usage examples and run manual tests. Refer to [this document](./connection_scenarios.md).
+
+## 6. Maintain
+
+1. (Optional) Upgrade Windows Contrail to newest version. See [upgrading section](./upgrading.md).
