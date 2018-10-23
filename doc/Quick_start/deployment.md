@@ -1,5 +1,13 @@
 # Heterogenous Contrail Deployment: Linux + Windows
 
+
+## ** IMPORTANT **
+
+**[FIXME]** As of Oct 23, deployment without Keystone does not fully work! Cluster is brought up, however users can't
+login to Contrail WebUI. This may be enough for development purposes, if developers don't interact in WebUI.
+
+---
+
 The following procedure allows the operator to bring up heterogenous Contrail deployment. It will consist of at least
 one Contrail Controller (CentOS machine) and at least one Windows Compute node.
 
