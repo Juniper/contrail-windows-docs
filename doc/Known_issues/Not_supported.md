@@ -25,4 +25,4 @@ due to differences in network handling with Hyper-V Containers.
 
 ## Authentication
 
-* Keystone v1 and v3 are not supported.
+* Only Keystone v2 API is supported.
