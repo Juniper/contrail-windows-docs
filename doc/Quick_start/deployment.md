@@ -12,7 +12,8 @@ To deploy Windows Contrail, you will need:
 
 * Machine with CentOS 7.5 installed (for Contrail Controller),
 * Machine(s) with Windows Server 2016 (for Windows compute nodes - please see requirements below),
-* Machine for running Ansible playbooks (Linux or Windows with WSL). This can be your laptop. You need Ansible v2.4.2.
+* Machine for running Ansible playbooks (Linux CentOS or Windows with WSL). This can be your laptop.
+You need Ansible v2.4.2.
 
 Requirements for Windows Server 2016 machine:
 
