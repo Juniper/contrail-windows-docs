@@ -110,6 +110,10 @@ If you wish to use keystone as authentication service on controller:
 * Add `openstack-*` roles to the controller node and set `CLOUD_ORCHESTRATOR` to `openstack`
 * Fill Keystone credentials and Kolla config. Refer to `config/instances.yaml.bms_win_full_example`.
 
+Otherwise:
+
+* Set `CLOUD_ORCHESTRATOR` to `none`.
+
 ## 4. Run Contrail-Ansible-Deployer
 
 Proceed with running Ansible playbooks:
