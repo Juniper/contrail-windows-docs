@@ -44,14 +44,7 @@ Behaviour of Windows Contrail utility tools is similar to their Linux counterpar
 
 They should be in `$Path`. If not, they can be found under `$Env:ProgramFiles\Juniper Networks\vRouter utilities\`.
 
-## 7. Crashdumps
-
-If you encounter any kernel panics or service crashes, debugging dump files may prove useful:
-
-* Kernel crashdumps: `$Env:SystemRoot\MEMORY.DMP` and `$Env:SystemRoot\Minidump\*dmp`
-* Usermode crashdumps: `$Env:LocalAppData\CrashDumps`
-
-## 8. Total cleanup
+## 7. Total cleanup
 
 Run `Clear-ComputeNode.ps1` script from [tools repository](https://github.com/Juniper/contrail-windows-tools)
 on Windows Computes that cause problems. Refer to README in root of the repository
