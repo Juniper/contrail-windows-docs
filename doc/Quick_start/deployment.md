@@ -5,6 +5,8 @@
 
 **[FIXME]** As of Oct 23, deployment without Keystone does not fully work! Cluster is brought up, however users can't
 login to Contrail WebUI. This may be enough for development purposes, if developers don't interact in WebUI.
+This section of documentation will be updated once the issue is resolved.
+Meanwhile, there is a known workaround, described below.
 
 ---
 
@@ -125,6 +127,9 @@ Proceed with running Ansible playbooks:
 * If you have already deployed the Controller **or** if you want to deploy Controller without OpenStack (noauth mode):
 
         sudo -H ansible-playbook -i inventory/ playbooks/configure_instances.yml
+        # !!! WORKAROUND !!! (see top of this page for explanation)
+        # remove the `CLOUD_ORCHESTRATOR` entry from `config/instances.yaml`
+        vi config/instances.yaml
         sudo -H ansible-playbook -i inventory/ playbooks/install_contrail.yml
 
 * If you want to deploy controller with OpenStack (Keystone auth):
