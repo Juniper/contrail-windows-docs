@@ -161,7 +161,9 @@ receiver > .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 
 ### Results
 
-Across multiple runs of baseline scenario, the following average figures are observed on `sender` container:
+Across multiple runs of baseline scenario, the following average figures are observed:
+
+- on `sender` container:
 
 | Metric | Result |
 |---|---|
@@ -169,3 +171,12 @@ Across multiple runs of baseline scenario, the following average figures are obs
 | Retransmits | 41.9 |
 | Errors | 0 |
 | Avg. CPU % | 15.843 |
+
+- on `sender` container:
+
+| Metric | Result |
+|---|---|
+| Throughput (MB/s) | 199.087 |
+| Retransmits | 0 |
+| Errors | 0 |
+| Avg. CPU % | 42.278 |
