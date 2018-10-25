@@ -1,16 +1,52 @@
 Contrail Windows Performance Testing
 ====================================
 
-This document describes assumptions and tools utilized to measure Contrail Windows performance during development.
-It's divided into following sections:
+This document describes assumptions, utilized tools and conclusions drawn from performance tests of Contrail on Windows Server 2016.
 
-1. Test environment
-2. Test scenarios
-3. Performance baseline discussion
-4. Performance baseline test results
+## Introduction
+
+TCP throughput was measured in the following scenarios:
+
+1. Raw Windows Server network stack (abbreviated `Raw` in _Results_ section).
+1. Windows Server containers (WinSrv containers) on 2 compute nodes (abbreviated `Containers` in _Results_ section).
+1. WinSrv containers on 1 compute node (abbreviated `Colocated Containers` in _Results_ section).
+1. WinSrv containers on 2 compute nodes, with Contrail Windows (abbreviated `Containers w/ Contrail` in _Results_ section).
+1. WinSrv containers on 2 compute nodes, traffic tuned to eliminate TCP segmentation (abbreviated `Containers (no seg)` in _Results_ section).
+1. WinSrv containers on 2 compute nodes, with Contrail Windows, traffic tuned to eliminate TCP segmentation (abbreviated `Containers w/ Contrail (no seg)` in _Results_ section).
+
+Test results and scenarios are described in the following sections.
+
+## Results
+
+| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers (no seg) | Containers w/ Contrail (no seg) |
+|---------------------|----------|------------|----------------------|------------------------|---------------------|---------------------------------|
+| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | TBD                    | 235.852             | 98.734                          |
+| Retransmits         | 257      | 335        | 2333                 | TBD                    | 1                   | 1034                            |
+| Errors              | 0        | 0          | 0                    | TBD                    | 0                   | 0                               |
+| Avg. CPU %          | 14.799   | 15.843     | 57.098               | TBD                    | 29.373              | 34.544                          |
+
+## Conclusions
+
+Tests have shown that:
+
+- Windows networking stack can achieve on average ~7300 Mbit/s of TCP throughput;
+- Windows container networking stack can achieve on average ~1500 Mbit/s of TCP throughput;
+- Windows networking stack, when Hyper-V is enabled, achieves throughput similar to Windows container networking stack;
+- Windows container networking stack, when containers are colocated on the same node, can achieve on average ~1900Mbit/s of TCP throughput.
+  However, a high number of retransmissions occurring is observed - on average, 2333 retransmissions;
+
+Conclusions:
+
+- Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4.
+- Reduced throughput can be explained by lack of support for VMQ in vmxnet3 adapters. `receiver` node has much higher CPU load when using Hyper-V.
+- Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck in this case.
+
+Refer to _Performance baseline test results_ section for a more detailed description of test setups and results.
+
+Performance baseline for Contrail Windows should be based on network performance of containers running on Hyper-V.
 
 
-## 1. Test environment
+## Test environment assumptions
 
 Performance is evaluated on 2 VMware virtual machines.
 Virtual machines should have the following specs:
@@ -29,17 +65,143 @@ for performance testing.
 This vSS should not have any physical NICs attached.
 
 
-## 2. Test scenarios
+## Test scenarios
 
-### TCP performance
+### Raw
 
-TCP test scenario:
+Description:
+
+- 2 Windows Server compute nodes (node A and node B);
+- compute nodes are configured without Hyper-V and Containers;
+- node A and node B exchange TCP segments using `NTttcp` tool;
+- used `NTttcp` options:
+
+    ```
+    # On node A
+    .\NTttcp.exe -s -m 1,*,172.16.0.12 -l 128k -t 15
+
+    # On node B
+    .\NTttcp.exe -r -m 1,*,172.16.0.12 -rb 2M -t 15
+    ```
+
+Diagram:
+
+```
++----------------------+                       +----------------------+
+|    WINDOWS NODE A    |                       |    WINDOWS NODE B    |
+|                      |                       |                      |
+|                      |                       |                      |
+|    +---------+     +-+-------+       +-------+-+     +---------+    |
+|    |         |     |         |       |         |     |         |    |
+|    |   OS    +-----+  10 Gb  +-------+  10 Gb  +-----+   OS    |    |
+|    |  STACK  +-----+   NIC   +-------+   NIC   +-----+  STACK  |    |
+|    |         |     |         |       |         |     |         |    |
+|    +---------+     +-+-------+       +-------+-+     +---------+    |
+|                      |                       |                      |
+|                      |                       |                      |
+|                      |                       |                      |
+|                      |                       |                      |
++----------------------+                       +----------------------+
+```
+
+### Containers
+
+Description:
+
+- 2 Windows Server compute nodes (node A and node B);
+- Hyper-V and Docker are installed on both compute nodes;
+- 1 container `sender` running on node A;
+- 1 container `receiver` running on node B;
+- `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
+- used `NTttcp` options:
+
+    ```
+    # On sender
+    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
+
+    # On receiver
+    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
+    ```
+
+Diagram:
+
+
+```
++----------------------+                       +----------------------+
+|                      |                       |                      |
+|  +------------+      |                       |      +------------+  |
+|  |  VMSWITCH  |      |                       |      |  VMSWITCH  |  |
+|  |            +--+ +---------+       +---------+ +--+            |  |
+|  +------------+  | |         |       |         | |  +------------+  |
+|    |        |    | |  10 Gb  +-------+  10 Gb  | |       |      |   |
+|    |        |    +-+   NIC   +-------+   NIC   +-+       |      |   |
+|  +----+ +------+   |         |       |         |    +------+ +----+ |
+|  |    | |      |   +---------+       +---------+    |      | |    | |
+|  | OS | | CONT |     |                       |      | CONT | | OS | |
+|  |    | |      |     |                       |      |      | |    | |
+|  +----+ +------+     |                       |      +------+ +----+ |
+|                      |                       |                      |
++----------------------+                       +----------------------+
+```
+
+### Colocated Containers
+
+Description:
+
+- 1 Windows Server compute node;
+- Hyper-V and Docker are installed on compute note;
+- containers `sender` and `receiver` are running on this compute node;
+- `sender` and `receiver` exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section.
+- used `NTttcp` options:
+
+    ```
+    # On sender
+    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
+
+    # On receiver
+    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
+    ```
+
+Diagram:
+
+```
++---------------------+
+|                     |
+|   +-------------+   |
+|   |  VMSWITCH   |   |
+|   |             |   |
+|   +-+---------+-+   |
+|     |         |     |
+|     |         |     |
+|  +--+---+ +---+--+  |
+|  |      | |      |  |
+|  | CONT | | CONT |  |
+|  |      | |      |  |
+|  +------+ +------+  |
+|                     |
++---------------------+
+```
+
+### Containers w/ Contrail
+
+Description:
 
 - 2 compute nodes (node A and node B);
 - 1 Contrail network named `network1`;
 - 1 container `sender` on node A, attached to `network1` network;
 - 1 container `receiver` on node B, attached to `network1` network;
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
+- used `NTttcp` options:
+
+    ```
+    # On sender
+    .\NTttcp.exe -s -m 1,*,10.0.1.4 -l 128k -a 2 -t 15
+
+    # On receiver
+    .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -a 16 -t 15
+    ```
+
+Diagram:
 
 ```
 +----------------------+                       +----------------------+
@@ -60,6 +222,95 @@ TCP test scenario:
 |                      |                       |                      |
 +----------------------+                       +----------------------+
 ```
+
+### Containers (no seg)
+
+Description:
+
+- 2 Windows Server compute nodes (node A and node B);
+- Hyper-V and Docker are installed on both compute nodes;
+- 1 container `sender` running on node A;
+- 1 container `receiver` running on node B;
+- `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
+- `NTttcp` options tuned so that no fragmentation and segmentation should occur; options used:
+
+    ```
+    # On sender
+    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 1390 -t 15 -ndl
+
+    # On receiver
+    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15 -ndl
+    ```
+
+Diagram:
+
+```
++----------------------+                       +----------------------+
+|                      |                       |                      |
+|  +------------+      |                       |      +------------+  |
+|  |  VMSWITCH  |      |                       |      |  VMSWITCH  |  |
+|  |            +--+ +---------+       +---------+ +--+            |  |
+|  +------------+  | |         |       |         | |  +------------+  |
+|    |        |    | |  10 Gb  +-------+  10 Gb  | |       |      |   |
+|    |        |    +-+   NIC   +-------+   NIC   +-+       |      |   |
+|  +----+ +------+   |         |       |         |    +------+ +----+ |
+|  |    | |      |   +---------+       +---------+    |      | |    | |
+|  | OS | | CONT |     |                       |      | CONT | | OS | |
+|  |    | |      |     |                       |      |      | |    | |
+|  +----+ +------+     |                       |      +------+ +----+ |
+|                      |                       |                      |
++----------------------+                       +----------------------+
+```
+
+### Containers w/ Contrail (no seg)
+
+Description:
+
+- 2 compute nodes (node A and node B);
+- 1 Contrail network named `network1`;
+- 1 container `sender` on node A, attached to `network1` network;
+- 1 container `receiver` on node B, attached to `network1` network;
+- `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
+- `NTttcp` options tuned so that no fragmentation and segmentation should occur; options used:
+
+    ```
+    # On sender
+    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 1390 -t 15 -ndl
+
+    # On receiver
+    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15 -ndl
+    ```
+
+Diagram:
+
+
+```
++----------------------+                       +----------------------+
+|                      |                       |                      |
+|  +------------+      |                       |      +------------+  |
+|  |  VMSWITCH  |      |                       |      |  VMSWITCH  |  |
+|  |     +      |      |                       |      |     +      |  |
+|  |  VROUTER   |      |                       |      |  VROUTER   |  |
+|  |            +--+ +---------+       +---------+ +--+            |  |
+|  +------------+  | |         |       |         | |  +------------+  |
+|    |        |    | |  10 Gb  +-------+  10 Gb  | |       |      |   |
+|    |        |    +-+   NIC   +-------+   NIC   +-+       |      |   |
+|  +----+ +------+   |         |       |         |    +------+ +----+ |
+|  |    | |      |   +---------+       +---------+    |      | |    | |
+|  | OS | | CONT |     |                       |      | CONT | | OS | |
+|  |    | |      |     |                       |      |      | |    | |
+|  +----+ +------+     |                       |      +------+ +----+ |
+|                      |                       |                      |
++----------------------+                       +----------------------+
+```
+
+
+__ASDJAJSDLJASDLJASLD__
+
+### TCP performance
+
+TCP test scenario:
+
 
 Following `NTttcp` options should be used for performance testing:
 
@@ -85,116 +336,9 @@ Following `NTttcp` options should be used for performance testing:
     .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -t 15
     ```
 
-`NTttcp` outputs many metrics, but in case of TCP most important are:
+## Appendices
 
-- Throughput(Mbit/s)
-- Retransmits
-- Errors
-- Avg. CPU %
-
-
-### UDP performance
-
-**TODO**
-
-
-## 3. Performance baseline discussion
-
-Tests have shown that:
-
-- Windows networking stack can achieve on average ~7300 Mbit/s of TCP throughput;
-- Windows container networking stack can achieve on average ~1500 Mbit/s of TCP throughput;
-- Windows networking stack, when Hyper-V is enabled, achieves throughput similar to Windows container networking stack;
-- Windows container networking stack, when containers are colocated on the same node, can achieve on average ~1900Mbit/s of TCP throughput.
-  However, a high number of retransmissions occurring is observed - on average, 2333 retransmissions;
-
-Conclusions:
-
-- Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4.
-- Reduced throughput can be explained by lack of support for VMQ in vmxnet3 adapters. `receiver` node has much higher CPU load when using Hyper-V.
-- Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck in this case.
-
-Refer to _Performance baseline test results_ section for a more detailed description of test setups and results.
-
-Performance baseline for Contrail Windows should be based on network performance of containers running on Hyper-V.
-
-## 4. Performance baseline test results
-
-### Raw OS
-
-- 2 Windows Server compute nodes (node A and node B);
-- compute nodes are configured without Hyper-V and Containers;
-- node A and node B exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section.
-
-```
-+----------------------+                       +----------------------+
-|    WINDOWS NODE A    |                       |    WINDOWS NODE B    |
-|                      |                       |                      |
-|                      |                       |                      |
-|    +---------+     +-+-------+       +-------+-+     +---------+    |
-|    |         |     |         |       |         |     |         |    |
-|    |   OS    +-----+  10 Gb  +-------+  10 Gb  +-----+   OS    |    |
-|    |  STACK  +-----+   NIC   +-------+   NIC   +-----+  STACK  |    |
-|    |         |     |         |       |         |     |         |    |
-|    +---------+     +-+-------+       +-------+-+     +---------+    |
-|                      |                       |                      |
-|                      |                       |                      |
-|                      |                       |                      |
-|                      |                       |                      |
-+----------------------+                       +----------------------+
-```
-
-#### Results
-
-Across multiple runs, the following average figures are observed:
-
-- on node A:
-
-| metric | result |
-|---|---|
-| Throughput (Mbit/s) | 7375.1592 |
-| Retransmits | 32.2 |
-| Errors | 0 |
-| Avg. cpu % | 14.799 |
-
-- on B:
-
-| metric | result |
-|---|---|
-| Throughput (Mbit/s) | 7375.1984 |
-| Retransmits | 0.1 |
-| Errors | 0 |
-| Avg. cpu % | 21.161 |
-
-
-### Hyper-V with Containers
-
-- 2 Windows Server compute nodes (node A and node B);
-- Hyper-V and Docker are installed on both compute nodes;
-- 1 container `sender` running on node A;
-- 1 container `receiver` running on node B;
-- `sender` and `receiver` exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section
-
-
-```
-+----------------------+                       +----------------------+
-|                      |                       |                      |
-|  +------------+      |                       |      +------------+  |
-|  |  VMSWITCH  |      |                       |      |  VMSWITCH  |  |
-|  |            +--+ +---------+       +---------+ +--+            |  |
-|  +------------+  | |         |       |         | |  +------------+  |
-|    |        |    | |  10 Gb  +-------+  10 Gb  | |       |      |   |
-|    |        |    +-+   NIC   +-------+   NIC   +-+       |      |   |
-|  +----+ +------+   |         |       |         |    +------+ +----+ |
-|  |    | |      |   +---------+       +---------+    |      | |    | |
-|  | OS | | CONT |     |                       |      | CONT | | OS | |
-|  |    | |      |     |                       |      |      | |    | |
-|  +----+ +------+     |                       |      +------+ +----+ |
-|                      |                       |                      |
-+----------------------+                       +----------------------+
-```
-
-#### Setup
+### Hyper-V with Containers - setup
 
 ```powershell
 # System setup
@@ -225,74 +369,3 @@ docker exec -it receiver powershell
 sender   > .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -t 15
 receiver > .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 ```
-
-
-#### Results
-
-Across multiple runs of baseline scenario, the following average figures are observed:
-
-- on `sender` container:
-
-| metric | result |
-|---|---|
-| Throughput (Mbit/s) | 1592.6912 |
-| Retransmits | 41.9 |
-| Errors | 0 |
-| Avg. cpu % | 15.843 |
-
-- on `receiver` container:
-
-| metric | result |
-|---|---|
-| Throughput (Mbit/s) | 1592.6984 |
-| Retransmits | 0 |
-| Errors | 0 |
-| Avg. cpu % | 42.278 |
-
-
-### Hyper-V with Containers
-
-- 1 Windows Server compute node;
-- Hyper-V and Docker are installed on compute note;
-- containers `sender` and `receiver` are running on this compute node;
-- `sender` and `receiver` exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section.
-
-```
-+---------------------+
-|                     |
-|   +-------------+   |
-|   |  VMSWITCH   |   |
-|   |             |   |
-|   +-+---------+-+   |
-|     |         |     |
-|     |         |     |
-|  +--+---+ +---+--+  |
-|  |      | |      |  |
-|  | CONT | | CONT |  |
-|  |      | |      |  |
-|  +------+ +------+  |
-|                     |
-+---------------------+
-```
-
-#### Results
-
-Across multiple runs of baseline scenario, the following average figures are observed:
-
-- on `sender` container:
-
-| metric | result |
-|---|---|
-| Throughput (Mbit/s) | 1956.7864 |
-| Retransmits | 2333.4 |
-| Errors | 0 |
-| Avg. cpu % | 57.098 |
-
-- on `receiver` container:
-
-| metric | result |
-|---|---|
-| Throughput (Mbit/s) | 1948.824 |
-| Retransmits | 2353.3 |
-| Errors | 0 |
-| Avg. cpu % | 57.086 |
