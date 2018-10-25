@@ -172,7 +172,7 @@ Across multiple runs of baseline scenario, the following average figures are obs
 | Errors | 0 |
 | Avg. CPU % | 15.843 |
 
-- on `sender` container:
+- on `receiver` container:
 
 | Metric | Result |
 |---|---|
