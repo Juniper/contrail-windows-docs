@@ -7,7 +7,7 @@ It's divided into following sections:
 1. Test environment
 2. Test scenarios
 3. Performance baseline discussion
-3. Performance baseline test results
+4. Performance baseline test results
 
 
 ## 1. Test environment
