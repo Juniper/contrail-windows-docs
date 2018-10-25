@@ -1,8 +1,15 @@
 Contrail Windows Performance Testing
 ====================================
 
+This document describes assumptions and tools utilized to measure Contrail Windows performance during development.
+It's divided into following sections:
 
-## Test environment
+1. Test environment
+2. Test scenarios
+3. Performance baseline setup
+
+
+## 1. Test environment
 
 Performance is evaluated on 2 VMware virtual machines.
 Virtual machines should have the following specs:
@@ -21,11 +28,75 @@ for performance testing.
 This vSS should not have any physical NICs attached.
 
 
-### Bare Hyper-V
+## Test scenarios
 
-Setup
+### TCP performance
+
+**TODO**: Diagram
+
+TCP test scenario:
+
+- 2 compute nodes (node A and node B);
+- 1 Contrail network named `network1`;
+- 1 container `sender` on node A, attached to `network1` network;
+- 1 container `receiver` on node B, attached to `network1` network;
+- `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
+
+Following `NTttcp` options should be used for performance testing:
+
+- on `sender`:
+
+    ```
+    # Flags description
+    # -m 1,*,10.0.14 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
+    # -l 128k -- send 128KB buffers
+    # -t 15 -- test should run for 15 seconds
+
+    .\NTttcp.exe -s -m 1,*,10.0.1.4 -l 128k -t 15
+    ```
+
+- on `receiver`:
+
+    ```
+    # Flags description
+    # -m 1,*,10.0.14 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
+    # -rb 2M -- configure 2MB receive buffers
+    # -t 15 -- test should run for 15 seconds
+
+    .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -t 15
+    ```
+
+`NTttcp` output many metrics, but in case of TCP most important are:
+
+- Throughput(MB/s)
+- Retransmits
+- Errors
+- Avg. CPU %
+
+
+### UDP performance
+
+**TODO**
+
+
+## Performance baseline setup
+
+Currently, performance baseline for Contrail Windows is set by measuring throughput in the following scenario:
+
+- 2 Windows Server compute nodes (node A and node B);
+- Hyper-V and Docker are installed on both compute nodes;
+- 1 container `sender` running on node A;
+- 1 container `receiver` running on node B;
+- `sender` and `receiver` exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section
+
+
+**TODO**: diagram
+
+
+### Setup
 
 ```powershell
+# System setup
 Install-WindowsFeature Containers
 Install-WindowsFeature NET-Framework-Features
 Install-WindowsFeature Hyper-V -IncludeManagementTools
@@ -33,70 +104,35 @@ Restart-Computer
 Install-Module DockerMsftProvider -Force
 Install-Package Docker -ProviderName DockerMsftProvider -Force -RequiredVersion 17.06.2-ee-16
 Restart-Computer
+
+# Docker setup (on both VMs)
+Start-Service Docker
 docker image pull microsoft/windowsservercore:ltsc2016
+docker network create -d transparent --subnet=172.16.0.0/24 --gateway=172.16.0.254 -o com.docker.network.windowsshim.interface="Ethernet1" mynetwork
+
+# On sender
+docker run -id --rm --network mynetwork --ip=172.16.0.21 --name sender microsoft/windowsservercore:ltsc2016 powershell
+docker cp .\NTttcp.exe sender:C:\
+docker exec -it sender powershell
+
+# On receiver
+docker run -id --rm --network mynetwork --ip=172.16.0.22 --name receiver microsoft/windowsservercore:ltsc2016 powershell
+docker cp .\NTttcp.exe receiver:C:\
+docker exec -it receiver powershell
+
+# Testing (commands inside container)
+sender   > .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -t 15
+receiver > .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 ```
 
 
-### Contrail Windows
+### Results
 
-**TODO**
+Across multiple runs of baseline scenario, the following average figures are observed on `sender` container:
 
-
-## Test cases
-
-TCP traffic (with `NTttcp`):
-
-- 2 containers, 1 network, 1 node
-- 2 containers, 2 networks, 1 node
-- 2 containers, 1 network, 2 nodes
-- 2 containers, 2 networks, 2 nodes
-
-What to measure, for TCP, on both sender and received side:
-
-- Throughput(MB/s)
-- Retransmits
-- Errors
-- Avg. CPU %
-
-UDP traffic:
-
-- 2 containers, 1 network, 1 node
-- 2 containers, 2 networks, 1 node
-- 2 containers, 1 network, 2 nodes
-- 2 containers, 2 networks, 2 nodes
-
-
-## Test method
-
-### NTttcp - TCP
-
-NTttcp - https://gallery.technet.microsoft.com/NTttcp-Version-528-Now-f8b12769
-
-```
-# On receiver node
-.\NTttcp.exe -r -m 2,*,172.16.0.12 -rb 2M -a 16 -t 15
-
-# On sender node
-.\NTttcp.exe -s -m 2,*,172.16.0.12 -l 128k -a 2 -t 15
-```
-
-Test results:
-
-```
-# MB/s, from receiver
-1352.541
-1478.696
-1380.415
-1474.988
-1459.776
-1372.184
-1434.986
-1306.985
-548.483
-1435.494
-```
-
-
-### NTttcp - UDP
-
-**TODO**
+| Metric | Result |
+|---|---|
+| Throughput (MB/s) | 199.086 |
+| Retransmits | 41.9 |
+| Errors | 0 |
+| Avg. CPU % | 15.843 |
