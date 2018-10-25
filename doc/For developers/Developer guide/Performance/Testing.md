@@ -6,7 +6,8 @@ It's divided into following sections:
 
 1. Test environment
 2. Test scenarios
-3. Performance baseline setup
+3. Performance baseline discussion
+3. Performance baseline test results
 
 
 ## 1. Test environment
@@ -66,7 +67,7 @@ Following `NTttcp` options should be used for performance testing:
 
     ```
     # Flags description
-    # -m 1,*,10.0.14 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
+    # -m 1,*,10.0.1.4 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
     # -l 128k -- send 128KB buffers
     # -t 15 -- test should run for 15 seconds
 
@@ -77,7 +78,7 @@ Following `NTttcp` options should be used for performance testing:
 
     ```
     # Flags description
-    # -m 1,*,10.0.14 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
+    # -m 1,*,10.0.1.4 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
     # -rb 2M -- configure 2MB receive buffers
     # -t 15 -- test should run for 15 seconds
 
@@ -97,7 +98,27 @@ Following `NTttcp` options should be used for performance testing:
 **TODO**
 
 
-## 3. Performance baseline setup
+## 3. Performance baseline discussion
+
+Tests have shown that:
+
+- Windows networking stack can achieve on average ~920 MB/s of TCP throughput;
+- Windows container networking stack can achieve on average ~200 MB/s of TCP throughput;
+- Windows networking stack, when Hyper-V is enabled, achieves throughput similar to Windows container networking stack;
+- Windows container networking stack, when containers are colocated on the same node, can achieve on average ~250MB/s of TCP throughput.
+  However, a high number of retransmissions occurring is observed - on average, 2333 retransmissions;
+
+Conclusions:
+
+- Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4.
+- Reduced throughput can be explained by lack of support for VMQ in vmxnet3 adapters. `receiver` node has much higher CPU load when using Hyper-V.
+- Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck in this case.
+
+Refer to _Performance baseline test results_ section for a more detailed description of test setups and results.
+
+Performance baseline for Contrail Windows should be based on network performance of containers running on Hyper-V.
+
+## 4. Performance baseline test results
 
 ### Raw OS
 
@@ -227,3 +248,51 @@ Across multiple runs of baseline scenario, the following average figures are obs
 | Retransmits | 0 |
 | Errors | 0 |
 | Avg. cpu % | 42.278 |
+
+
+### Hyper-V with Containers
+
+- 1 Windows Server compute node;
+- Hyper-V and Docker are installed on compute note;
+- containers `sender` and `receiver` are running on this compute node;
+- `sender` and `receiver` exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section.
+
+```
++---------------------+
+|                     |
+|   +-------------+   |
+|   |  VMSWITCH   |   |
+|   |             |   |
+|   +-+---------+-+   |
+|     |         |     |
+|     |         |     |
+|  +--+---+ +---+--+  |
+|  |      | |      |  |
+|  | CONT | | CONT |  |
+|  |      | |      |  |
+|  +------+ +------+  |
+|                     |
++---------------------+
+```
+
+#### Results
+
+Across multiple runs of baseline scenario, the following average figures are observed:
+
+- on `sender` container:
+
+| metric | result |
+|---|---|
+| Throughput (MB/s) | 244.598 |
+| Retransmits | 2333.4 |
+| Errors | 0 |
+| Avg. cpu % | 57.098 |
+
+- on `receiver` container:
+
+| metric | result |
+|---|---|
+| Throughput (MB/s) | 243.603 |
+| Retransmits | 2353.3 |
+| Errors | 0 |
+| Avg. cpu % | 57.086 |
