@@ -42,6 +42,26 @@ TCP test scenario:
 - 1 container `receiver` on node B, attached to `network1` network;
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
 
+```
++----------------------+                       +----------------------+
+|                      |                       |                      |
+|  +------------+      |                       |      +------------+  |
+|  |  VMSWITCH  |      |                       |      |  VMSWITCH  |  |
+|  |     +      |      |                       |      |     +      |  |
+|  |  VROUTER   |      |                       |      |  VROUTER   |  |
+|  |            +--+ +---------+       +---------+ +--+            |  |
+|  +------------+  | |         |       |         | |  +------------+  |
+|    |        |    | |  10 Gb  +-------+  10 Gb  | |       |      |   |
+|    |        |    +-+   NIC   +-------+   NIC   +-+       |      |   |
+|  +----+ +------+   |         |       |         |    +------+ +----+ |
+|  |    | |      |   +---------+       +---------+    |      | |    | |
+|  | OS | | CONT |     |                       |      | CONT | | OS | |
+|  |    | |      |     |                       |      |      | |    | |
+|  +----+ +------+     |                       |      +------+ +----+ |
+|                      |                       |                      |
++----------------------+                       +----------------------+
+```
+
 Following `NTttcp` options should be used for performance testing:
 
 - on `sender`:
@@ -90,8 +110,23 @@ Currently, performance baseline for Contrail Windows is set by measuring through
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section
 
 
-**TODO**: diagram
-
+```
++----------------------+                       +----------------------+
+|                      |                       |                      |
+|  +------------+      |                       |      +------------+  |
+|  |  VMSWITCH  |      |                       |      |  VMSWITCH  |  |
+|  |            +--+ +---------+       +---------+ +--+            |  |
+|  +------------+  | |         |       |         | |  +------------+  |
+|    |        |    | |  10 Gb  +-------+  10 Gb  | |       |      |   |
+|    |        |    +-+   NIC   +-------+   NIC   +-+       |      |   |
+|  +----+ +------+   |         |       |         |    +------+ +----+ |
+|  |    | |      |   +---------+       +---------+    |      | |    | |
+|  | OS | | CONT |     |                       |      | CONT | | OS | |
+|  |    | |      |     |                       |      |      | |    | |
+|  +----+ +------+     |                       |      +------+ +----+ |
+|                      |                       |                      |
++----------------------+                       +----------------------+
+```
 
 ### Setup
 
