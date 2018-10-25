@@ -84,7 +84,7 @@ Following `NTttcp` options should be used for performance testing:
     .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -t 15
     ```
 
-`NTttcp` output many metrics, but in case of TCP most important are:
+`NTttcp` outputs many metrics, but in case of TCP most important are:
 
 - Throughput(MB/s)
 - Retransmits
@@ -99,7 +99,54 @@ Following `NTttcp` options should be used for performance testing:
 
 ## 3. Performance baseline setup
 
-Currently, performance baseline for Contrail Windows is set by measuring throughput in the following scenario:
+### Raw OS
+
+- 2 Windows Server compute nodes (node A and node B);
+- compute nodes are configured without Hyper-V and Containers;
+- node A and node B exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section.
+
+```
++----------------------+                       +----------------------+
+|    WINDOWS NODE A    |                       |    WINDOWS NODE B    |
+|                      |                       |                      |
+|                      |                       |                      |
+|    +---------+     +-+-------+       +-------+-+     +---------+    |
+|    |         |     |         |       |         |     |         |    |
+|    |   OS    +-----+  10 Gb  +-------+  10 Gb  +-----+   OS    |    |
+|    |  STACK  +-----+   NIC   +-------+   NIC   +-----+  STACK  |    |
+|    |         |     |         |       |         |     |         |    |
+|    +---------+     +-+-------+       +-------+-+     +---------+    |
+|                      |                       |                      |
+|                      |                       |                      |
+|                      |                       |                      |
+|                      |                       |                      |
++----------------------+                       +----------------------+
+```
+
+#### Results
+
+Across multiple runs, the following average figures are observed:
+
+- on node A:
+
+| metric | result |
+|---|---|
+| Throughput (MB/s) | 921.895 |
+| Retransmits | 32.2 |
+| Errors | 0 |
+| Avg. cpu % | 14.799 |
+
+- on B:
+
+| metric | result |
+|---|---|
+| Throughput (MB/s) | 921.900 |
+| Retransmits | 0.1 |
+| Errors | 0 |
+| Avg. cpu % | 21.161 |
+
+
+### Hyper-V with Containers
 
 - 2 Windows Server compute nodes (node A and node B);
 - Hyper-V and Docker are installed on both compute nodes;
@@ -126,7 +173,7 @@ Currently, performance baseline for Contrail Windows is set by measuring through
 +----------------------+                       +----------------------+
 ```
 
-### Setup
+#### Setup
 
 ```powershell
 # System setup
@@ -159,24 +206,24 @@ receiver > .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 ```
 
 
-### Results
+#### Results
 
 Across multiple runs of baseline scenario, the following average figures are observed:
 
 - on `sender` container:
 
-| Metric | Result |
+| metric | result |
 |---|---|
 | Throughput (MB/s) | 199.086 |
 | Retransmits | 41.9 |
 | Errors | 0 |
-| Avg. CPU % | 15.843 |
+| Avg. cpu % | 15.843 |
 
 - on `receiver` container:
 
-| Metric | Result |
+| metric | result |
 |---|---|
 | Throughput (MB/s) | 199.087 |
 | Retransmits | 0 |
 | Errors | 0 |
-| Avg. CPU % | 42.278 |
+| Avg. cpu % | 42.278 |
