@@ -4,9 +4,11 @@ Please follow steps below if you encounter issues when using Windows Contrail.
 
 ## 1. Use `contrail-status`
 
-**TODO**
-
-`contrail-status` is not implemented yet. Please move on to next troubleshooting steps.
+Open the PowerShell command prompt (with the Administrator priviledge) on the compute node.
+Run contrail-status.ps1 from https://github.com/Juniper/contrail-windows/tree/master/scripts
+Make sure that the following services listed by the script are running: Docker, contrail-cnm-plugin, contrail-vrouter-nodemgr and contrail-vrouter-agent.
+Also make sure that the vrouter extension that is listed by the script is enabled and running. 
+You may also run the script using the optional -Verbose option to get more details of the system as well as get the location of several important files such as logs etc. 
 
 ## 2. Diagnostic check
 
