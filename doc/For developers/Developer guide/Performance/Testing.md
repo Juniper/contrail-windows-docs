@@ -28,7 +28,7 @@ for performance testing.
 This vSS should not have any physical NICs attached.
 
 
-## Test scenarios
+## 2. Test scenarios
 
 ### TCP performance
 
@@ -79,7 +79,7 @@ Following `NTttcp` options should be used for performance testing:
 **TODO**
 
 
-## Performance baseline setup
+## 3. Performance baseline setup
 
 Currently, performance baseline for Contrail Windows is set by measuring throughput in the following scenario:
 
