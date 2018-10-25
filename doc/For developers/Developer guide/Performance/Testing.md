@@ -32,8 +32,6 @@ This vSS should not have any physical NICs attached.
 
 ### TCP performance
 
-**TODO**: Diagram
-
 TCP test scenario:
 
 - 2 compute nodes (node A and node B);
