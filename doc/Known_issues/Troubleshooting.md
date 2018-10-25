@@ -61,7 +61,11 @@ for script configuration info.
 any leftover state. This includes any workload instances (containers).
 
 **Note**: For ease of use, you can use `Invoke-ScriptInRemoteSessions.ps1` script that will run
-the cleanup on a remote machine.
+the cleanup on a remote machine:
+
+```
+\Invoke-ScriptInRemoteSessions.ps1 -ScriptFileName ".\Clear-ComputeNode.ps1" -Addresses "<IP1>,<IP2>" -Credential (Get-Credential)
+```
 
 Redeployment of Windows Compute node is required after runnig this script. Please
 refer to [deployment instructions](../Quick_start/deployment.md).

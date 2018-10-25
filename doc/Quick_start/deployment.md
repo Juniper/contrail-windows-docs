@@ -130,12 +130,14 @@ Proceed with running Ansible playbooks:
 
 ## 5. Verify deployment
 
-1. Run `Invoke-DiagnosticCheck.ps1` script from [tools repository](https://github.com/Juniper/contrail-windows-tools).
-    If deployment went correctly, all checks should pass.
+1. Run `Invoke-DiagnosticCheck.ps1` script from [tools repository](https://github.com/Juniper/contrail-windows-tools)
+    on Windows compute nodes. If deployment went correctly, all checks should pass.
 
-    **Note**: to quickly have the ability to run this script on your Windows machine, you can use the following snippet:
+    **Note**: to quickly have the ability to run this script on your Windows nodes, you can use the following snippet:
     
+        Invoke-WebRequest  https://raw.githubusercontent.com/Juniper/contrail-windows-tools/master/Invoke-ScriptInRemoteSessions.ps1 -OutFile Invoke-ScriptInRemoteSessions.ps1
         Invoke-WebRequest  https://raw.githubusercontent.com/Juniper/contrail-windows-tools/master/Invoke-DiagnosticCheck.ps1 -OutFile Invoke-DiagnosticCheck.ps1
+        .\Invoke-ScriptInRemoteSessions.ps1 -ScriptFileName ".\Invoke-DiagnosticCheck.ps1" -Addresses "<IP1>,<IP2>" -Credential (Get-Credential) -OtherParams...
 
     Consult the README on how to configure the diagnostic script (it's safe to run, so don't worry about
     misconfiguration).
