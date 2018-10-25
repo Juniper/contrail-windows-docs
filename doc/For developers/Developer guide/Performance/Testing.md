@@ -18,6 +18,8 @@ Test results and scenarios are described in the following sections.
 
 ## Results
 
+On `sender` nodes:
+
 | Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers (no seg) | Containers w/ Contrail (no seg) |
 |---------------------|----------|------------|----------------------|------------------------|---------------------|---------------------------------|
 | Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | TBD                    | 235.852             | 98.734                          |
@@ -25,23 +27,23 @@ Test results and scenarios are described in the following sections.
 | Errors              | 0        | 0          | 0                    | TBD                    | 0                   | 0                               |
 | Avg. CPU %          | 14.799   | 15.843     | 57.098               | TBD                    | 29.373              | 34.544                          |
 
+On `receiver` nodes:
+
+| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers (no seg) | Containers w/ Contrail (no seg) |
+|---------------------|----------|------------|----------------------|------------------------|---------------------|---------------------------------|
+| Throughput (Mbit/s) | 7375.198 | 1592.698   | 1948.824             | TBD                    | 235.784             | 98.732                          |
+| Retransmits         | 0        | 0          | 2353                 | TBD                    | 0                   | 0                               |
+| Errors              | 0        | 0          | 0                    | TBD                    | 0                   | 0                               |
+| Avg. CPU %          | 21.161   | 42.278     | 57.086               | TBD                    | 25.064              | 25.763                          |
+
 ## Conclusions
-
-Tests have shown that:
-
-- Windows networking stack can achieve on average ~7300 Mbit/s of TCP throughput;
-- Windows container networking stack can achieve on average ~1500 Mbit/s of TCP throughput;
-- Windows networking stack, when Hyper-V is enabled, achieves throughput similar to Windows container networking stack;
-- Windows container networking stack, when containers are colocated on the same node, can achieve on average ~1900Mbit/s of TCP throughput.
-  However, a high number of retransmissions occurring is observed - on average, 2333 retransmissions;
 
 Conclusions:
 
 - Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4.
-- Reduced throughput can be explained by lack of support for VMQ in vmxnet3 adapters. `receiver` node has much higher CPU load when using Hyper-V.
-- Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck in this case.
-
-Refer to _Performance baseline test results_ section for a more detailed description of test setups and results.
+    - Reduced throughput can be explained by lack of support for VMQ in vmxnet3 adapters.
+- Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck.
+- Comparing `Containers (no seg)` test with `Containers w/ Contrail (no seg)` shows that vRouter code paths could account for 50-60% drop in TCP throughput.
 
 Performance baseline for Contrail Windows should be based on network performance of containers running on Hyper-V.
 
