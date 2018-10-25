@@ -307,37 +307,6 @@ Diagram:
 ```
 
 
-__ASDJAJSDLJASDLJASLD__
-
-### TCP performance
-
-TCP test scenario:
-
-
-Following `NTttcp` options should be used for performance testing:
-
-- on `sender`:
-
-    ```
-    # Flags description
-    # -m 1,*,10.0.1.4 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
-    # -l 128k -- send 128KB buffers
-    # -t 15 -- test should run for 15 seconds
-
-    .\NTttcp.exe -s -m 1,*,10.0.1.4 -l 128k -t 15
-    ```
-
-- on `receiver`:
-
-    ```
-    # Flags description
-    # -m 1,*,10.0.1.4 -- 1 thread, do not pin CPUs, receiver on IP 10.0.1.4
-    # -rb 2M -- configure 2MB receive buffers
-    # -t 15 -- test should run for 15 seconds
-
-    .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -t 15
-    ```
-
 ## Appendices
 
 ### Hyper-V with Containers - setup
