@@ -87,7 +87,7 @@ Following `NTttcp` options should be used for performance testing:
 
 `NTttcp` outputs many metrics, but in case of TCP most important are:
 
-- Throughput(MB/s)
+- Throughput(Mbit/s)
 - Retransmits
 - Errors
 - Avg. CPU %
@@ -102,10 +102,10 @@ Following `NTttcp` options should be used for performance testing:
 
 Tests have shown that:
 
-- Windows networking stack can achieve on average ~920 MB/s of TCP throughput;
-- Windows container networking stack can achieve on average ~200 MB/s of TCP throughput;
+- Windows networking stack can achieve on average ~7300 Mbit/s of TCP throughput;
+- Windows container networking stack can achieve on average ~1500 Mbit/s of TCP throughput;
 - Windows networking stack, when Hyper-V is enabled, achieves throughput similar to Windows container networking stack;
-- Windows container networking stack, when containers are colocated on the same node, can achieve on average ~250MB/s of TCP throughput.
+- Windows container networking stack, when containers are colocated on the same node, can achieve on average ~1900Mbit/s of TCP throughput.
   However, a high number of retransmissions occurring is observed - on average, 2333 retransmissions;
 
 Conclusions:
@@ -152,7 +152,7 @@ Across multiple runs, the following average figures are observed:
 
 | metric | result |
 |---|---|
-| Throughput (MB/s) | 921.895 |
+| Throughput (Mbit/s) | 7375.1592 |
 | Retransmits | 32.2 |
 | Errors | 0 |
 | Avg. cpu % | 14.799 |
@@ -161,7 +161,7 @@ Across multiple runs, the following average figures are observed:
 
 | metric | result |
 |---|---|
-| Throughput (MB/s) | 921.900 |
+| Throughput (Mbit/s) | 7375.1984 |
 | Retransmits | 0.1 |
 | Errors | 0 |
 | Avg. cpu % | 21.161 |
@@ -235,7 +235,7 @@ Across multiple runs of baseline scenario, the following average figures are obs
 
 | metric | result |
 |---|---|
-| Throughput (MB/s) | 199.086 |
+| Throughput (Mbit/s) | 1592.6912 |
 | Retransmits | 41.9 |
 | Errors | 0 |
 | Avg. cpu % | 15.843 |
@@ -244,7 +244,7 @@ Across multiple runs of baseline scenario, the following average figures are obs
 
 | metric | result |
 |---|---|
-| Throughput (MB/s) | 199.087 |
+| Throughput (Mbit/s) | 1592.6984 |
 | Retransmits | 0 |
 | Errors | 0 |
 | Avg. cpu % | 42.278 |
@@ -283,7 +283,7 @@ Across multiple runs of baseline scenario, the following average figures are obs
 
 | metric | result |
 |---|---|
-| Throughput (MB/s) | 244.598 |
+| Throughput (Mbit/s) | 1956.7864 |
 | Retransmits | 2333.4 |
 | Errors | 0 |
 | Avg. cpu % | 57.098 |
@@ -292,7 +292,7 @@ Across multiple runs of baseline scenario, the following average figures are obs
 
 | metric | result |
 |---|---|
-| Throughput (MB/s) | 243.603 |
+| Throughput (Mbit/s) | 1948.824 |
 | Retransmits | 2353.3 |
 | Errors | 0 |
 | Avg. cpu % | 57.086 |
