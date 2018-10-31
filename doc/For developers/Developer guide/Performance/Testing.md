@@ -7,12 +7,15 @@ This document describes assumptions, utilized tools and conclusions drawn from p
 
 TCP throughput was measured in the following scenarios:
 
-1. Raw Windows Server network stack (abbreviated `Raw` in _Results_ section).
-1. Windows Server containers (WinSrv containers) on 2 compute nodes (abbreviated `Containers` in _Results_ section).
-1. WinSrv containers on 1 compute node (abbreviated `Colocated Containers` in _Results_ section).
-1. WinSrv containers on 2 compute nodes, with Contrail Windows (abbreviated `Containers w/ Contrail` in _Results_ section).
-1. WinSrv containers on 2 compute nodes, traffic tuned to eliminate TCP segmentation (abbreviated `Containers (no seg)` in _Results_ section).
-1. WinSrv containers on 2 compute nodes, with Contrail Windows, traffic tuned to eliminate TCP segmentation (abbreviated `Containers w/ Contrail (no seg)` in _Results_ section).
+| Test name                       | Description | Comments |
+|---------------------------------|-------------|----------|
+| Raw                             | Raw Windows Server network stack | |
+| Containers                      | Windows Server containers (WinSrv containers) on 2 compute nodes | |
+| Colocated Containers            | WinSrv containers on 1 compute node | |
+| Containers w/ Contrail          | WinSrv containers on 2 compute nodes, with Contrail Windows | |
+| Containers w/ Contrail #2       | WinSrv containers on 2 compute nodes, with Contrail Windows, with fixes for TCP segmentation | WIP PR https://review.opencontrail.org/#/c/47292/ |
+| Containers (no seg)             | WinSrv containers on 2 compute nodes, traffic tuned to eliminate TCP segmentation | |
+| Containers w/ Contrail (no seg) | WinSrv containers on 2 compute nodes, with Contrail Windows, traffic tuned to eliminate TCP segmentation | |
 
 Test results and scenarios are described in the following sections.
 
@@ -20,12 +23,12 @@ Test results and scenarios are described in the following sections.
 
 On `sender` nodes:
 
-| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers (no seg) | Containers w/ Contrail (no seg) |
-|---------------------|----------|------------|----------------------|------------------------|---------------------|---------------------------------|
-| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | TBD                    | 235.852             | 98.734                          |
-| Retransmits         | 257      | 335        | 2333                 | TBD                    | 1                   | 1034                            |
-| Errors              | 0        | 0          | 0                    | TBD                    | 0                   | 0                               |
-| Avg. CPU %          | 14.799   | 15.843     | 57.098               | TBD                    | 29.373              | 34.544                          |
+| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 |Containers (no seg) | Containers w/ Contrail (no seg) |
+|---------------------|----------|------------|----------------------|------------------------|---------------------------|--------------------|---------------------------------|
+| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | TBD                    | TBD                       | 235.852            | 98.734                          |
+| Retransmits         | 257      | 335        | 2333                 | TBD                    | TBD                       | 1                  | 1034                            |
+| Errors              | 0        | 0          | 0                    | TBD                    | TBD                       | 0                  | 0                               |
+| Avg. CPU %          | 14.799   | 15.843     | 57.098               | TBD                    | TBD                       | 29.373             | 34.544                          |
 
 On `receiver` nodes:
 
