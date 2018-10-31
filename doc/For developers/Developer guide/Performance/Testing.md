@@ -7,15 +7,14 @@ This document describes assumptions, utilized tools and conclusions drawn from p
 
 TCP throughput was measured in the following scenarios:
 
-| Test name                       | Description | Comments |
-|---------------------------------|-------------|----------|
-| Raw                             | Raw Windows Server network stack | |
-| Containers                      | Windows Server containers (WinSrv containers) on 2 compute nodes | |
-| Colocated Containers            | WinSrv containers on 1 compute node | |
-| Containers w/ Contrail          | WinSrv containers on 2 compute nodes, with Contrail Windows | |
-| Containers w/ Contrail #2       | WinSrv containers on 2 compute nodes, with Contrail Windows, with fixes for TCP segmentation | WIP PR https://review.opencontrail.org/#/c/47292/ |
-| Containers (no seg)             | WinSrv containers on 2 compute nodes, traffic tuned to eliminate TCP segmentation | |
-| Containers w/ Contrail (no seg) | WinSrv containers on 2 compute nodes, with Contrail Windows, traffic tuned to eliminate TCP segmentation | |
+| ID  | Test name                       | Description | Comments |
+|-----|---------------------------------|-------------|----------|
+| A   | Raw                             | Raw Windows Server network stack | |
+| B   | Containers                      | Windows Server containers (WinSrv containers) on 2 compute nodes | |
+| C   | Colocated Containers            | WinSrv containers on 1 compute node | |
+| D   | Containers w/ Contrail          | WinSrv containers on 2 compute nodes, with Contrail Windows | WIP PR https://review.opencontrail.org/#/c/47292/ |
+| E   | Containers (no seg)             | WinSrv containers on 2 compute nodes, traffic tuned to eliminate TCP segmentation | |
+| F   | Containers w/ Contrail (no seg) | WinSrv containers on 2 compute nodes, with Contrail Windows, traffic tuned to eliminate TCP segmentation | |
 
 Test results and scenarios are described in the following sections.
 
@@ -23,17 +22,17 @@ Test results and scenarios are described in the following sections.
 
 On `sender` nodes:
 
-| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 | Containers (no seg) | Containers w/ Contrail (no seg) |
-|---------------------|----------|------------|----------------------|------------------------|---------------------------|---------------------|---------------------------------|
-| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | 0.214                  | 658.291                   | 235.852             | 98.734                          |
-| Avg. CPU %          | 14.799   | 15.843     | 57.098               | 4.667                  | 40.992                    | 29.373              | 34.544                          |
+| Metric              | A        | B        | C        | D       | E       | F      |
+|---------------------|----------|----------|----------|---------|---------|--------|
+| Throughput (Mbit/s) | 7375.159 | 1592.691 | 1956.786 | 658.291 | 235.852 | 98.734 |
+| Avg. CPU %          | 14.799   | 15.843   | 57.098   | 40.992  | 29.373  | 34.544 |
 
 On `receiver` nodes:
 
-| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 | Containers (no seg) | Containers w/ Contrail (no seg) |
-|---------------------|----------|------------|----------------------|------------------------|---------------------------|---------------------|---------------------------------|
-| Throughput (Mbit/s) | 7375.198 | 1592.698   | 1948.824             | 0.227                  | 657.520                   | 235.784             | 98.732                          |
-| Avg. CPU %          | 21.161   | 42.278     | 57.086               | 3.770                  | 48.184                    | 25.064              | 25.763                          |
+| Metric              | A        | B        | C        | E       | F       | G      |
+|---------------------|----------|----------|----------|---------|---------|--------|
+| Throughput (Mbit/s) | 7375.198 | 1592.698 | 1948.824 | 657.520 | 235.784 | 98.732 |
+| Avg. CPU %          | 21.161   | 42.278   | 57.086   | 48.184  | 25.064  | 25.763 |
 
 ## Conclusions
 
