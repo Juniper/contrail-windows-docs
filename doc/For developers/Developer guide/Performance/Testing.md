@@ -31,11 +31,11 @@ On `sender` nodes:
 
 On `receiver` nodes:
 
-| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers (no seg) | Containers w/ Contrail (no seg) |
-|---------------------|----------|------------|----------------------|------------------------|---------------------|---------------------------------|
-| Throughput (Mbit/s) | 7375.198 | 1592.698   | 1948.824             | TBD                    | 235.784             | 98.732                          |
-| Errors              | 0        | 0          | 0                    | TBD                    | 0                   | 0                               |
-| Avg. CPU %          | 21.161   | 42.278     | 57.086               | TBD                    | 25.064              | 25.763                          |
+| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 | Containers (no seg) | Containers w/ Contrail (no seg) |
+|---------------------|----------|------------|----------------------|------------------------|---------------------------|---------------------|---------------------------------|
+| Throughput (Mbit/s) | 7375.198 | 1592.698   | 1948.824             | TBD                    | TBD                       | 235.784             | 98.732                          |
+| Errors              | 0        | 0          | 0                    | TBD                    | TBD                       | 0                   | 0                               |
+| Avg. CPU %          | 21.161   | 42.278     | 57.086               | TBD                    | TBD                       | 25.064              | 25.763                          |
 
 ## Conclusions
 
