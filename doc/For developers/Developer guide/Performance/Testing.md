@@ -25,24 +25,24 @@ On `sender` nodes:
 
 | Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 | Containers (no seg) | Containers w/ Contrail (no seg) |
 |---------------------|----------|------------|----------------------|------------------------|---------------------------|---------------------|---------------------------------|
-| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | TBD                    | TBD                       | 235.852             | 98.734                          |
-| Errors              | 0        | 0          | 0                    | TBD                    | TBD                       | 0                   | 0                               |
-| Avg. CPU %          | 14.799   | 15.843     | 57.098               | TBD                    | TBD                       | 29.373              | 34.544                          |
+| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | 0.214                  | 658.291                   | 235.852             | 98.734                          |
+| Avg. CPU %          | 14.799   | 15.843     | 57.098               | 4.667                  | 40.992                    | 29.373              | 34.544                          |
 
 On `receiver` nodes:
 
 | Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 | Containers (no seg) | Containers w/ Contrail (no seg) |
 |---------------------|----------|------------|----------------------|------------------------|---------------------------|---------------------|---------------------------------|
-| Throughput (Mbit/s) | 7375.198 | 1592.698   | 1948.824             | TBD                    | TBD                       | 235.784             | 98.732                          |
-| Errors              | 0        | 0          | 0                    | TBD                    | TBD                       | 0                   | 0                               |
-| Avg. CPU %          | 21.161   | 42.278     | 57.086               | TBD                    | TBD                       | 25.064              | 25.763                          |
+| Throughput (Mbit/s) | 7375.198 | 1592.698   | 1948.824             | 0.227                  | 657.520                   | 235.784             | 98.732                          |
+| Avg. CPU %          | 21.161   | 42.278     | 57.086               | 3.770                  | 48.184                    | 25.064              | 25.763                          |
 
 ## Conclusions
 
 Conclusions:
 
 - Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4.
-    - Reduced throughput can be explained by lack of support for VMQ in vmxnet3 adapters.
+    - Observed reduced throghput is expected. As per Microsoft Networking blog (here: [VMQ Deep Dive][vmq]) this is by design.
+      Before creating VMSwitch packets are directed to separate CPU cores based on flow hash.
+      After VMSwitch is created, packets are directed to separate CPU cores based on destination MAC address, thus each virtual adapter is assigned to a single CPU core.
 - Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck.
 - Comparing `Containers (no seg)` test with `Containers w/ Contrail (no seg)` shows that vRouter code paths could account for 50-60% drop in TCP throughput.
 
@@ -341,3 +341,5 @@ docker exec -it receiver powershell
 sender   > .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -t 15
 receiver > .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 ```
+
+[vmq]: https://blogs.technet.microsoft.com/networking/2013/09/10/vmq-deep-dive-1-of-3/
