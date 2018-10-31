@@ -23,11 +23,11 @@ Test results and scenarios are described in the following sections.
 
 On `sender` nodes:
 
-| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 |Containers (no seg) | Containers w/ Contrail (no seg) |
-|---------------------|----------|------------|----------------------|------------------------|---------------------------|--------------------|---------------------------------|
-| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | TBD                    | TBD                       | 235.852            | 98.734                          |
-| Errors              | 0        | 0          | 0                    | TBD                    | TBD                       | 0                  | 0                               |
-| Avg. CPU %          | 14.799   | 15.843     | 57.098               | TBD                    | TBD                       | 29.373             | 34.544                          |
+| Metric              | Raw      | Containers | Colocated Containers | Containers w/ Contrail | Containers w/ Contrail #2 | Containers (no seg) | Containers w/ Contrail (no seg) |
+|---------------------|----------|------------|----------------------|------------------------|---------------------------|---------------------|---------------------------------|
+| Throughput (Mbit/s) | 7375.159 | 1592.691   | 1956.786             | TBD                    | TBD                       | 235.852             | 98.734                          |
+| Errors              | 0        | 0          | 0                    | TBD                    | TBD                       | 0                   | 0                               |
+| Avg. CPU %          | 14.799   | 15.843     | 57.098               | TBD                    | TBD                       | 29.373              | 34.544                          |
 
 On `receiver` nodes:
 
@@ -46,7 +46,7 @@ Conclusions:
 - Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck.
 - Comparing `Containers (no seg)` test with `Containers w/ Contrail (no seg)` shows that vRouter code paths could account for 50-60% drop in TCP throughput.
 
-Performance baseline for Contrail Windows should be based on network performance of containers running on Hyper-V.
+Performance baseline for Contrail Windows should be based on network performance of containers running on Hyper-V, which is `~1600 MBit/s` of TCP throughput between containers on different compute nodes.
 
 
 ## Test environment assumptions
@@ -75,7 +75,7 @@ This vSS should not have any physical NICs attached.
 Description:
 
 - 2 Windows Server compute nodes (node A and node B);
-- compute nodes are configured without Hyper-V and Containers;
+- compute nodes without Hyper-V and Containers Windows features installed;
 - node A and node B exchange TCP segments using `NTttcp` tool;
 - used `NTttcp` options:
 
@@ -322,7 +322,7 @@ Install-Module DockerMsftProvider -Force
 Install-Package Docker -ProviderName DockerMsftProvider -Force -RequiredVersion 17.06.2-ee-16
 Restart-Computer
 
-# Docker setup (on both VMs)
+# Docker setup (on both Windows hosts)
 Start-Service Docker
 docker image pull microsoft/windowsservercore:ltsc2016
 docker network create -d transparent --subnet=172.16.0.0/24 --gateway=172.16.0.254 -o com.docker.network.windowsshim.interface="Ethernet1" mynetwork
