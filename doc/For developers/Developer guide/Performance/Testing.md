@@ -78,13 +78,11 @@ Description:
 - node A and node B exchange TCP segments using `NTttcp` tool;
 - used `NTttcp` options:
 
-    ```
-    # On node A
-    .\NTttcp.exe -s -m 1,*,172.16.0.12 -l 128k -t 15
+        # On node A
+        .\NTttcp.exe -s -m 1,*,172.16.0.12 -l 128k -t 15
 
-    # On node B
-    .\NTttcp.exe -r -m 1,*,172.16.0.12 -rb 2M -t 15
-    ```
+        # On node B
+        .\NTttcp.exe -r -m 1,*,172.16.0.12 -rb 2M -t 15
 
 Diagram:
 
@@ -117,13 +115,11 @@ Description:
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
 - used `NTttcp` options:
 
-    ```
-    # On sender
-    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
+        # On sender
+        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
 
-    # On receiver
-    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
-    ```
+        # On receiver
+        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
 
 Diagram:
 
@@ -156,13 +152,11 @@ Description:
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool using command line options from _Test scenarios_ section.
 - used `NTttcp` options:
 
-    ```
-    # On sender
-    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
+        # On sender
+        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
 
-    # On receiver
-    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
-    ```
+        # On receiver
+        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
 
 Diagram:
 
@@ -195,13 +189,11 @@ Description:
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
 - used `NTttcp` options:
 
-    ```
-    # On sender
-    .\NTttcp.exe -s -m 1,*,10.0.1.4 -l 128k -a 2 -t 15
+        # On sender
+        .\NTttcp.exe -s -m 1,*,10.0.1.4 -l 128k -a 2 -t 15
 
-    # On receiver
-    .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -a 16 -t 15
-    ```
+        # On receiver
+        .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -a 16 -t 15
 
 Diagram:
 
@@ -236,13 +228,11 @@ Description:
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
 - `NTttcp` options tuned so that no fragmentation and segmentation should occur; options used:
 
-    ```
-    # On sender
-    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 1390 -t 15 -ndl
+        # On sender
+        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 1390 -t 15 -ndl
 
-    # On receiver
-    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15 -ndl
-    ```
+        # On receiver
+        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15 -ndl
 
 Diagram:
 
@@ -275,13 +265,11 @@ Description:
 - `sender` and `receiver` exchange TCP segments using `NTttcp` tool;
 - `NTttcp` options tuned so that no fragmentation and segmentation should occur; options used:
 
-    ```
-    # On sender
-    .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 1390 -t 15 -ndl
+        # On sender
+        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 1390 -t 15 -ndl
 
-    # On receiver
-    .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15 -ndl
-    ```
+        # On receiver
+        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15 -ndl
 
 Diagram:
 
