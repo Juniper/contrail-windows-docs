@@ -68,7 +68,7 @@ version you can probably install ansible using pip)
 > from [contrail-windows-ci] repository with
 > `pip install -r python-requirements.txt`
 
-[ansible-requirements-txt]: https://github.com/Juniper/contrail-windows-ci/blob/development/ansible/python-requirements.txt
+[ansible-requirements-txt]: https://github.com/Juniper/contrail-windows-ci/blob/master/ansible/python-requirements.txt
 
 Install ansible >= 2.4 using `apt`:
 

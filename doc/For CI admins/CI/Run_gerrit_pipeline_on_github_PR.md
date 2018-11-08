@@ -7,7 +7,7 @@ trigger mechanism - code that depends on Zuul or other Jenkins trigger plugins
 
 ## 
 
-1. Clone Jenkins job `winci-server2016-devel` to some temporary `tmp-devel-gerrit-check`
+1. Clone Jenkins job `winci-server2016-prod` to some temporary `tmp-devel-gerrit-check`
 2. Configure `tmp-devel-gerrit-check`:
 * Properties content: BRANCH_NAME={branch to test}
 * Branches to build: {branch to test}

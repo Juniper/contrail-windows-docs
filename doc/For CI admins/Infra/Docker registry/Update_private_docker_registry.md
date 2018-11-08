@@ -17,9 +17,9 @@ The update of local docker registry is required when the version of Controller u
 3. Check if there is `update-docker-registry.py` script in root directory.
 
 4. If there is no such script:
-    - download it from [here](https://github.com/Juniper/contrail-windows-ci/tree/development/utility/update_docker_registry):
+    - download it from [here](https://github.com/Juniper/contrail-windows-ci/tree/master/utility/update_docker_registry):
 
-            curl https://raw.githubusercontent.com/Juniper/contrail-windows-ci/development/utility/update_docker_registry/update-docker-registry.py --output update-docker-registry.py
+            curl https://raw.githubusercontent.com/Juniper/contrail-windows-ci/master/utility/update_docker_registry/update-docker-registry.py --output update-docker-registry.py
 
     - make it executable:
 

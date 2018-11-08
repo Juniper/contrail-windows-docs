@@ -46,7 +46,7 @@ The following sections describe these steps in details.
 
 5.  Then reboot the machine and log in using the new IP.
 
-[controller-docker-registry-param]: https://github.com/Juniper/contrail-windows-ci/blob/development/ansible/roles/controller/defaults/main.yml#L1
+[controller-docker-registry-param]: https://github.com/Juniper/contrail-windows-ci/blob/master/ansible/roles/controller/defaults/main.yml#L1
 
 ## Installing Docker
 

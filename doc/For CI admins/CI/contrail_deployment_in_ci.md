@@ -22,7 +22,7 @@
   * ci-repo.englab.juniper.net or [opencontrailnigthly](https://hub.docker.com/u/opencontrailnightly/)
 * Interfaces
   * Example [config](https://github.com/Juniper/contrail-ansible-deployer/blob/master/config/)
-  * Windows-CI [config](https://github.com/Juniper/contrail-windows-ci/blob/development/ansible/roles/contrail-ansible-deployer/templates/instances.j2)
+  * Windows-CI [config](https://github.com/Juniper/contrail-windows-ci/blob/master/ansible/roles/contrail-ansible-deployer/templates/instances.j2)
 
 ## Kolla
 

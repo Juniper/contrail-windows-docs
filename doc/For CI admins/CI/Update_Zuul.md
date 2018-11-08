@@ -1,7 +1,6 @@
 # Update Windows CI Zuulv2
 
-This document describes a procedure required to update Windows CI Zuulv2 configuration.
-This procedure updates configuration using `development` or `production` branch from [contrail-windows-ci][c-w-ci] repository.
+This document describes a procedure required to update Windows CI Zuulv2 configuration from [contrail-windows-ci][c-w-ci] repository.
 
 ## Prerequisites
 
@@ -24,19 +23,7 @@ This procedure updates configuration using `development` or `production` branch 
         git clone https://github.com/Juniper/contrail-windows-ci.git
         cd contrail-windows-ci
 
-1. Checkout branch that you want to use for configuring Zuul. For example:
-
-    - to checkout `development` branch:
-
-            git checkout development
-
-    - to checkout `production` branch:
-
-            git fetch --all
-            git branch production origin/production
-            git checkout production
-
-1. Verify that `development` (or `production`) branch contains PRs with required changes to Zuul configuration
+1. Verify that `master` branch contains PRs with required changes to Zuul configuration
 
     - Assuming `PR#2` and `PR#1` are required PRs, run the following command:
 
