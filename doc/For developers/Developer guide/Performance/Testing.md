@@ -40,8 +40,7 @@ Conclusions:
 
 - Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4.
     - Observed reduced throghput is expected. As per Microsoft Networking blog (here: [VMQ Deep Dive][vmq]) this is by design.
-      Before creating VMSwitch packets are directed to separate CPU cores based on flow hash.
-      After VMSwitch is created, packets are directed to separate CPU cores based on destination MAC address, thus each virtual adapter is assigned to a single CPU core.
+      Issue is discussed more deeply in [Raw vs Hyper-V performance](#raw-vs-hyper-v-performance) section.
 - Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck.
 - Comparing `Containers (no seg)` test with `Containers w/ Contrail (no seg)` shows that vRouter code paths could account for 50-60% drop in TCP throughput.
 
@@ -328,5 +327,76 @@ docker exec -it receiver powershell
 sender   > .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -t 15
 receiver > .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 ```
+
+### Raw vs Hyper-V performance
+
+According to the Microsoft Networking blog (here: [VMQ Deep Dive][vmq]) the following behavior can be observed:
+
+- Without any VMSwitch/Hyper-V configured, packets are directed to different hardware queues based on flow hash.
+  Each queue is assigned to a different CPU core.
+  Windows utilizes RSS on NICs to achieve that.
+- With VMSwitch configured, packets are directed to different hardware queues based on destination MAC address.
+  Each queue is assigned to a different CPU core.
+  As a result each virtual adapter is assigned to a single CPU core and network throughput should be capped at c. 2-3 GBps.
+  This mechanism is called VMQ on Windows and it _effectively_ disables RSS.
+
+Initial tests confirm these claims - after Hyper-V was enabled and VMSwitch was configured, the network throughput dropped from ~7400 Mbps to ~1600 Mbps for single TCP stream.
+However, inspecting VMQ configuration provides that VMQ is enabled on the host (VMXNET3 virtual adapters do not support VMQ in nested Hyper-V), so packets should not be processed based on destination MAC address.
+Thus, performance drop, in this case, comes from bare computational overhead imposed by Hyper-V/VMSwitch.
+
+To test out this assumption, the following scenarios were tested:
+
+| ID  | Test name               | Description |
+|-----|-------------------------|-------------|
+| A   | Raw                     | Raw Windows Server network stack |
+| B   | 2 Containers            | 2 WinSrv containers on 2 compute nodes (1 container per node) |
+| C   | 4 Containers            | 4 WinSrv containers on 2 compute nodes (2 containers per node) |
+| D   | 2 Containers, 2 threads | Same as B, but NTttcp uses 2 threads instead of one |
+
+If assumption is correct, then:
+
+- network throughput in scenario `C` should be twice as high as in `B`,
+- since throughput is bound per virtual adapter, throughput in scenario `D` should not go beyond the results for scenario `B`.
+
+The results were as follows:
+
+**sender** node:
+
+| Metric              | A        | B        | C        | D        |
+|---------------------|----------|----------|----------|----------|
+| Throughput (Mbit/s) | 7375.159 | 1592.691 | 2313.072 | 2500.388 |
+| Avg. CPU %          | 14.799   | 15.843   | 36.044   | 34.294   |
+
+**receiver** node:
+
+| Metric              | A        | B        | C        | D         |
+|---------------------|----------|----------|----------|-----------|
+| Throughput (Mbit/s) | 7375.198 | 1592.698 | 2316.991 | 2501.5896 |
+| Avg. CPU %          | 21.161   | 42.278   | 69.274   | 76.055    |
+
+Conclusions:
+
+- enabling Hyper-V and introducing VMSwitch to a network stack, increases CPU usage on receiver side by a factor of 2-4;
+- throughput does not seem to be capped per virtual adapter, since we observe the same performance boost in scenarios `C` and `D`;
+- as a result, performance drop seems to be related to computational overhead imposed by Hyper-V/VMSwitch.
+
+To test out the limits of this setup, we have increased a number of vCPUs on testbeds from 2 to 8 and ran a test similar to scenario `D`, but with 8 threads in NTttcp.
+The results were as follows:
+
+**sender** node:
+
+| Metric              |          |
+|---------------------|----------|
+| Throughput (Mbit/s) | 4845.864 |
+| Avg. CPU %          | 26.034   |
+
+**receiver** node:
+
+| Metric              |          |
+|---------------------|----------|
+| Throughput (Mbit/s) | 4845.932 |
+| Avg. CPU %          | 63.549   |
+
+These results support an assumption, that performance drop after enabling Hyper-V is mostly a result of software overhead.
 
 [vmq]: https://blogs.technet.microsoft.com/networking/2013/09/10/vmq-deep-dive-1-of-3/
