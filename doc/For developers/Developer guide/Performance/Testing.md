@@ -38,11 +38,11 @@ On `receiver` nodes:
 
 Conclusions:
 
-- Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4.
+- Enabling Hyper-V on Windows Server 2016 reduces TCP throughput by a factor of 3-4 (throughput in scenario `A` is 3-4 times higher than throughput in scenario `B`)
     - Observed reduced throghput is expected. As per Microsoft Networking blog (here: [VMQ Deep Dive][vmq]) this is by design.
       Issue is discussed more deeply in [Raw vs Hyper-V performance](#raw-vs-hyper-v-performance) section.
-- Difference between TCP throughput scenario where containers are colocated and scenario where containers are on separate nodes, suggests that VMSwitch is a bottleneck.
-- Comparing `Containers (no seg)` test with `Containers w/ Contrail (no seg)` shows that vRouter code paths could account for 50-60% drop in TCP throughput.
+- Difference between TCP throughput scenario where containers are colocated (scenario `C`) and scenario where containers are on separate nodes (scenario `B`), suggests that VMSwitch is a bottleneck.
+- Comparing results from scenarios `E` and `F` shows that vRouter code paths could account for 50-60% drop in TCP throughput.
 
 Performance baseline for Contrail Windows should be based on network performance of containers running on Hyper-V, which is `~1600 MBit/s` of TCP throughput between containers on different compute nodes.
 
@@ -337,7 +337,7 @@ According to the Microsoft Networking blog (here: [VMQ Deep Dive][vmq]) the foll
   Windows utilizes RSS on NICs to achieve that.
 - With VMSwitch configured, packets are directed to different hardware queues based on destination MAC address.
   Each queue is assigned to a different CPU core.
-  As a result each virtual adapter is assigned to a single CPU core and network throughput should be capped at c. 2-3 GBps.
+  As a result each virtual adapter is assigned to a single CPU core and network throughput should be capped at c. 2-3 Gbps.
   This mechanism is called VMQ on Windows and it _effectively_ disables RSS.
 
 Initial tests confirm these claims - after Hyper-V was enabled and VMSwitch was configured, the network throughput dropped from ~7400 Mbps to ~1600 Mbps for single TCP stream.
@@ -355,7 +355,7 @@ To test out this assumption, the following scenarios were tested:
 
 If assumption is correct, then:
 
-- network throughput in scenario `C` should be twice as high as in `B`,
+- total network throughput in scenario `C` should be twice as high as in `B`,
 - since throughput is bound per virtual adapter, throughput in scenario `D` should not go beyond the results for scenario `B`.
 
 The results were as follows:
