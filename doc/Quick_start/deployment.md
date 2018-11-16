@@ -156,7 +156,8 @@ Proceed with running Ansible playbooks:
 Contrail Windows deployment has been tested on the following hypervisors:
 
 - VMware,
-- KVM.
+- KVM,
+- Hyper-V.
 
 Each of them requires a few tweaks required to enable nested Hyper-V.
 
@@ -164,6 +165,7 @@ Each of them requires a few tweaks required to enable nested Hyper-V.
 
 Contrail Windows deployment has been successfully tested on VMware ESXi 6.5 hypervisor.
 Virtual machines for compute nodes should be configured to support `ESXi 6.5 or later` (VM version 13) and VM secure boot should be disabled.
+
 VMware should expose hardware virtualization to the guest OS.
 To configure it:
 
@@ -188,3 +190,11 @@ The following configuration is required:
     - virtio NICs should be used.
     - Windows virtio driver version `>= 0.1.141`.
         - downloadable from [https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso](https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso).
+
+#### Hyper-V
+
+Contrail Windows deployment has been successfully tested on Hyper-V virtual machines.
+The following VM configuration is required:
+
+- Hyper-V Generation 2 VMs must be used.
+- Secure boot must be disabled on the VM.
