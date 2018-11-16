@@ -10,6 +10,7 @@ Quick links:
 * [Usage](./Quick_start/usage.md)
 * [Troubleshooting](./Known_issues/Troubleshooting.md)
 * [Test scenarios](./Quick_start/connection_scenarios.md)
+* [Hypervisors configuration](./Quick_start/hypervisors_configuration.md)
 
 ## Platforms
 
