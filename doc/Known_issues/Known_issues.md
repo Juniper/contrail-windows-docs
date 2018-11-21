@@ -72,3 +72,9 @@ msiexec /i vRouter.msi
 ### I have received a cryptic HNS error
 
 Please refer to [HNS error bestiary](./HNS_error_bestiary.md).
+
+### I get authentication error "CredSSP encryption Oracle remediation" when trying to RDP into a Windows machine from another Windows machine
+
+![CredSSP encryption Oracle remediation](CredSSPError.png)
+
+If you see the above error, please refer to [CredSSP encryption Oracle remediation bestiary](CredSSP_error_bestiary.md)
