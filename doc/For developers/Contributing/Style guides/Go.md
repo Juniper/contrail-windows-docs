@@ -1,4 +1,4 @@
-Since docker driver written in Go is the only module of OpenContrail we've written completely by ourselves, we can introduce the best programming practices here, without regard for compatibility with legacy code.
+Since CNM plugin written in Go is the only module of OpenContrail we've written completely by ourselves, we can introduce the best programming practices here, without regard for compatibility with legacy code.
 
 For issues not discussed here, look at Official Code Review Comments.
 

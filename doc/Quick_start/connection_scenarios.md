@@ -33,9 +33,9 @@
         Find block of data describing to `vRouter`  
         Both Enabled and Running fields should be True
 
-    1. Verify if Docker Driver service is running:
+    1. Verify if CNM plugin service is running:
 
-            Get-Service contrail-docker-driver
+            Get-Service contrail-cnm-plugin
 
         State should be Running
     1. Create docker network `testnet1` on the 1st Windows compute code:

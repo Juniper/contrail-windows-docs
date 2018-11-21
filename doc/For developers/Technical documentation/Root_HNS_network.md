@@ -5,4 +5,4 @@ HNS operates by using two virtual switches:
 
 Those virtual switches are not created unless there is at least one HNS network using corresponding Mode: "transparent" or "nat". If the last network of corresponding Mode is removed, the vswitch is also removed. Creation/deletion of vswitch takes a couple seconds and disrupts network connectivity.
 
-This dynamism of creating/deleting vswitches poses a problem, because we want vRouter Forwarding Extension to be persistent, no matter if there are many or no virtual networks. That's why, when Docker Driver initializes, it creates a "dummy" Root HNS Network, which makes HNS create an external vswitch "Layered Ethernet*". Forwarding Extension is then enabled for that vswitch.
+This dynamism of creating/deleting vswitches poses a problem, because we want vRouter Forwarding Extension to be persistent, no matter if there are many or no virtual networks. That's why, when CNM plugin initializes, it creates a "dummy" Root HNS Network, which makes HNS create an external vswitch "Layered?Ethernet*". Forwarding Extension is then enabled for that vswitch.

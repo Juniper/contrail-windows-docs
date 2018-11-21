@@ -16,6 +16,6 @@ There is two-way interaction between DP-core and NDIS:
 Note: In other words, there are two "kinds" of callbacks: "NDIS callbacks" and "DP-core callbacks". NDIS callbacks are a consequence of event-driven architecture of Hyper-V Extensions, while DP-core callbacks are actually just platform specific "dependency injections" or "C interfaces". 
 The team usually refers to those "DP-core callbacks" as just callbacks. NDIS callbacks are usually referred to as "Extension/NDIS API implementation".
 
-Note: There is a convenience library provided by Microsoft around the raw NDIS API. The library is referred to as SxBase, but it's just 4 source files. They can be found here: https://github.com/Microsoft/Windows-driver-samples/tree/master/network/ndis/extension/base. SxBase is used in the current implementation, but it will HAVE TO be replaced in the future, due to licensing issues.
+Note: There is a convenience library provided by Microsoft around the raw NDIS API. The library is referred to as SxBase, but it's just 4 source files. They can be found here: https://github.com/Microsoft/Windows-driver-samples/tree/master/network/ndis/extension/base. SxBase was used in the project but due to licensing issues it was removed.
 
 The Forwarding Extension does not directly communicate with Contrail Controller. Instead, vRouter Agent is responsible for creating all the objects and flows inside the Extension. 

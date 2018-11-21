@@ -65,7 +65,7 @@ Refer to examples of `instances.yaml` file in Contrail-Ansible-Deployer reposito
 You will need to know the IP addresses of CentOS and Windows hosts.
 
 * For Windows computes use `bms_win` dict instead of regular `bms`.
-* You need to add `vrouter` and `win_docker_driver` roles for Windows compute nodes.
+* You need to add `vrouter` and `win_cnm_plugin` roles for Windows compute nodes.
 * Set `WINDOWS_PHYSICAL_INTERFACE` to dataplane interface name (run `Get-NetAdapter` from PowerShell to list available
     interfaces on Windows compute node). If your Compute nodes have only one interface, specify it. Otherwise, you
     can split data and control planes between two interfaces - you can choose. Refer to Contrail documentation
@@ -78,8 +78,7 @@ Currently, only unsigned and debug builds of Windows Contrail components are ava
 configuration is also required:
 
 * In BIOS of every Windows node you need to disable secure boot.
-* Add `WINDOWS_ENABLE_TEST_SIGNING` option and leave it empty. This option configures Windows Server to allow
-    installation of unsigned drivers.
+* Add `WINDOWS_ENABLE_TEST_SIGNING` option and leave it empty. This option configures Windows Server to allow installation of unsigned drivers.
 * Set `WINDOWS_DEBUG_DLLS_PATH` to path on Ansible machine containing MSVC 2015 debug dll libraries.Since user space
     Contrail components are build in debug mode, to run them on Windows Server the following dlls are required:
     * `msvcp140d.dll`,
