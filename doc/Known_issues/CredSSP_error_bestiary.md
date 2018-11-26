@@ -34,7 +34,7 @@ On the client machine,
 
 ![Encryption Oracle Remediation](EncryptionOracleRemediationDlg.png)
 
-###References and further reading
+### References and further reading
 
 Microsoft KB Article:
 
