@@ -19,25 +19,35 @@ for script configuration info.
 **Note**: the script can be ran with or without Administrator privileges. However, some checks
 will not be performed without them.
 
-## 3. Check the logs
+## 3. Microsoft's diagnostic check
+
+Run Microsoft's `Debug-ContainerHost.ps1` script:
+
+```
+Invoke-WebRequest https://aka.ms/Debug-ContainerHost.ps1 -UseBasicParsing | Invoke-Expression
+```
+
+For other problems with Windows Containers, consult the [official troubleshooting docs](https://docs.microsoft.com/en-us/virtualization/windowscontainers/troubleshooting).
+
+## 4. Check the logs
 
 Diagnostic check already looks for issues in logs of Contrail Components running on the node.
 However, you might want to check them manually.
 
 Logs are located in `$Env:ProgramData\contrail\var\logs\contrail\`.
 
-## 4. Verify the configuration
+## 5. Verify the configuration
 
 You might want to verify the configuration of all Contrail services running on the node.
 
 Config files are located in `$Env:ProgramData\contrail\etc\contrail\`
 
-## 5. Known issues
+## 6. Known issues
 
 Search [known issues section](./Known_issues.md) for symptoms of your issue.
 The section contains recovery procedures.
 
-## 6. Use Contrail utility tools
+## 7. Use Contrail utility tools
 
 **Note**: the following steps require experience using Contrail utils.
 
@@ -46,14 +56,14 @@ Behaviour of Windows Contrail utility tools is similar to their Linux counterpar
 
 They should be in `$Path`. If not, they can be found under `$Env:ProgramFiles\Juniper Networks\vRouter utilities\`.
 
-## 7. Crashdumps
+## 8. Crashdumps
 
 If you encounter any kernel panics or service crashes, debugging dump files may prove useful:
 
 * Kernel crashdumps: `$Env:SystemRoot\MEMORY.DMP` and `$Env:SystemRoot\Minidump\*dmp`
 * Usermode crashdumps: `$Env:LocalAppData\CrashDumps`
 
-## 8. PDB files
+## 9. PDB files
 
 Debugging symbols for Contrail Components can be found in PDB files in Artifacts folder, next to MSI files.
 Artifacts folder is unpacked from docker containers on test beds and can be found directly on C: drive.
@@ -61,7 +71,8 @@ For debugging you can use WinDbg or DbgShell (if you know PowerShell).
 
 **Warning**: Remember, that every PDB file is bound to executable which was built with it
 (verified by checksum).
-## 9. Total cleanup
+
+## 10. Total cleanup
 
 Run `Clear-ComputeNode.ps1` script from [tools repository](https://github.com/Juniper/contrail-windows-tools)
 on Windows Computes that cause problems. Refer to README in root of the repository

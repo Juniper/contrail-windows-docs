@@ -16,6 +16,7 @@ warning: Please note that this makes the server vulnerable.
 This is the safer option as it does not make the client vulnerable.
 On the Server, please start Server Manager. Go to Local Server and click on Remote Desktop.
 Make sure that the checkbox that says "allow connections only from computers running remote desktop with Network Level Authentication" is not checked.
+
 ![System Properties](SystemProperties.png)
 
 ### Changing the options on the client:
