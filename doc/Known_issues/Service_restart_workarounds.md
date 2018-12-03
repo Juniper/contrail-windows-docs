@@ -27,7 +27,13 @@ contrail-autostart is a script invoked at the startup of Windows whose job is to
 contrail-autostart does the following:
 - Removes remaining networks from HNS
 - Removes containers
-- Starts docker and contrail services
+- Starts docker and contrail services:
+  - Order:
+    - Docker
+    - CNM Pugin
+    - vRouter Agent
+  - Agent has to start after CNM Plugin, because the plugin enables vRouter extension
+  - Because HNS networks are deleted, the starting order of CNM Plugin/Docker doesn't matter
 
 ### Issues
 - uncleaned ports in controller:
