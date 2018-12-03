@@ -1,9 +1,14 @@
-Windows Server 2016 with Docker 18.09 has several issues with associating HNS networks and Docker networks.
+The purpose of this document is to describe problems and workarounds for restarting Contrail components on Windows.
 
-- Restarting Docker service causes Docker networks to lose   their association to corresponding HNS networks, if they   were created using custom network plugins.
- It is caused by lack of information regarding network plugin in HNS itself.
- Networks created using Contrail CNM plugin are registered in HNS with type `transparent`.
- During a restart, Docker removes networks created with custom plugins.
+## Docker/HNS networks issues
+
+Windows Server 2016 with Docker 18.09 has an issue with associating HNS networks and Docker networks
+
+Restarting Docker service causes Docker networks to lose their association to corresponding HNS networks, if they were created using custom network plugins.
+It is caused by lack of information regarding network plugin in HNS itself.
+Networks created using Contrail CNM plugin are registered in HNS with type `transparent`.
+During a restart, Docker removes networks created with custom plugins and after that pulls networks from HNS.
+Thus, network <-> plugin association is lost.
 
 ## Problems
 
@@ -25,18 +30,19 @@ Windows Server 2016 with Docker 18.09 has several issues with associating HNS ne
 contrail-autostart is a script invoked at the startup of Windows whose job is to workaround weird Docker for Windows behaviour related to rebooting.
 
 contrail-autostart does the following:
+
 - Removes remaining networks from HNS
 - Removes containers
 - Starts docker and contrail services:
-  - Order:
-    - Docker
-    - CNM Pugin
-    - vRouter Agent
-  - Agent has to start after CNM Plugin, because the plugin enables vRouter extension
-  - Because HNS networks are deleted, the starting order of CNM Plugin/Docker doesn't matter
+    - Order:
+        - Docker
+        - CNM Pugin
+        - vRouter Agent
+    - Agent has to start after CNM Plugin, because the plugin enables vRouter extension
+    - Because HNS networks are deleted, the starting order of CNM Plugin/Docker doesn't matter
 
 ### Issues
-- uncleaned ports in controller:
- Because after reboot cnm-plugin can't recognize upon deletion that some container had been connected to a contrail network,
+
+- uncleaned ports in controller: Because after reboot cnm-plugin can't recognize upon deletion that some container had been connected to a contrail network,
  the delete-endpoint request isn't sent to the controller and it's polluted with outdated data.
-- manual startup: CNM Plugin's and vRouter Agent's services need to have startup type set to manual
+- manual startup: Docker's and Contrail components' services need to have startup type set to manual
