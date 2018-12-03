@@ -43,6 +43,6 @@ contrail-autostart does the following:
 
 ### Issues
 
-- uncleaned ports in controller: Because after reboot cnm-plugin can't recognize upon deletion that some container had been connected to a contrail network,
- the delete-endpoint request isn't sent to the controller and it's polluted with outdated data.
+- uncleaned ports in controller: After reboot cnm-plugin can't recognize upon deletion that some container had been connected to a contrail network.
+The delete-endpoint request isn't sent to the controller and it's polluted with outdated data.
 - manual startup: Docker's and Contrail components' services need to have startup type set to manual
