@@ -83,7 +83,7 @@ If you see the above error, please refer to [CredSSP encryption Oracle remediati
 
 Issue is related to checksum handling on the Linux Contrail compute node.
 If checksum offload is enabled, Linux transmits packets with inner IP checksums not calculated correctly.
-When Windows compute nodes receive such encapsulated packets, after vRouter decapsulates them, receiving container's TCP/IP stack drops a packet due to incorrect checksum.
+When Windows compute nodes receive such encapsulated packets, after vRouter decapsulates them, receiving container's TCP/IP stack drops the packets due to incorrect checksum.
 
 To work around this behaviour, you can disable checksum offloading on Linux compute node.
 Assuming `ens224` is the data plane interface, please run the following as root on Linux compute node:
