@@ -14,13 +14,14 @@ Thus, network <-> plugin association is lost.
 
 ### Docker restart
 
-- `docker network prune`: using this command after docker restart is not supported.
- Because Docker fills it's network database in incorrect way,
- using this command could delete a HNS root network which could lead to vRouter Agent crash, which is dependent on this network (more specifically, on VMSwitch associated with this network).
+- **Docker network removal**: removing networks after docker restart is not supported.
+ Docker fills it's network database in incorrect way.
+ Deleting all networks would delete a HNS root network leading to vRouter Agent crash,
+ because it is dependent on this network (more specifically, on VMSwitch associated with this network).
 
 ### Compute node reboot
 
-- container deletion: Docker doesn't allow deleting a network which has container attached to it, regardless of the container's state.
+- **container deletion**: Docker doesn't allow deleting a network which has container attached to it, regardless of the container's state.
  As the networks states are invalid after reboot, both networks and containers need to be deleted.
 
 ## Workaround: contrail-autostart
@@ -38,11 +39,14 @@ contrail-autostart does the following:
         - Docker
         - CNM Pugin
         - vRouter Agent
-    - Agent has to start after CNM Plugin, because the plugin enables vRouter extension
-    - Because HNS networks are deleted, the starting order of CNM Plugin/Docker does not matter
+
+Notes on starting order:
+
+- Agent has to start after CNM Plugin, because the plugin enables vRouter extension
+- Because HNS networks are deleted, the starting order of CNM Plugin/Docker does not matter
 
 ### Issues
 
-- **Uncleaned ports in controller**: After reboot cnm-plugin cannot recognize upon deletion that some container had been connected to a contrail network.
+- **Leaked ports in controller**: After reboot cnm-plugin cannot recognize upon deletion of containers that some container had been connected to a contrail network.
 The delete-endpoint request is not sent to the controller and it is polluted with outdated data.
 - **Manual startup**: Docker's and Contrail components' services need to have startup type set to manual
