@@ -1,8 +1,8 @@
-The purpose of this document is to describe problems and workarounds for restarting Contrail components on Windows.
+The purpose of this document is to describe problems with workarounds for restarting Contrail components on Windows.
 
 ## Docker/HNS networks issues
 
-Windows Server 2016 with Docker 18.09 has an issue with associating HNS networks and Docker networks
+Windows Server 2016 with Docker 18.09 has an issue with associating HNS networks and Docker networks.
 
 Restarting Docker service causes Docker networks to lose their association to corresponding HNS networks, if they were created using custom network plugins.
 It is caused by lack of information regarding network plugin in HNS itself.
@@ -14,9 +14,9 @@ Thus, network <-> plugin association is lost.
 
 ### Docker restart
 
-- `docker network prune`: using this command after docker restart isn't supported.
+- `docker network prune`: using this command after docker restart is not supported.
  Because Docker fills it's network database in incorrect way,
- using this command could delete a HNS root network which could lead to e.g. BSOD.
+ using this command could delete a HNS root network which could lead to vRouter Agent crash, which is dependent on this network (more specifically, on VMSwitch associated with this network).
 
 ### Compute node reboot
 
@@ -39,10 +39,10 @@ contrail-autostart does the following:
         - CNM Pugin
         - vRouter Agent
     - Agent has to start after CNM Plugin, because the plugin enables vRouter extension
-    - Because HNS networks are deleted, the starting order of CNM Plugin/Docker doesn't matter
+    - Because HNS networks are deleted, the starting order of CNM Plugin/Docker does not matter
 
 ### Issues
 
-- uncleaned ports in controller: After reboot cnm-plugin can't recognize upon deletion that some container had been connected to a contrail network.
-The delete-endpoint request isn't sent to the controller and it's polluted with outdated data.
-- manual startup: Docker's and Contrail components' services need to have startup type set to manual
+- **Uncleaned ports in controller**: After reboot cnm-plugin cannot recognize upon deletion that some container had been connected to a contrail network.
+The delete-endpoint request is not sent to the controller and it is polluted with outdated data.
+- **Manual startup**: Docker's and Contrail components' services need to have startup type set to manual
