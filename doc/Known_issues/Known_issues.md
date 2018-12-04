@@ -79,9 +79,9 @@ Please refer to [HNS error bestiary](./HNS_error_bestiary.md).
 
 If you see the above error, please refer to [CredSSP encryption Oracle remediation bestiary](CredSSP_error_bestiary.md)
 
-### I cannot ping Windows container from Linux VM on OpenStack compute node
+### I cannot ping Windows container from Linux VM
 
-Issue is related to checksum handling on the Linux Contrail compute node.
+Issue is related to checksum handling on the Linux Tungsten Fabric compute node.
 If checksum offload is enabled, Linux transmits packets with inner IP checksums not calculated correctly.
 When Windows compute nodes receive such encapsulated packets, after vRouter decapsulates them, receiving container's TCP/IP stack drops the packets due to incorrect checksum.
 
