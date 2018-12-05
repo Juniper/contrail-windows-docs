@@ -81,7 +81,7 @@ If you see the above error, please refer to [CredSSP encryption Oracle remediati
 
 ### I cannot ping container on Windows from VM on Linux
 
-Issue is related to checksum handling on the Linux Tungsten Fabric compute node.
+This issue is related to checksum handling on the Linux Tungsten Fabric compute node.
 If checksum offload is enabled, Linux transmits packets with inner IP checksums not calculated correctly.
 When Windows compute nodes receive such encapsulated packets, after vRouter decapsulates them, receiving container's TCP/IP stack drops the packets due to incorrect checksum.
 
