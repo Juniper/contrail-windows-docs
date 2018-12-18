@@ -9,17 +9,14 @@
 
 1. Open an elevated command prompt and run:
 
-    ```
-    netsh trace start persistent=yes capture=yes tracefile=.\trace.etl
-    ```
+        netsh trace start persistent=yes capture=yes tracefile=.\trace.etl
+
 
 2. Reproduce the issue.
 
 3. Open an elevated command prompt and run:
 
-    ```
-    netsh trace stop
-    ```
+        netsh trace stop
 
 4. Copy trace.etl file to development machine and open with Network Monitor.
 

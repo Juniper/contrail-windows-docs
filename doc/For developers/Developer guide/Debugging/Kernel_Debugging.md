@@ -7,15 +7,11 @@
 1. Open a PowerShell or cmd.exe with Administrative privileges.
 2. Enable kernel debugging:
 
-    ```
-    bcdedit /debug on
-    ```
+        bcdedit /debug on
 
 3. Enable network kernel debugging:
 
-    ```
-    bcdedit /dbgsettings net hostip:w.x.y.z port:n key:1.2.3.4
-    ```
+        bcdedit /dbgsettings net hostip:w.x.y.z port:n key:1.2.3.4
 
     * w.x.y.z should be an IP address of the host where you will run a debugger,
     * n should be a port number, e.g. 50001,
@@ -24,15 +20,11 @@
 
 4. Obtain busparams using following PowerShell one liner:
 
-    ```
-    Get-NetAdapterHardwareInfo -InterfaceDescription *Intel* | select Name, InterfaceDescription, DeviceType, Busnumber, Devicenumber, Functionnumber | FL
-    ```
+        Get-NetAdapterHardwareInfo -InterfaceDescription *Intel* | select Name, InterfaceDescription, DeviceType, Busnumber, Devicenumber, Functionnumber | FL
 
 5. Configure busparams in bcdeit:
 
-    ```
-    bcdedit /set "{dbgsettings}" busparams b.d.f
-    ```
+        bcdedit /set "{dbgsettings}" busparams b.d.f
 
     * b is bus number
     * d is device number
