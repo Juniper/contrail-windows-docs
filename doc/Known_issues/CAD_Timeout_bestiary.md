@@ -13,8 +13,8 @@ Warning: If the VM takes excessive memory, your host machine will be affected.
 
 When to use Hyper-V Dynamic Memory versus Runtime Memory Resize:
 
-https://blogs.technet.microsoft.com/virtualization/2015/05/26/when-to-use-hyper-v-dynamic-memory-versus-runtime-memory-resize/
+<https://blogs.technet.microsoft.com/virtualization/2015/05/26/when-to-use-hyper-v-dynamic-memory-versus-runtime-memory-resize/>
 
 Hyper-V Dynamic Memory Overview:
 
-https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/hh831766(v=ws.11)
+<https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/hh831766(v=ws.11)>
