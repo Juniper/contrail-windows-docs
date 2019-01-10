@@ -43,7 +43,7 @@ On the Ansible machine:
 1. Clone the Contrail-Ansible-Deployer repository:
 
         # bash
-        git clone https://Juniper/contrail-ansible-deployer
+        git clone https://github.com/Juniper/contrail-ansible-deployer
         cd contrail-ansible-deployer
         vim config/instances.yaml
 
@@ -85,12 +85,8 @@ configuration is also required:
     * `ucrtbased.dll`,
     * `vcruntime140d.dll`
     
-    MSVC 2015 debug DLLs can be obtained by installing Visual Studio 2015. After installing Visual Studio they should
-    be located in:
-
-    * `mscvp140d.dll` and `vcruntime140d.dll` -
-        `C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\debug_nonredist\x64\Microsoft.VC140.DebugCRT`,
-    * `ucrtbased.dll` - `C:\Program Files (x86)\Windows Kits\10\bin\x64\ucrt`.
+    MSVC 2015 debug DLLs can be obtained by installing Visual Studio 2015. After installing Visual Studio
+    they should be located in `C:\Windows\system32\`.
 
     You should copy them to the `~/dll` directory on your Ansible machine and point `WINDOWS_DEBUG_DLLS_PATH`
     variable to this directory. Make sure they are 64-bit.
