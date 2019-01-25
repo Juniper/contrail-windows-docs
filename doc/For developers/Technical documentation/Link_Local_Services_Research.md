@@ -23,7 +23,6 @@ Add routing rules for link local IPs in Windows container so the packets are sen
 
 Add logic to vRouter agent so it responds to the ARP requests for link local IPs.
 
-
 ## Research
 
 ### IP Autoconfiguration
