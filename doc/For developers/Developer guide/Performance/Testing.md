@@ -115,10 +115,10 @@ Description:
 - used `NTttcp` options:
 
         # On sender
-        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
+        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -t 15
 
         # On receiver
-        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
+        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 
 Diagram:
 
@@ -152,10 +152,10 @@ Description:
 - used `NTttcp` options:
 
         # On sender
-        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -a 2 -t 15
+        .\NTttcp.exe -s -m 1,*,172.16.0.22 -l 128k -t 15
 
         # On receiver
-        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -a 16 -t 15
+        .\NTttcp.exe -r -m 1,*,172.16.0.22 -rb 2M -t 15
 
 Diagram:
 
@@ -189,10 +189,10 @@ Description:
 - used `NTttcp` options:
 
         # On sender
-        .\NTttcp.exe -s -m 1,*,10.0.1.4 -l 128k -a 2 -t 15
+        .\NTttcp.exe -s -m 1,*,10.0.1.4 -l 128k -t 15
 
         # On receiver
-        .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -a 16 -t 15
+        .\NTttcp.exe -r -m 1,*,10.0.1.4 -rb 2M -t 15
 
 Diagram:
 
