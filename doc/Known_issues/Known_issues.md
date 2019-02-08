@@ -45,14 +45,18 @@ Otherwise, Docker will try to reenable WinNAT upon restart.
 
 ### Creating container failed because of timeout
 
-Symptom: running `docker run ...` results in this error:
+Symptom: running `docker run ...` results in one of these errors:
 ```
 hcsshim::PrepareLayer failed in Win32: This operation returned because the timeout period expired. (0x5b4)
 ```
+or
+```
+ hcsshim::PrepareLayer failed in Win32: The parameter is incorrect. (0x57)
+ ```
 
-It happens when mounted layer take too much time to appear in system. Workaround requires repeating failed action.
+It happens when mounted layer takes too much time to appear in system. Workaround requires repeating failed action.
 
-Please refer to [this issue on github](https://github.com/moby/moby/issues/27588).
+Please refer to [this](https://github.com/moby/moby/issues/27588) and [this issue](https://github.com/moby/moby/issues/36831) on github.
 
 ---
 
