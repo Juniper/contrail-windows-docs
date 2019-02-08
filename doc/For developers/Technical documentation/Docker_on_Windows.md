@@ -16,6 +16,10 @@ Docker is cross-platform and is integrated into many different network orchestra
 
 Since docker is written in Go, Microsoft engineers had to expose an API for managing Windows Containers written in this language. 
 
+## How to run docker daemon in debug mode
+
+Just run dockerd.exe -D in console or add "debug": true to config and restart daemon. This will enable debug logging.
+
 # Host compute service (HCS) & host network service (HNS)
 
 Golang wrapper for HCS and HNS is implemented in a public hcsshim repository: www.github.com/Microsoft/hcsshim. HCS and HNS are Windows Services responsible for light container virtualization as well as setting up virtual networking for them. They are implemented in some system dynamic libraries, which interact with the kernel directly. How it works isn't documented.
