@@ -124,7 +124,7 @@ TODO
 
 This error happens occasionally when Docker tries to create a container.
 
-The container is actually created (it enters CREATED state), but can not be run (Docker doesn't start it automatically and manual start fails). Such a faulty container can be removed. Then one may try to create container again - this is expected to succeed (no case has been observed, when second attempt failed).
+The container is actually created (it enters CREATED state), but cannot be run (Docker doesn't start it automatically and manual start fails). Such a faulty container can be removed. Then one may try to create container again - this is expected to succeed (no case has been observed, when second attempt failed).
 
 ### Steps to reproduce
 
