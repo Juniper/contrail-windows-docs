@@ -908,6 +908,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../For developers/Technical documentation/Docker_HNS/" title="What exactly happens during container creation" class="md-nav__link">
+      What exactly happens during container creation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../For developers/Technical documentation/Docker_on_Windows/" title="Docker" class="md-nav__link">
       Docker
     </a>
@@ -1203,20 +1215,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-i-run-get-net-command-inside-a-container-it-hangs" title="When I run Get-Net* command inside a container, it hangs" class="md-nav__link">
-    When I run Get-Net* command inside a container, it hangs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#i-see-that-vrouter-is-enabled-but-not-running" title="I see that vRouter is enabled, but not running" class="md-nav__link">
-    I see that vRouter is enabled, but not running
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#i-have-received-a-cryptic-hns-error" title="I have received a cryptic HNS error" class="md-nav__link">
     I have received a cryptic HNS error
   </a>
@@ -1429,20 +1427,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#when-i-run-get-net-command-inside-a-container-it-hangs" title="When I run Get-Net* command inside a container, it hangs" class="md-nav__link">
-    When I run Get-Net* command inside a container, it hangs
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#i-see-that-vrouter-is-enabled-but-not-running" title="I see that vRouter is enabled, but not running" class="md-nav__link">
-    I see that vRouter is enabled, but not running
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#i-have-received-a-cryptic-hns-error" title="I have received a cryptic HNS error" class="md-nav__link">
     I have received a cryptic HNS error
   </a>
@@ -1526,28 +1510,44 @@ Get-ContainerNetwork | Remove-ContainerNetwork -Force
 <p>Otherwise, Docker will try to reenable WinNAT upon restart.</p>
 <hr />
 <h3 id="creating-container-failed-because-of-timeout">Creating container failed because of timeout</h3>
-<p>Symptom: running <code>docker run ...</code> results in this error:</p>
+<p>Symptom: running <code>docker run ...</code> results in one of these errors:</p>
 <pre><code>hcsshim::PrepareLayer failed in Win32: This operation returned because the timeout period expired. (0x5b4)
 </code></pre>
 
-<p>It happens when mounted layer take too much time to appear in system. Workaround requires repeating failed action.</p>
-<p>Please refer to <a href="https://github.com/moby/moby/issues/27588">this issue on github</a>.</p>
-<hr />
-<h3 id="when-i-run-get-net-command-inside-a-container-it-hangs">When I run Get-Net* command inside a container, it hangs</h3>
-<p>Symptom: running <code>Get-NetAdapter</code>, <code>Get-NetIpInterface</code> or other <code>Get-Net*</code> commands inside containers hangs.</p>
-<p>The workaround consists of restarting the container.</p>
-<hr />
-<h3 id="i-see-that-vrouter-is-enabled-but-not-running">I see that vRouter is enabled, but not running</h3>
-<p>After finished deployment of Windows Contrail compute nodes, sometimes vRouter enters a state when it is enabled
-but not running. To check run:</p>
-<pre><code>Get-VMSwitch | Get-VMSwitchExtension -Name &quot;vRouter forwarding extension&quot; | Select Enabled, Running
+<p>or</p>
+<pre><code> hcsshim::PrepareLayer failed in Win32: The parameter is incorrect. (0x57)
+ ```
+
+It happens when mounted layer takes too much time to appear in system. Workaround requires repeating failed action.
+
+Please refer to [this](https://github.com/moby/moby/issues/27588) and [this issue](https://github.com/moby/moby/issues/36831) on github.
+
+---
+
+### When I run Get-Net* command inside a container, it hangs
+
+Symptom: running `Get-NetAdapter`, `Get-NetIpInterface` or other `Get-Net*` commands inside containers hangs.
+
+The workaround consists of restarting the container.
+
+---
+
+### I see that vRouter is enabled, but not running
+
+After finished deployment of Windows Contrail compute nodes, sometimes vRouter enters a state when it is enabled
+but not running. To check run:
+
 </code></pre>
 
-<p>Workaround requires uninstalling and installing vRouter (possibly few times).</p>
-<pre><code>msiexec /x vRouter.msi
+<p>Get-VMSwitch | Get-VMSwitchExtension -Name "vRouter forwarding extension" | Select Enabled, Running</p>
+<pre><code>
+Workaround requires uninstalling and installing vRouter (possibly few times).
+
+</code></pre>
+
+<p>msiexec /x vRouter.msi
 msiexec /i vRouter.msi
-</code></pre>
-
+```</p>
 <hr />
 <h3 id="i-have-received-a-cryptic-hns-error">I have received a cryptic HNS error</h3>
 <p>Please refer to <a href="../HNS_error_bestiary/">HNS error bestiary</a>.</p>

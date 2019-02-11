@@ -908,6 +908,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../../For developers/Technical documentation/Docker_HNS/" title="What exactly happens during container creation" class="md-nav__link">
+      What exactly happens during container creation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
     <a href="../../For developers/Technical documentation/Docker_on_Windows/" title="Docker" class="md-nav__link">
       Docker
     </a>
@@ -1556,7 +1568,7 @@ We suspect that this error occurs during a high load.</p>
 <h2 id="5-container-creation-fails-with-error-createcontainer-failure-in-a-windows-system-call">5. Container creation fails with error: CreateContainer: failure in a Windows system call</h2>
 <h3 id="when-it-happens_4">When it happens</h3>
 <p>This error happens occasionally when Docker tries to create a container.</p>
-<p>The container is actually created (it enters CREATED state), but can not be run (Docker doesn't start it automatically and manual start fails). Such a faulty container can be removed. Then one may try to create container again - this is expected to succeed (no case has been observed, when second attempt failed).</p>
+<p>The container is actually created (it enters CREATED state), but cannot be run (Docker doesn't start it automatically and manual start fails). Such a faulty container can be removed. Then one may try to create container again - this is expected to succeed (no case has been observed, when second attempt failed).</p>
 <h3 id="steps-to-reproduce_4">Steps to reproduce</h3>
 <p>There's no obvious correlation with any special circumstances. On a VM that's not heavily loaded, it is expected that hundreds of tries might be needed to reproduce this error. Creating and removing containers in a loop is enough.</p>
                 
