@@ -1,5 +1,15 @@
 # Building Tungsten Fabric for Windows
 
+## Dependencies
+
+Machine with Windows 10 and installed updates is required.
+
+Enable .Net Framework 3.5 Windows Feature:
+
+    Enable-WindowsOptionalFeature -Online -FeatureName NetFX3 -All
+
+Install VS2015 (any version) and Windows SKD and WDK version 15063 (for Windows 10 version 1703).
+
 ## Setting up repositories
 
     git clone https://review.opencontrail.org/Juniper/contrail-api-client src\contrail-api-client
