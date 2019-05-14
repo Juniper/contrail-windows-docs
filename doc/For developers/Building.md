@@ -100,17 +100,17 @@ For Node Manager:
 
 ## Known issues
 
-1. Issue with `wdf`
+10. Issue with `wdf`
 
-   Solution:
+    Solution:
 
-       Remove-Item -Recurse -Force "C:\Program Files (x86)\Windows Kits\10\Include\wdf"
+        Remove-Item -Recurse -Force "C:\Program Files (x86)\Windows Kits\10\Include\wdf"
 
-   Read more [here](https://community.osr.com/discussion/270106).
+    Read more [here](https://community.osr.com/discussion/270106).
 
-2. Issue with `Microsoft.Build.Tasks.v12.0.dll`
+10. Issue with `Microsoft.Build.Tasks.v12.0.dll`
 
-   Solution:
+    Solution:
 
-       cd $EWDKPath\Program Files\MSBuild\14.0\Bin\amd64
-       cp Microsoft.Build.Tasks.Core.dll Microsoft.Build.Tasks.v12.0.dll
+        cd $EWDKPath\Program Files\MSBuild\14.0\Bin\amd64
+        cp Microsoft.Build.Tasks.Core.dll Microsoft.Build.Tasks.v12.0.dll
