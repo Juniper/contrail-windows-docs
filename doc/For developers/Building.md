@@ -38,21 +38,30 @@ Machine with Windows 10 and installed updates is required.
        Copy-Item C:\ProgramData\chocolatey\bin\win_bison.exe C:\ProgramData\chocolatey\bin\bison.exe
 
 1. Add GNU utils directory to `PATH` env var, eg. `C:\Program Files (x86)\GnuWin32\bin`
-1. Install CMake
+1. Install CMake:
 
        choco install CMake --install-arguments='ADD_CMAKE_TO_PATH=System'
 
-1. Install WiX
+1. Install WiX:
 
        choco install wixtoolset
 
 1. Add WiX install directory to `PATH` env var, eg. `C:\Program Files (x86)\WiX Toolset v3.11\bin\`
-1. Install Boost
+1. Install Boost:
 
-       choco install boost-msvc-14 --source="'https://www.myget.org/F/contrail-windows-builder/'" --version=1.62.0
+       choco install boost-msvc-14 --version 1.62.0 --source https://www.myget.org/F/boost-msvc/api/v2
 
 1. Add Boost directory to `INCLUDE` env var (create this variable if it doesn't exist), eg. `C:\local\boost_1_62`
 1. Create env var `BOOST_ROOT` pointing to Boost directory, eg. `C:\local\boost_1_62`
+1. Install OpenSSL:
+
+       choco install win-openssl --version 1.0.2-r --source https://www.myget.org/F/openssl/api/v2
+
+1. Add OpenSSL include directory to `INCLUDE` env var (create this variable if it doesn't exist), eg. `C:\OpenSSL-Win64\include`
+1. Create env var `OPENSSL_ROOT` pointing to OpenSSL directory, eg. `C:\OpenSSL-Win64`
+1. Install Visual C++ Redistributable Packages for Visual Studio 2013 (for OpenSSL):
+
+       choco install vcredist2013
 
 ## Setting up repositories
 
@@ -93,15 +102,15 @@ For Node Manager:
 
 1. Issue with `wdf`
 
-    Solution:
+   Solution:
 
-        Remove-Item -Recurse -Force "C:\Program Files (x86)\Windows Kits\10\Include\wdf"
+       Remove-Item -Recurse -Force "C:\Program Files (x86)\Windows Kits\10\Include\wdf"
 
-    Read more [here](https://community.osr.com/discussion/270106).
+   Read more [here](https://community.osr.com/discussion/270106).
 
 2. Issue with `Microsoft.Build.Tasks.v12.0.dll`
 
-    Solution:
+   Solution:
 
-        cd $EWDKPath\Program Files\MSBuild\14.0\Bin\amd64
-        cp Microsoft.Build.Tasks.Core.dll Microsoft.Build.Tasks.v12.0.dll
+       cd $EWDKPath\Program Files\MSBuild\14.0\Bin\amd64
+       cp Microsoft.Build.Tasks.Core.dll Microsoft.Build.Tasks.v12.0.dll
