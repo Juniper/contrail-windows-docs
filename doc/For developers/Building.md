@@ -9,7 +9,7 @@ Machine with Windows 10 and installed updates is required.
        Enable-WindowsOptionalFeature -Online -FeatureName NetFX3 -All
 
 1. Install VS2015 (any version).
-1. Install Windows [SKD](https://go.microsoft.com/fwlink/p/?LinkID=845298) and [WDK](https://go.microsoft.com/fwlink/p/?LinkID=845980) version 15063 (for Windows 10 version 1703).
+1. Install Windows [SDK](https://go.microsoft.com/fwlink/p/?LinkID=845298) and [WDK](https://go.microsoft.com/fwlink/p/?LinkID=845980) version 15063 (for Windows 10 version 1703).
 1. Create environment variable `MSBUILD` pointing to `MSBuild.exe`, eg. `C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe`
 1. Install Chocolatey:
 
