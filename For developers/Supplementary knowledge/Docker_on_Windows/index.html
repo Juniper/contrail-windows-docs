@@ -2,7 +2,7 @@
 
 
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" class="no-js">
   <head>
     
@@ -32,7 +32,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+      <meta name="generator" content="mkdocs-1.0.3, mkdocs-material-3.0.6">
     
     
       
@@ -40,12 +40,12 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/application.750b69bd.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/application.451f80e5.css">
       
       
     
     
-      <script src="../../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../../assets/javascripts/modernizr.1aa3b519.js"></script>
     
     
       
@@ -56,15 +56,11 @@
     
     <link rel="stylesheet" href="../../../assets/fonts/material-icons.css">
     
-    
       <link rel="stylesheet" href="../../../highlight.css">
     
       <link rel="stylesheet" href="../../../theme.css">
     
       <link rel="stylesheet" href="../../../theme_extra.css">
-    
-    
-      
     
     
   </head>
@@ -102,19 +98,22 @@
       <div class="md-flex__cell md-flex__cell--stretch">
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
-            <span class="md-header-nav__topic">
-              Windows Contrail documentation
-            </span>
-            <span class="md-header-nav__topic">
-              Docker
-            </span>
+            
+              <span class="md-header-nav__topic">
+                Windows Contrail documentation
+              </span>
+              <span class="md-header-nav__topic">
+                Docker
+              </span>
+            
           
         </div>
       </div>
       <div class="md-flex__cell md-flex__cell--shrink">
         
-          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
           
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
@@ -137,6 +136,7 @@
     </div>
   </div>
 </div>
+          
         
       </div>
       
@@ -1407,8 +1407,8 @@
 <p>Windows Containers are a feature shipped with Windows Server 2016, Windows 10 and Windows Nano Server. These act similarly to lxc containers. On Windows, they are implemented using various namespaces, as well as network namespace equivalent (called network compartment).</p>
 <p>Network compartments are not documented, but vmcompute.dll contains some functions related to how they work.
 Unlike on Linux, Windows supports two types/levels of isolation for its containers:
-* Windows Server containers, which work just like normal Linux containers - they all share the kernel
-* Hyper-V containers. These are essentialy small VMs (running Nano Server), that run Windows Containers which then run the container we wanted. This additional level of virtualization is useful mostly for security reasons. It provides some pros and cons of both containers and VMs. To run a container in this mode, one needs to add "--isolation-level=hyperv" to "docker run" command.</p>
+<em> Windows Server containers, which work just like normal Linux containers - they all share the kernel
+</em> Hyper-V containers. These are essentialy small VMs (running Nano Server), that run Windows Containers which then run the container we wanted. This additional level of virtualization is useful mostly for security reasons. It provides some pros and cons of both containers and VMs. To run a container in this mode, one needs to add "--isolation-level=hyperv" to "docker run" command.</p>
 <p>There are no differences on how networking is implemented for both of these types of containers.</p>
 <p>There are two base images for docker container creation:</p>
 <ul>
@@ -1478,15 +1478,20 @@ Unlike on Linux, Windows supports two types/levels of isolation for its containe
           Material for MkDocs</a>
       </div>
       
+        
+      
     </div>
   </div>
 </footer>
       
     </div>
     
-      <script src="../../../assets/javascripts/application.39abc4af.js"></script>
+      <script src="../../../assets/javascripts/application.5e60981f.js"></script>
       
-      <script>app.initialize({version:"1.0.4",url:{base:"../../.."}})</script>
+      <script>app.initialize({version:"1.0.3",url:{base:"../../.."}})</script>
+      
+    
+    
       
     
   </body>
