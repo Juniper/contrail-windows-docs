@@ -19,6 +19,7 @@
 - They can be dynamically inserted, removed and reconfigured without stopping the whole driver stack.
 
 Filter drivers can be divided into two categories:
+
 - Monitoring filter drivers - They receive all network request and indications and pass them to other drivers. They cannot modify or originate data. They also cannot modify behavior of the driver stack. May be used for monitoring network requests.
 
 - Modifying filter drivers - These drivers are allowed to modify the driver stack. The type of modification depends on the type of the driver:
