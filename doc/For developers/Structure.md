@@ -139,9 +139,12 @@ associated with extensible switch port.
 
 
 
-###  Plug and Play and Power Management events
+### Plug and Play and Power Management events
 
-TODO: PnP events
+The [`FilterNetPnpEvent`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_net_pnp_event)
+function is called by NDIS to notify the filter driver about network
+Plug and Play and Power Management events that was issued for underlying NIC.
+vRouter handles activation of the switch in this function.
 
 
 ### Unloading the driver
