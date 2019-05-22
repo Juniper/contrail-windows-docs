@@ -116,7 +116,27 @@ After that it enters *Paused* state.
 
 ### Switch parameters and events
 
-TODO: OID
+The [`FilterOidRequest`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_oid_request),
+[`FilterOidRequestComplete`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_oid_request_complete)
+and
+[`FilterCancelOidRequest`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_cancel_oid_request)
+functions are used for handling, processing, filtering and issuing
+OID (Object Identifier) requests by the NDIS filter driver.
+The adapter parameters described by OID values includes device characteristics,
+statistics and configurable settings.
+vRouter uses the following set of OID requests:
+
+* `OID_SWITCH_NIC_CONNECT` - for implementing simple switch logic when there
+are no VIFs in vRouter. This request is issued to notify switch extensions
+about completely established network connection between extensible
+switch port and a network adapter.
+* `OID_SWITCH_PARAMETERS` - vRouter sends this query and implements synchronous
+waiting routine which waits for response containing configuration
+data of the extensible switch. It is used for checking if the switch is active.
+* `OID_SWITCH_NIC_ARRAY` - used by vRouter for obtaining an array
+of configuration parameters of all network adapters
+associated with extensible switch port.
+
 
 
 ###  Plug and Play and Power Management events
