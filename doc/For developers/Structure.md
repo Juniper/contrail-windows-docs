@@ -69,7 +69,49 @@ vRouter implements the following sets of functions:
 
 ### Driver states
 
-TODO: State graph, description of Attach, Detach, Pause, Restart.
+Filter driver can be in multiple different states.
+The relationship between them is shown in the diagram below:
+
+![Filter driver states](filter-driver-states.svg)
+
+After loading by operating system, the driver is in *Detached* state:
+it is detached from the network driver stack. When NDIS calls the
+[`FilterAttach`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_attach)
+function, the driver enters *Attaching* state. If the operation is successful,
+the driver enters the *Paused* state. Otherwise, it returns to *Detached* state.
+The main things done in vRouter's `FilterAttach` function are:
+
+* allocating switch object containing filter handle,
+pointers to optional switch handlers and switch context,
+* initializing read/write locks, NBL pool and NB pool,
+* initializing ksync, pkt0 and shmem devices, sandesh transport,
+vRouter logic and fragment assembler,
+* initializing packet dumping functionality,
+* setting global variable containing number of CPUs.
+
+When vRouter is in the *Paused* state, it does not perform any network
+I/O operations. When NDIS calls
+[`FilterRestart`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_restart)
+function in this state, the driver enters *Restarting* state, and after this
+operation is complete, it enters the *Running* state.
+When restarting operation fails, the driver returns to *Paused* state.
+When NDIS calls
+[`FilterDetach`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_detach)
+in the *Paused* state, the driver enters *Detached* state and is detached
+from the network driver stack.
+
+The main responsibility of vRouter's `FilterRestart` function is handling
+a scenario when there are no VIFs by implementing single switch logic.
+`FilterDetach` waits for all pending OIDs, stops and uninitializes
+fragment assembler, vRouter logic, sandesh transport and ksync,
+pkt0 and shmem devices. It also destroys NBL and NB pools and frees all locks.
+
+When vRouter is in *Running* state, it can perform all network I/O operations.
+The driver enters *Pausing* state when NDIS calls
+[`FilterPause`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_pause)
+function. In *FilterPause* the driver should wait for all pending network
+I/O operations and all pending [OID requests](#switch-parameters-and-events).
+After that it enters *Paused* state.
 
 
 ### Switch parameters and events
