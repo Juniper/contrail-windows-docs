@@ -149,7 +149,22 @@ vRouter handles activation of the switch in this function.
 
 ### Unloading the driver
 
-TODO: DriverUnload
+The [`DriverUnload`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/wdm/nc-wdm-driver_unload)
+function is called by the NDIS before unloading the driver. It should perform
+all operations that are necessary before the system unloads the driver.
+The [`NdisFDeregisterFilterDriver`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nf-ndis-ndisfderegisterfilterdriver)
+function should be called from `DriverUnload` to release all resources
+allocated previously in `DriverEntry` routine. If the driver is in any other
+state than *Detached*, the `NdisFDeregisterFilterDriver` function waits for
+all pending I/O operations and all OID requests and then calls
+[`FilterPause`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_pause)
+and [`FilterDetach`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_detach)
+to return to *Detached* state. In vRouter's case, this order of operation will
+cause a deadlock, because all pending network I/O operations are cancelled
+in `FilterDetach` function, but `NdisFDeregisterFilterDriver` waits for them
+to finish before calling `FilterDetach`. This issue is resolved here by
+explicitly freeing some resources and doing necessary deinitializations
+in `DriverUnload` before calling `NdisFDeregisterFilterDriver`.
 
 
 ## Packet flow
