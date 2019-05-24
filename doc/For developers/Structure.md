@@ -9,7 +9,7 @@ lifecycle, packet flow, communication channels and structures abstractions.
 
 The vRouter module on Windows is implemented as NDIS modifying filter driver:
 the Hyper-V Extensible Switch forwarding extension
-(see [NDIS types overview](../Supplementary knowledge/NDIS_driver_types_overview)
+(see [NDIS types overview](/For developers/Supplementary knowledge/NDIS_driver_types_overview)
 for more details on NDIS driver types).
 
 The implementation consists of:
@@ -169,12 +169,13 @@ in `DriverUnload` before calling `NdisFDeregisterFilterDriver`.
 
 ## Packet flow
 
-TODO: Link to separate document (link to NBL description inside)
+Packet flow is described in [separate document](/For developers/Packet_Flow).
 
 
 ## Communication channels
 
-TODO: Link to and fix communication-agent-extension
+Communication channels between vRouter kernel driver and user space Agent are
+described in [separate document](/Overview/Communication_Agent_Extension).
 
 
 ## Windows structures abstraction
