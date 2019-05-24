@@ -174,9 +174,82 @@ TODO: Link to separate document (link to NBL description inside)
 
 ## Communication channels
 
-TODO: ksync, pkt0, pipes, shmem
+TODO: Link to and fix communication-agent-extension
 
 
 ## Windows structures abstraction
 
-TODO: WinPakcet, WinPacketRaw, VrPacket, ...
+This section describes all structures used in vRouter as an abstrac
+wrappers around NDIS structures. All of them were introduced to enable easy
+unit testing of vRouter's Windows specific logic in user space.
+All of the wrappers described in subsections below have separate,
+lightweight implementation in user-mode code.
+
+
+### `vr_packet`
+
+This is a packet representation in system independent dp-core code.
+It contains a pointer to the packet data and many other meta-data fields,
+like data length, offsets to outer and inner network headers, ttl and flags.
+All of the functions in dp-core code assumes that the underlying memory
+of packet data that is pointed by `vr_packet` is contiguous.
+To meet this requirement, Windows-dependent code of vRouter translates
+non-contignous packets to corresponsing contignous representation before
+passing the packet to the dp-core
+(see more in [Packet flow](#packet-flow) section).
+
+
+### `WIN_PACKET`
+
+`WIN_PACKET` is an NDIS-independent logic representation of single
+[`NBL`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure)
+structure that **contains single [`NB`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure)**.
+It represents single packet in Windows-dependent part of vRouter's code.
+
+
+### `WIN_MULTI_PACKET`
+
+`WIN_MULTI_PACKET` is an NDIS-independent logic representation of single
+[`NBL`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure)
+structure that **may contain multiple [`NBs`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure)**.
+It represents multiple packets received by vRouter from NDIS in single API call.
+This packets are then split to `WIN_PACKET_LIST` containing
+multiple `WIN_PACKETs`.
+
+
+### `WIN_PACKET_RAW`
+
+`WIN_PACKET_RAW` is an NDIS-independent logic representation of single
+[`NBL`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure)
+structure that **contains unspecified number of [`NBs`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure)**.
+Unlike `WIN_PACKET` and `WIN_MULTI_PACKET` which are used in the whole
+Windows-dependent code, `WIN_PACKET_RAW` is used in internal `WinPacket`
+layer implementation.
+
+
+### `WIN_SUB_PACKET`
+
+The `WIN_SUB_PACKET` structure is an NDIS-independent wrapper around single
+[`NB`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure).
+It is used in fragmentation and segmentation code that splits
+a packet represented by a single
+[`NBL`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure)
+with single `NB` to multiple packets represented by single `NBL` containing
+multiple `NBs`.
+
+
+### `WIN_PACKET_LIST`
+
+The `WIN_PACKET_LIST` is a list of `WIN_PACKETs`. It is created from
+`WIN_MULTI_PACKET` before sending all packets for processing by dp-core.
+
+
+### `VR_PACKET_WRAPPER`
+
+The `VR_PACKET_WRAPPER` is a structure that bounds the `vr_packet` and
+corresponding `WIN_PACKET` wrapper in a way, that the `WIN_PACKET` part
+is invisible to system independent dp-core code. Every time the `vr_packet`
+has to be allocated, the whole `VR_PACKET_WRAPPER` is allocated and processed,
+and then, before passing to dp-core, the pointer is casted to `vr_pakcet`.
+When the packet returns from dp-core to Windows-dependent code, the pointer
+is casted again to `VR_PACKET_WRAPPER`.
