@@ -47,7 +47,7 @@ structures which are wrappera around `NBL` containing single `NB`.
 For more information about wrappers, please see
 [Windows structures abstraction](/For developers/Structure#windows-structures-abstraction).
 
-1. For every `WIN_PACKET`, a `VR_PACKET_WRAPPER` structure is alocated.
+1. For every `WIN_PACKET`, a `VR_PACKET_WRAPPER` structure is allocated.
 It contains a `vr_packet` structure - a packet representation used in dp-core,
 which is linked in underlying `NBL`.
 
