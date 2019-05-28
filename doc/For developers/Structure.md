@@ -195,7 +195,7 @@ like data length, offsets to outer and inner network headers, ttl and flags.
 All of the functions in dp-core code assumes that the underlying memory
 of packet data that is pointed by `vr_packet` is continuous.
 To meet this requirement, Windows-dependent code of vRouter translates
-non-contignous packets to corresponsing contignous representation before
+non-continuous packets to corresponsing continuous representation before
 passing the packet to the dp-core
 (see more in [Packet flow](#packet-flow) section).
 
