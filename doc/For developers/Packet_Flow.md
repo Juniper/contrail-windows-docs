@@ -53,7 +53,7 @@ which is linked in underlying `NBL`.
 
 1. The dp-core code requires that all packet headers are in a continuous
 memory region. On Windows, each `NB` contains a list of `MDLs` which describes
-multiple memory regions. To avaid a situation when the headers are in different
+multiple memory regions. To avoid a situation when the headers are in different
 memory regions, new NBL containing continuous memory region is allocated
 and all data is copied there.
 
