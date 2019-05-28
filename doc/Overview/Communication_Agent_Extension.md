@@ -53,7 +53,7 @@ The named pipe server is created by the Forwarding Extension.
 ## Shared memory
 
 Shared memory is allocated inside Forwarding Extension,
-and can be read by Agent adn utils. Currently there are two structures mapped
+and can be read by Agent and utils. Currently there are two structures mapped
 to userspace using shared memory: flow table and bridge table.
 
 Only Agent and utils need access to shared memory from userspace.
