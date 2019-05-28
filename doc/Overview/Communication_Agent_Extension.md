@@ -57,4 +57,3 @@ and can be read by Agent and utils. Currently there are two structures mapped
 to userspace using shared memory: flow table and bridge table.
 
 Only Agent and utils need access to shared memory from userspace.
-the team ensured that the implementation is secure.
