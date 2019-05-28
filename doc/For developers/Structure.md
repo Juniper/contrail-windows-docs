@@ -193,7 +193,7 @@ This is a packet representation in system independent dp-core code.
 It contains a pointer to the packet data and many other meta-data fields,
 like data length, offsets to outer and inner network headers, ttl and flags.
 All of the functions in dp-core code assumes that the underlying memory
-of packet data that is pointed by `vr_packet` is contiguous.
+of packet data that is pointed by `vr_packet` is continuous.
 To meet this requirement, Windows-dependent code of vRouter translates
 non-contignous packets to corresponsing contignous representation before
 passing the packet to the dp-core
