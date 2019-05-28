@@ -1,0 +1,1953 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.2.0">
+    
+    
+      
+        <title>Structure of vRouter code on Windows - Windows Contrail documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.750b69bd.css">
+      
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../highlight.css">
+    
+      <link rel="stylesheet" href="../../theme.css">
+    
+      <link rel="stylesheet" href="../../theme_extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#structure-of-vrouter-code-on-windows" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../.." title="Windows Contrail documentation" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Windows Contrail documentation
+            </span>
+            <span class="md-header-nav__topic">
+              Structure of vRouter code on Windows
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../.." title="Windows Contrail documentation" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Windows Contrail documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      For CI admins
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-2">
+        For CI admins
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-1" type="checkbox" id="nav-2-1">
+    
+    <label class="md-nav__link" for="nav-2-1">
+      Backups
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-1">
+        Backups
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Backups/Infrastructure_backups/" title="Infrastructure backups" class="md-nav__link">
+      Infrastructure backups
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-2" type="checkbox" id="nav-2-2">
+    
+    <label class="md-nav__link" for="nav-2-2">
+      CI
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-2">
+        CI
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/CI/Builder_nodes/" title="Managing build dependencies" class="md-nav__link">
+      Managing build dependencies
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/CI/Run_gerrit_pipeline_on_github_PR/" title="Run gerrit pipeline on github PR" class="md-nav__link">
+      Run gerrit pipeline on github PR
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/CI/Update_Jenkins_slaves/" title="Updating Jenkins slaves" class="md-nav__link">
+      Updating Jenkins slaves
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/CI/Update_Zuul/" title="Update Windows CI Zuulv2" class="md-nav__link">
+      Update Windows CI Zuulv2
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/CI/contrail_deployment_in_ci/" title="Contrail deployment in Windows CI" class="md-nav__link">
+      Contrail deployment in Windows CI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3" type="checkbox" id="nav-2-3">
+    
+    <label class="md-nav__link" for="nav-2-3">
+      Infra
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-3">
+        Infra
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Infra/List_of_VMs_in_Windows_CI/" title="List of all important VMs in Windows CI" class="md-nav__link">
+      List of all important VMs in Windows CI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Infra/Windows_CI_infrastructure/" title="Windows CI infrastructure diagram" class="md-nav__link">
+      Windows CI infrastructure diagram
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3-3" type="checkbox" id="nav-2-3-3">
+    
+    <label class="md-nav__link" for="nav-2-3-3">
+      Docker registry
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-3-3">
+        Docker registry
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Infra/Docker registry/Docker_registry_provisioning/" title="Docker registry provisioning" class="md-nav__link">
+      Docker registry provisioning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Infra/Docker registry/Update_private_docker_registry/" title="Updating private docker registry" class="md-nav__link">
+      Updating private docker registry
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-3-4" type="checkbox" id="nav-2-3-4">
+    
+    <label class="md-nav__link" for="nav-2-3-4">
+      VMWare cluster
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-2-3-4">
+        VMWare cluster
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Infra/VMWare cluster/Prepare_Host_for_Maintenance/" title="Prepare an ESXi Host for Maintenance" class="md-nav__link">
+      Prepare an ESXi Host for Maintenance
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Infra/VMWare cluster/Reconnecting_Host/" title="Reconnecting Host to Contrail Windows CI cluster" class="md-nav__link">
+      Reconnecting Host to Contrail Windows CI cluster
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-4" type="checkbox" id="nav-2-4">
+    
+    <label class="md-nav__link" for="nav-2-4">
+      Nightly
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-4">
+        Nightly
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Nightly/nightly_builds/" title="Nightly builds in Windows CI" class="md-nav__link">
+      Nightly builds in Windows CI
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2-5" type="checkbox" id="nav-2-5">
+    
+    <label class="md-nav__link" for="nav-2-5">
+      Signing
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-2-5">
+        Signing
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../For CI admins/Signing/Manual_signing/" title="Manual procedure for signing vRouter driver" class="md-nav__link">
+      Manual procedure for signing vRouter driver
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      For developers
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        For developers
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Building/" title="Building Tungsten Fabric for Windows" class="md-nav__link">
+      Building Tungsten Fabric for Windows
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../How_to_update_this_documentation/" title="How to update this documentation" class="md-nav__link">
+      How to update this documentation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Packet_Flow/" title="Packet flow" class="md-nav__link">
+      Packet flow
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Performance_testing/" title="Performance testing" class="md-nav__link">
+      Performance testing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Structure of vRouter code on Windows
+      </label>
+    
+    <a href="./" title="Structure of vRouter code on Windows" class="md-nav__link md-nav__link--active">
+      Structure of vRouter code on Windows
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vrouter-structure-overview" title="vRouter structure overview" class="md-nav__link">
+    vRouter structure overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver-lifecycle" title="Driver lifecycle" class="md-nav__link">
+    Driver lifecycle
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-the-driver" title="Loading the driver" class="md-nav__link">
+    Loading the driver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver-states" title="Driver states" class="md-nav__link">
+    Driver states
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switch-parameters-and-events" title="Switch parameters and events" class="md-nav__link">
+    Switch parameters and events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plug-and-play-and-power-management-events" title="Plug and Play and Power Management events" class="md-nav__link">
+    Plug and Play and Power Management events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unloading-the-driver" title="Unloading the driver" class="md-nav__link">
+    Unloading the driver
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-flow" title="Packet flow" class="md-nav__link">
+    Packet flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#communication-channels" title="Communication channels" class="md-nav__link">
+    Communication channels
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-structures-abstraction" title="Windows structures abstraction" class="md-nav__link">
+    Windows structures abstraction
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vr_packet" title="vr_packet" class="md-nav__link">
+    vr_packet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_packet" title="WIN_PACKET" class="md-nav__link">
+    WIN_PACKET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_multi_packet" title="WIN_MULTI_PACKET" class="md-nav__link">
+    WIN_MULTI_PACKET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_packet_raw" title="WIN_PACKET_RAW" class="md-nav__link">
+    WIN_PACKET_RAW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_sub_packet" title="WIN_SUB_PACKET" class="md-nav__link">
+    WIN_SUB_PACKET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_packet_list" title="WIN_PACKET_LIST" class="md-nav__link">
+    WIN_PACKET_LIST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vr_packet_wrapper" title="VR_PACKET_WRAPPER" class="md-nav__link">
+    VR_PACKET_WRAPPER
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-6" type="checkbox" id="nav-3-6">
+    
+    <label class="md-nav__link" for="nav-3-6">
+      Contributing
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-6">
+        Contributing
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-6-1" type="checkbox" id="nav-3-6-1">
+    
+    <label class="md-nav__link" for="nav-3-6-1">
+      Style guides
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="3">
+      <label class="md-nav__title" for="nav-3-6-1">
+        Style guides
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Contributing/Style guides/C/" title="C" class="md-nav__link">
+      C
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Contributing/Style guides/Cpp/" title="Cpp" class="md-nav__link">
+      Cpp
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Contributing/Style guides/Go/" title="Go" class="md-nav__link">
+      Go
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-7" type="checkbox" id="nav-3-7">
+    
+    <label class="md-nav__link" for="nav-3-7">
+      Debugging
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-7">
+        Debugging
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Debugging/Kernel_Debugging/" title="Kernel debugging over network" class="md-nav__link">
+      Kernel debugging over network
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Debugging/Network_Monitor/" title="Capturing network traffic without Wireshark" class="md-nav__link">
+      Capturing network traffic without Wireshark
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Debugging/Utility_tools/" title="Utility tools" class="md-nav__link">
+      Utility tools
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-8" type="checkbox" id="nav-3-8">
+    
+    <label class="md-nav__link" for="nav-3-8">
+      Interpreting CI logs
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-8">
+        Interpreting CI logs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Interpreting CI logs/Windows_CI_logs_layout/" title="Windows CI logs layout" class="md-nav__link">
+      Windows CI logs layout
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-9" type="checkbox" id="nav-3-9">
+    
+    <label class="md-nav__link" for="nav-3-9">
+      Research
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-9">
+        Research
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Research/Experiment_dockerized_builder_using_ansible/" title="Failed experiment: dockerized builder using ansible" class="md-nav__link">
+      Failed experiment: dockerized builder using ansible
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Research/Link_Local_Services_Research/" title="Link Local Services Research" class="md-nav__link">
+      Link Local Services Research
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Research/NIC_Teaming/" title="Hyper-V/Docker NIC teaming research" class="md-nav__link">
+      Hyper-V/Docker NIC teaming research
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Research/dns_in_contrail_overview/" title="Few words about DNS in Contrail" class="md-nav__link">
+      Few words about DNS in Contrail
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-10" type="checkbox" id="nav-3-10">
+    
+    <label class="md-nav__link" for="nav-3-10">
+      Setting up development environment
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-10">
+        Setting up development environment
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Setting up development environment/Juni_lab/" title="Dev environment in Juniper lab" class="md-nav__link">
+      Dev environment in Juniper lab
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3-11" type="checkbox" id="nav-3-11">
+    
+    <label class="md-nav__link" for="nav-3-11">
+      Supplementary knowledge
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-3-11">
+        Supplementary knowledge
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Supplementary knowledge/Docker_HNS/" title="What exactly happens during container creation" class="md-nav__link">
+      What exactly happens during container creation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Supplementary knowledge/Docker_on_Windows/" title="Docker" class="md-nav__link">
+      Docker
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Supplementary knowledge/HyperV_extensible_switch/" title="HyperV extensible switch" class="md-nav__link">
+      HyperV extensible switch
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Supplementary knowledge/NBL_processing/" title="NET_BUFFER_LIST processing" class="md-nav__link">
+      NET_BUFFER_LIST processing
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Supplementary knowledge/NDIS_driver_types_overview/" title="NDIS (Network Driver Interface Specification) driver types overview" class="md-nav__link">
+      NDIS (Network Driver Interface Specification) driver types overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Supplementary knowledge/Offloading_IP_checksums_and_other_tasks/" title="Offloading IP Checksums and other tasks" class="md-nav__link">
+      Offloading IP Checksums and other tasks
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Supplementary knowledge/Root_HNS_network/" title="Root HNS network" class="md-nav__link">
+      Root HNS network
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      Known issues
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Known issues
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Known_issues/CAD_Timeout_bestiary/" title="Contrail Ansible Deployer(CAD) Timeout bestiary" class="md-nav__link">
+      Contrail Ansible Deployer(CAD) Timeout bestiary
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Known_issues/CredSSP_error_bestiary/" title="CredSSP errors bestiary" class="md-nav__link">
+      CredSSP errors bestiary
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Known_issues/HNS_error_bestiary/" title="HNS errors bestiary" class="md-nav__link">
+      HNS errors bestiary
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Known_issues/Known_issues/" title="Workarounds for known issues" class="md-nav__link">
+      Workarounds for known issues
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Known_issues/Not_supported/" title="Unsupported features" class="md-nav__link">
+      Unsupported features
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Known_issues/Service_restart_workarounds/" title="Service restart workarounds" class="md-nav__link">
+      Service restart workarounds
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Known_issues/Troubleshooting/" title="Troubleshooting" class="md-nav__link">
+      Troubleshooting
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      Overview
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Overview
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/Blueprint_5.0/" title="Blueprint 5.0" class="md-nav__link">
+      Blueprint 5.0
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/Communication_Agent_Extension/" title="Communication: Agent ⇄ Extension" class="md-nav__link">
+      Communication: Agent ⇄ Extension
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/Components_and_structure/" title="Components and structure" class="md-nav__link">
+      Components and structure
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/Container_creation_lifecycle/" title="Container creation lifecycle" class="md-nav__link">
+      Container creation lifecycle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/Forwarding_extension/" title="Forwarding extension" class="md-nav__link">
+      Forwarding extension
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/Linux_Overview/" title="Contrail Controller" class="md-nav__link">
+      Contrail Controller
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/Network_creation_lifecycle/" title="Network creation lifecycle" class="md-nav__link">
+      Network creation lifecycle
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Overview/vRouter_Linux_implementation/" title="vRouter Linux implementation" class="md-nav__link">
+      vRouter Linux implementation
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      Quick start
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Quick start
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Quick_start/connection_scenarios/" title="Examples and scenarios" class="md-nav__link">
+      Examples and scenarios
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Quick_start/deployment/" title="Heterogenous Contrail Deployment: Linux + Windows" class="md-nav__link">
+      Heterogenous Contrail Deployment: Linux + Windows
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Quick_start/hypervisors_configuration/" title="Hypervisors configuration" class="md-nav__link">
+      Hypervisors configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Quick_start/upgrading/" title="Upgrading existing deployment" class="md-nav__link">
+      Upgrading existing deployment
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../Quick_start/usage/" title="Usage" class="md-nav__link">
+      Usage
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#vrouter-structure-overview" title="vRouter structure overview" class="md-nav__link">
+    vRouter structure overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#driver-lifecycle" title="Driver lifecycle" class="md-nav__link">
+    Driver lifecycle
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-the-driver" title="Loading the driver" class="md-nav__link">
+    Loading the driver
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#driver-states" title="Driver states" class="md-nav__link">
+    Driver states
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#switch-parameters-and-events" title="Switch parameters and events" class="md-nav__link">
+    Switch parameters and events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plug-and-play-and-power-management-events" title="Plug and Play and Power Management events" class="md-nav__link">
+    Plug and Play and Power Management events
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unloading-the-driver" title="Unloading the driver" class="md-nav__link">
+    Unloading the driver
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packet-flow" title="Packet flow" class="md-nav__link">
+    Packet flow
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#communication-channels" title="Communication channels" class="md-nav__link">
+    Communication channels
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-structures-abstraction" title="Windows structures abstraction" class="md-nav__link">
+    Windows structures abstraction
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vr_packet" title="vr_packet" class="md-nav__link">
+    vr_packet
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_packet" title="WIN_PACKET" class="md-nav__link">
+    WIN_PACKET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_multi_packet" title="WIN_MULTI_PACKET" class="md-nav__link">
+    WIN_MULTI_PACKET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_packet_raw" title="WIN_PACKET_RAW" class="md-nav__link">
+    WIN_PACKET_RAW
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_sub_packet" title="WIN_SUB_PACKET" class="md-nav__link">
+    WIN_SUB_PACKET
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#win_packet_list" title="WIN_PACKET_LIST" class="md-nav__link">
+    WIN_PACKET_LIST
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vr_packet_wrapper" title="VR_PACKET_WRAPPER" class="md-nav__link">
+    VR_PACKET_WRAPPER
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="structure-of-vrouter-code-on-windows">Structure of vRouter code on Windows</h1>
+<p>This document describes general structure of vRouter code and implementation
+details of the most important features including dp-core callbacks, driver
+lifecycle, packet flow, communication channels and structures abstractions.</p>
+<h2 id="vrouter-structure-overview">vRouter structure overview</h2>
+<p>The vRouter module on Windows is implemented as NDIS modifying filter driver:
+the Hyper-V Extensible Switch forwarding extension
+(see <a href="/For developers/Supplementary knowledge/NDIS_driver_types_overview">NDIS types overview</a>
+for more details on NDIS driver types).</p>
+<p>The implementation consists of:</p>
+<ul>
+<li>OS-independent, generic <code>dp-core</code> directory, where the main logic of packet
+processing is placed,</li>
+<li>header files in <code>include</code> directory,</li>
+<li>Windows specific code, including dp-core callback in <code>windows</code> directory;
+All OS-dependent callcacks required by dp-core are can be found in
+<code>vr_host.c</code> and <code>vr_host_interface.c</code> files,</li>
+<li>userspace applications used to read and modify the state of vRouter
+placed in <code>utils</code> directory,</li>
+<li>unit tests that can be run in userspace, in <code>test</code>.</li>
+</ul>
+<h2 id="driver-lifecycle">Driver lifecycle</h2>
+<h3 id="loading-the-driver">Loading the driver</h3>
+<p>When the driver implementing vRouter logic is loaded, the first function
+called by the system is a
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/wdm/nc-wdm-driver_initialize"><code>DriverEntry</code></a>
+routine, which is responsible for two main things:</p>
+<ul>
+<li>
+<p>setting up the pointer to
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/wdm/nc-wdm-driver_unload"><code>DriverUnload</code></a>
+routine which will be called when the driver is unloaded. For more information,
+see <a href="#unloading-the-driver">Unloading the driver</a>,</p>
+</li>
+<li>
+<p>calling the
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nf-ndis-ndisfregisterfilterdriver"><code>NdisFRegisterFilterDriver</code></a>
+function with a pointer to structure containing driver characteristic which
+consists of driver names, versions and, the most important, functions called
+by the system on speciffic conditions.
+vRouter implements the following sets of functions:</p>
+<ul>
+<li>
+<p><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_attach"><code>FilterAttach</code></a>,
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_detach"><code>FilterDetach</code></a>,
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_pause"><code>FilterPause</code></a>,
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_restart"><code>FilterRestart</code></a>:
+see more in the <a href="#driver-states">Driver states</a> section,</p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_send_net_buffer_lists"><code>FilterSendNetBufferLists</code></a>,
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_send_net_buffer_lists_complete"><code>FilterSendNetBufferListsComplete</code></a>:
+not related to the driver lifecycle, described more precisely in the
+<a href="#packet-flow">Packet flow</a> section,</p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_oid_request"><code>FilterOidRequest</code></a>,
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_oid_request_complete"><code>FilterOidRequestComplete</code></a>,
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_cancel_oid_request"><code>FilterCancelOidRequest</code></a>:
+see <a href="#switch-parameters-and-events">Switch parameters and events</a> section,</p>
+</li>
+<li>
+<p><a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_net_pnp_event"><code>FilterNetPnpEvent</code></a>:
+see <a href="#plug-and-play-and-power-management-events">Plug and Play and Power Management events</a> section.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="driver-states">Driver states</h3>
+<p>Filter driver can be in multiple different states.
+The relationship between them is shown in the diagram below:</p>
+<p><img alt="Filter driver states" src="../filter-driver-states.svg" /></p>
+<p>After loading by operating system, the driver is in <em>Detached</em> state:
+it is detached from the network driver stack. When NDIS calls the
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_attach"><code>FilterAttach</code></a>
+function, the driver enters <em>Attaching</em> state. If the operation is successful,
+the driver enters the <em>Paused</em> state. Otherwise, it returns to <em>Detached</em> state.
+The main things done in vRouter's <code>FilterAttach</code> function are:</p>
+<ul>
+<li>allocating switch object containing filter handle,
+pointers to optional switch handlers and switch context,</li>
+<li>initializing read/write locks, NBL pool and NB pool,</li>
+<li>initializing ksync, pkt0 and shmem devices, sandesh transport,
+vRouter logic and fragment assembler,</li>
+<li>initializing packet dumping functionality,</li>
+<li>setting global variable containing number of CPUs.</li>
+</ul>
+<p>When vRouter is in the <em>Paused</em> state, it does not perform any network
+I/O operations. When NDIS calls
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_restart"><code>FilterRestart</code></a>
+function in this state, the driver enters <em>Restarting</em> state, and after this
+operation is complete, it enters the <em>Running</em> state.
+When restarting operation fails, the driver returns to <em>Paused</em> state.
+When NDIS calls
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_detach"><code>FilterDetach</code></a>
+in the <em>Paused</em> state, the driver enters <em>Detached</em> state and is detached
+from the network driver stack.</p>
+<p>The main responsibility of vRouter's <code>FilterRestart</code> function is handling
+a scenario when there are no VIFs by implementing single switch logic.
+<code>FilterDetach</code> waits for all pending OIDs, stops and uninitializes
+fragment assembler, vRouter logic, sandesh transport and ksync,
+pkt0 and shmem devices. It also destroys NBL and NB pools and frees all locks.</p>
+<p>When vRouter is in <em>Running</em> state, it can perform all network I/O operations.
+The driver enters <em>Pausing</em> state when NDIS calls
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_pause"><code>FilterPause</code></a>
+function. In <em>FilterPause</em> the driver should wait for all pending network
+I/O operations and all pending <a href="#switch-parameters-and-events">OID requests</a>.
+After that it enters <em>Paused</em> state.</p>
+<h3 id="switch-parameters-and-events">Switch parameters and events</h3>
+<p>The <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_oid_request"><code>FilterOidRequest</code></a>,
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_oid_request_complete"><code>FilterOidRequestComplete</code></a>
+and
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_cancel_oid_request"><code>FilterCancelOidRequest</code></a>
+functions are used for handling, processing, filtering and issuing
+OID (Object Identifier) requests by the NDIS filter driver.
+The adapter parameters described by OID values includes device characteristics,
+statistics and configurable settings.
+vRouter uses the following set of OID requests:</p>
+<ul>
+<li><code>OID_SWITCH_NIC_CONNECT</code> - for implementing simple switch logic when there
+are no VIFs in vRouter. This request is issued to notify switch extensions
+about completely established network connection between extensible
+switch port and a network adapter.</li>
+<li><code>OID_SWITCH_PARAMETERS</code> - vRouter sends this query and implements synchronous
+waiting routine which waits for response containing configuration
+data of the extensible switch. It is used for checking if the switch is active.</li>
+<li><code>OID_SWITCH_NIC_ARRAY</code> - used by vRouter for obtaining an array
+of configuration parameters of all network adapters
+associated with extensible switch port.</li>
+</ul>
+<h3 id="plug-and-play-and-power-management-events">Plug and Play and Power Management events</h3>
+<p>The <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_net_pnp_event"><code>FilterNetPnpEvent</code></a>
+function is called by NDIS to notify the filter driver about network
+Plug and Play and Power Management events that was issued for underlying NIC.
+vRouter handles activation of the switch in this function.</p>
+<h3 id="unloading-the-driver">Unloading the driver</h3>
+<p>The <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/wdm/nc-wdm-driver_unload"><code>DriverUnload</code></a>
+function is called by the NDIS before unloading the driver. It should perform
+all operations that are necessary before the system unloads the driver.
+The <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nf-ndis-ndisfderegisterfilterdriver"><code>NdisFDeregisterFilterDriver</code></a>
+function should be called from <code>DriverUnload</code> to release all resources
+allocated previously in <code>DriverEntry</code> routine. If the driver is in any other
+state than <em>Detached</em>, the <code>NdisFDeregisterFilterDriver</code> function waits for
+all pending I/O operations and all OID requests and then calls
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_pause"><code>FilterPause</code></a>
+and <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_detach"><code>FilterDetach</code></a>
+to return to <em>Detached</em> state. In vRouter's case, this order of operation will
+cause a deadlock, because all pending network I/O operations are cancelled
+in <code>FilterDetach</code> function, but <code>NdisFDeregisterFilterDriver</code> waits for them
+to finish before calling <code>FilterDetach</code>. This issue is resolved here by
+explicitly freeing some resources and doing necessary deinitializations
+in <code>DriverUnload</code> before calling <code>NdisFDeregisterFilterDriver</code>.</p>
+<h2 id="packet-flow">Packet flow</h2>
+<p>Packet flow is described in <a href="/For developers/Packet_Flow">separate document</a>.</p>
+<h2 id="communication-channels">Communication channels</h2>
+<p>Communication channels between vRouter kernel driver and user space Agent are
+described in <a href="/Overview/Communication_Agent_Extension">separate document</a>.</p>
+<h2 id="windows-structures-abstraction">Windows structures abstraction</h2>
+<p>This section describes all structures used in vRouter as an abstrac
+wrappers around NDIS structures. All of them were introduced to enable easy
+unit testing of vRouter's Windows specific logic in user space.
+All of the wrappers described in subsections below have separate,
+lightweight implementation in user-mode code.</p>
+<h3 id="vr_packet"><code>vr_packet</code></h3>
+<p>This is a packet representation in system independent dp-core code.
+It contains a pointer to the packet data and many other meta-data fields,
+like data length, offsets to outer and inner network headers, ttl and flags.
+All of the functions in dp-core code assumes that the underlying memory
+of packet data that is pointed by <code>vr_packet</code> is continuous.
+To meet this requirement, Windows-dependent code of vRouter translates
+non-continuous packets to corresponsing continuous representation before
+passing the packet to the dp-core
+(see more in <a href="#packet-flow">Packet flow</a> section).</p>
+<h3 id="win_packet"><code>WIN_PACKET</code></h3>
+<p><code>WIN_PACKET</code> is an NDIS-independent logic representation of single
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure"><code>NBL</code></a>
+structure that <strong>contains single <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure"><code>NB</code></a></strong>.
+It represents single packet in Windows-dependent part of vRouter's code.</p>
+<h3 id="win_multi_packet"><code>WIN_MULTI_PACKET</code></h3>
+<p><code>WIN_MULTI_PACKET</code> is an NDIS-independent logic representation of single
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure"><code>NBL</code></a>
+structure that <strong>may contain multiple <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure"><code>NBs</code></a></strong>.
+It represents multiple packets received by vRouter from NDIS in single API call.
+This packets are then split to <code>WIN_PACKET_LIST</code> containing
+multiple <code>WIN_PACKETs</code>.</p>
+<h3 id="win_packet_raw"><code>WIN_PACKET_RAW</code></h3>
+<p><code>WIN_PACKET_RAW</code> is an NDIS-independent logic representation of single
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure"><code>NBL</code></a>
+structure that <strong>contains unspecified number of <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure"><code>NBs</code></a></strong>.
+Unlike <code>WIN_PACKET</code> and <code>WIN_MULTI_PACKET</code> which are used in the whole
+Windows-dependent code, <code>WIN_PACKET_RAW</code> is used in internal <code>WinPacket</code>
+layer implementation.</p>
+<h3 id="win_sub_packet"><code>WIN_SUB_PACKET</code></h3>
+<p>The <code>WIN_SUB_PACKET</code> structure is an NDIS-independent wrapper around single
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-structure"><code>NB</code></a>.
+It is used in fragmentation and segmentation code that splits
+a packet represented by a single
+<a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure"><code>NBL</code></a>
+with single <code>NB</code> to multiple packets represented by single <code>NBL</code> containing
+multiple <code>NBs</code>.</p>
+<h3 id="win_packet_list"><code>WIN_PACKET_LIST</code></h3>
+<p>The <code>WIN_PACKET_LIST</code> is a list of <code>WIN_PACKETs</code>. It is created from
+<code>WIN_MULTI_PACKET</code> before sending all packets for processing by dp-core.</p>
+<h3 id="vr_packet_wrapper"><code>VR_PACKET_WRAPPER</code></h3>
+<p>The <code>VR_PACKET_WRAPPER</code> is a structure that bounds the <code>vr_packet</code> and
+corresponding <code>WIN_PACKET</code> wrapper in a way, that the <code>WIN_PACKET</code> part
+is invisible to system independent dp-core code. Every time the <code>vr_packet</code>
+has to be allocated, the whole <code>VR_PACKET_WRAPPER</code> is allocated and processed,
+and then, before passing to dp-core, the pointer is casted to <code>vr_pakcet</code>.
+When the packet returns from dp-core to Windows-dependent code, the pointer
+is casted again to <code>VR_PACKET_WRAPPER</code>.</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../Performance_testing/" title="Performance testing" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Performance testing
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../Contributing/Style guides/C/" title="C" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                C
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.39abc4af.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+    
+  </body>
+</html>
