@@ -12,11 +12,10 @@ Git repository with the source code is available [here](https://review.opencontr
 
 ## Container creation lifecycle
 
-TODO(mc): from step 11. it's not exactly true, we've removed the hashmap, also agent can inject vifs before interface is attached to vswitch.
+![cnm-plugin-container-creation.png](cnm-plugin-container-creation.png)
 
 1. Docker client tells docker daemon to run a container and attach it to a Docker network (that corresponds to a chunk of a Contrail subnet).
-1. Docker deamon delegates the network configuration of the container that is being created to the CNM plugin.
-1. CNM plugin queries docker daemon about metadata associated with docker's network resource and receives Contrail tenant name and subnet CIDR.
+1. Docker deamon delegates the network configuration of the container that is being created to the CNM plugin. CNM plugin queries docker daemon about metadata associated with docker's network resource and receives Contrail tenant name and subnet CIDR.
 1. CNM plugin performs a series of queries against Contrail Controller that create various Contrail resources, most notably: virtual-machine, virtual-machine-interface, instance-ip.
 1. CNM plugin receives Instance IP, MAC and default gateway to configure the newly created container's interface with. It also receives UUID of virtual-machine-interface resource
 1. CNM plugin knows all the information necessary to recreate HNS Network's name. It uses this name to identify which HNS network to attach the container to. CNM plugin sends requests to HNS to configure endpoint with newly received IP, MAC and Default gateway.
@@ -29,7 +28,11 @@ TODO(mc): from step 11. it's not exactly true, we've removed the hashmap, also a
 1. vRouter Agent inserts basic rules and flows into the Forwarding Extension. 
 1. Forwarding Extension uses the FriendlyName to determine which port seen in userspace corresponds to port waiting in Forwarding Extension's hash map.
 
+    TODO: steps 11+ require a review as the hashmap has been removed and agent can inject vifs before interface is attached to vswitch.
+
 ## Network creation lifecycle
+
+![cnm-plugin-network-creation.png](cnm-plugin-network-creation.png)
 
 There is a slight discrepancy between Docker's and Contrail's networking model. Contrail can implement a logical, overlay network for containers. However, docker can only create a network locally, on the hypervisor.
 
