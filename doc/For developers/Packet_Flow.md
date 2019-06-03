@@ -17,7 +17,7 @@ virtual interface, or received on physical interface.
 1. Packets are processed by NDIS and vRouter's
 [`FilterSendNetBufferLists`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_send_net_buffer_lists)
 function is called. It receives a list of [`NBLs`](https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure)
-(a list of lists of packets, see more [here](/For developers/Supplementary knowledge/NBL_processing)).
+(a list of lists of packets, see more [here](../Supplementary knowledge/NBL_processing)).
 
 1. If the switch is not running,
 [`NdisFSendNetBufferListsComplete`](https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nf-ndis-ndisfsendnetbufferlistscomplete)
@@ -45,7 +45,7 @@ The system independent dp-core code handles single packet at a time, so
 `WIN_MULTI_PACKET` is converted to `PWIN_PACKET_LIST` - a list of `WIN_PACKET`
 structures which are wrappera around `NBL` containing single `NB`.
 For more information about wrappers, please see
-[Windows structures abstraction](/For developers/Structure#windows-structures-abstraction).
+[Windows structures abstraction](../Structure#windows-structures-abstraction).
 
 1. For every `WIN_PACKET`, a `VR_PACKET_WRAPPER` structure is allocated.
 It contains a `vr_packet` structure - a packet representation used in dp-core,
