@@ -1155,8 +1155,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../Blueprint_5.0/" title="Blueprint 5.0" class="md-nav__link">
-      Blueprint 5.0
+    <a href="../CNM_plugin/" title="CNM Plugin" class="md-nav__link">
+      CNM Plugin
     </a>
   </li>
 
@@ -1187,22 +1187,46 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Components and structure
+      </label>
+    
     <a href="./" title="Components and structure" class="md-nav__link md-nav__link--active">
       Components and structure
     </a>
     
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../Container_creation_lifecycle/" title="Container creation lifecycle" class="md-nav__link">
-      Container creation lifecycle
-    </a>
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#components" title="Components" class="md-nav__link">
+    Components
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#units-of-deployment" title="Units of deployment" class="md-nav__link">
+    Units of deployment
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -1226,18 +1250,6 @@
   <li class="md-nav__item">
     <a href="../Linux_Overview/" title="Contrail Controller" class="md-nav__link">
       Contrail Controller
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../Network_creation_lifecycle/" title="Network creation lifecycle" class="md-nav__link">
-      Network creation lifecycle
     </a>
   </li>
 
@@ -1360,6 +1372,29 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#components" title="Components" class="md-nav__link">
+    Components
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#units-of-deployment" title="Units of deployment" class="md-nav__link">
+    Units of deployment
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1372,7 +1407,25 @@
                 
                 
                 <h1 id="components-and-structure">Components and structure</h1>
+<h2 id="components">Components</h2>
+<p>The following image presents main building blocks of the system and their communication channels:</p>
 <p><img alt="Components and structure" src="../tf-windows-structure.png" /></p>
+<h2 id="units-of-deployment">Units of deployment</h2>
+<p>The following components are deployed on Windows compute node:</p>
+<ul>
+<li>vRouter Agent,</li>
+<li>vRouter (Forwarding Extension for Hyper-V Switch),</li>
+<li>Node manager,</li>
+<li>CNM Plugin for Docker.</li>
+</ul>
+<p>The vRouter (Forwarding Extension) runs in kernel space.
+All other components run as Windows services.</p>
+<p>All components installed on Windows compute node are deployed through two container images:</p>
+<ul>
+<li>contrail-windows-vrouter (vRouter Agent, vRouter - Forwarding Extension for Hyper-V Switch, Node manager),</li>
+<li>contrail-windows-cnm-plugin (CNM Plugin for Docker).</li>
+</ul>
+<p>The images serve only as a method of distributing installers for the components.</p>
                 
                   
                 
@@ -1408,13 +1461,13 @@
           </a>
         
         
-          <a href="../Container_creation_lifecycle/" title="Container creation lifecycle" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Forwarding_extension/" title="Forwarding extension" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Container creation lifecycle
+                Forwarding extension
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

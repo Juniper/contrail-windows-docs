@@ -1200,8 +1200,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Overview/Blueprint_5.0/" title="Blueprint 5.0" class="md-nav__link">
-      Blueprint 5.0
+    <a href="../../Overview/CNM_plugin/" title="CNM Plugin" class="md-nav__link">
+      CNM Plugin
     </a>
   </li>
 
@@ -1236,18 +1236,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Overview/Container_creation_lifecycle/" title="Container creation lifecycle" class="md-nav__link">
-      Container creation lifecycle
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../Overview/Forwarding_extension/" title="Forwarding extension" class="md-nav__link">
       Forwarding extension
     </a>
@@ -1262,18 +1250,6 @@
   <li class="md-nav__item">
     <a href="../../Overview/Linux_Overview/" title="Contrail Controller" class="md-nav__link">
       Contrail Controller
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Overview/Network_creation_lifecycle/" title="Network creation lifecycle" class="md-nav__link">
-      Network creation lifecycle
     </a>
   </li>
 
@@ -1447,7 +1423,7 @@ virtual interface, or received on physical interface.</p>
 <p>Packets are processed by NDIS and vRouter's
 <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/ddi/content/ndis/nc-ndis-filter_send_net_buffer_lists"><code>FilterSendNetBufferLists</code></a>
 function is called. It receives a list of <a href="https://docs.microsoft.com/en-us/windows-hardware/drivers/network/net-buffer-list-structure"><code>NBLs</code></a>
-(a list of lists of packets, see more <a href="/For developers/Supplementary knowledge/NBL_processing">here</a>).</p>
+(a list of lists of packets, see more <a href="../Supplementary knowledge/NBL_processing">here</a>).</p>
 </li>
 <li>
 <p>If the switch is not running,
@@ -1481,7 +1457,7 @@ The system independent dp-core code handles single packet at a time, so
 <code>WIN_MULTI_PACKET</code> is converted to <code>PWIN_PACKET_LIST</code> - a list of <code>WIN_PACKET</code>
 structures which are wrappera around <code>NBL</code> containing single <code>NB</code>.
 For more information about wrappers, please see
-<a href="/For developers/Structure#windows-structures-abstraction">Windows structures abstraction</a>.</p>
+<a href="../Structure#windows-structures-abstraction">Windows structures abstraction</a>.</p>
 </li>
 <li>
 <p>For every <code>WIN_PACKET</code>, a <code>VR_PACKET_WRAPPER</code> structure is allocated.

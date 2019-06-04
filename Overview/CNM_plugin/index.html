@@ -36,7 +36,7 @@
     
     
       
-        <title>Network creation lifecycle - Windows Contrail documentation</title>
+        <title>CNM Plugin - Windows Contrail documentation</title>
       
     
     
@@ -81,6 +81,10 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
+      <a href="#cnm-plugin" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header-nav md-grid">
@@ -102,7 +106,7 @@
               Windows Contrail documentation
             </span>
             <span class="md-header-nav__topic">
-              Network creation lifecycle
+              CNM Plugin
             </span>
           
         </div>
@@ -1149,11 +1153,63 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../Blueprint_5.0/" title="Blueprint 5.0" class="md-nav__link">
-      Blueprint 5.0
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        CNM Plugin
+      </label>
+    
+    <a href="./" title="CNM Plugin" class="md-nav__link md-nav__link--active">
+      CNM Plugin
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-purpose" title="The purpose" class="md-nav__link">
+    The purpose
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-creation-lifecycle" title="Container creation lifecycle" class="md-nav__link">
+    Container creation lifecycle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-creation-lifecycle" title="Network creation lifecycle" class="md-nav__link">
+    Network creation lifecycle
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -1187,18 +1243,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../Container_creation_lifecycle/" title="Container creation lifecycle" class="md-nav__link">
-      Container creation lifecycle
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../Forwarding_extension/" title="Forwarding extension" class="md-nav__link">
       Forwarding extension
     </a>
@@ -1214,25 +1258,6 @@
     <a href="../Linux_Overview/" title="Contrail Controller" class="md-nav__link">
       Contrail Controller
     </a>
-  </li>
-
-        
-          
-          
-          
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-    
-    <a href="./" title="Network creation lifecycle" class="md-nav__link md-nav__link--active">
-      Network creation lifecycle
-    </a>
-    
   </li>
 
         
@@ -1344,15 +1369,86 @@
               </div>
             
             
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-purpose" title="The purpose" class="md-nav__link">
+    The purpose
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-creation-lifecycle" title="Container creation lifecycle" class="md-nav__link">
+    Container creation lifecycle
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-creation-lifecycle" title="Network creation lifecycle" class="md-nav__link">
+    Network creation lifecycle
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
                 
                 
-                  <h1>Network creation lifecycle</h1>
-                
-                <p>There is a slight discrepancy between Docker's and Contrail's networking model. Contrail can implement a logical, overlay network for containers. However, docker can only create a network locally, on the hypervisor.</p>
+                <h1 id="cnm-plugin">CNM Plugin</h1>
+<h2 id="the-purpose">The purpose</h2>
+<p>Windows CNM plugin for Docker is a Windows specific component. It coordinates all activities related to container creation and docker network creation.</p>
+<p>It is roughly equivalent to Nova Agent, but runs as a Windows service and implements docker driver APIs. It communicates with config, Agent and HNS (Host Network Service - Windows container management service).</p>
+<p>It is written in Golang.
+Git repository with the source code is available <a href="https://review.opencontrail.org/Juniper/contrail-windows-docker-driver">here</a>.</p>
+<h2 id="container-creation-lifecycle">Container creation lifecycle</h2>
+<p><img alt="cnm-plugin-container-creation.png" src="../cnm-plugin-container-creation.png" /></p>
+<ol>
+<li>Docker client tells docker daemon to run a container and attach it to a Docker network (that corresponds to a chunk of a Contrail subnet).</li>
+<li>Docker deamon delegates the network configuration of the container that is being created to the CNM plugin. CNM plugin queries docker daemon about metadata associated with docker's network resource and receives Contrail tenant name and subnet CIDR.</li>
+<li>CNM plugin performs a series of queries against Contrail Controller that create various Contrail resources, most notably: virtual-machine, virtual-machine-interface, instance-ip.</li>
+<li>CNM plugin receives Instance IP, MAC and default gateway to configure the newly created container's interface with. It also receives UUID of virtual-machine-interface resource</li>
+<li>CNM plugin knows all the information necessary to recreate HNS Network's name. It uses this name to identify which HNS network to attach the container to. CNM plugin sends requests to HNS to configure endpoint with newly received IP, MAC and Default gateway.</li>
+<li>In the background, HNS creates the network compartment for the container and configures its interface.</li>
+<li>The moment the interface is created, the Forwarding Extension receives an event about new adapter being connected. </li>
+<li>Forwarding Extension doesn't know what to do with it yet, so it stores it in a hash map, where the key is adapters FriendlyName. Then it waits, dropping all packets except the ones sent from native Hyper-V driver.</li>
+<li>Meanwhile, if container creation was successful, HNS returns ID of the endpoint to CNM plugin.</li>
+<li>CNM plugin sends "add port" request to vRouter Agent, with all the necessary information to identify the port both in Contrail terms (UUID of virtual-machine-interface) as well as in Windows terms (using Endpoint ID, which is a part of FriendlyName).</li>
+<li>vRouter Agent communicates with Contrail Controller to let it know about newly added port.</li>
+<li>vRouter Agent inserts basic rules and flows into the Forwarding Extension. </li>
+<li>
+<p>Forwarding Extension uses the FriendlyName to determine which port seen in userspace corresponds to port waiting in Forwarding Extension's hash map.</p>
+<p>TODO: steps 11+ require a review as the hashmap has been removed and agent can inject vifs before interface is attached to vswitch.</p>
+</li>
+</ol>
+<h2 id="network-creation-lifecycle">Network creation lifecycle</h2>
+<p><img alt="cnm-plugin-network-creation.png" src="../cnm-plugin-network-creation.png" /></p>
+<p>There is a slight discrepancy between Docker's and Contrail's networking model. Contrail can implement a logical, overlay network for containers. However, docker can only create a network locally, on the hypervisor.</p>
 <p>This means that "docker network create" command needs to be ran on each hypervisor that will contain any container that could be connected to a specific network. In other words, "local" networks must be prepared on each host.</p>
 <p>Furthermore, Docker's "network" is actually equivalent to Contrail's "subnet". This means, that during docker network creation, specific Contrail subnet (using CIDR notation) must be specified as a parameter.</p>
 <ol>
@@ -1383,7 +1479,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../Linux_Overview/" title="Contrail Controller" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../../Known_issues/Troubleshooting/" title="Troubleshooting" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1392,19 +1488,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Contrail Controller
+                Troubleshooting
               </span>
             </div>
           </a>
         
         
-          <a href="../vRouter_Linux_implementation/" title="vRouter Linux implementation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../Communication_Agent_Extension/" title="Communication: Agent ⇄ Extension" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                vRouter Linux implementation
+                Communication: Agent ⇄ Extension
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

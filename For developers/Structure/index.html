@@ -1317,8 +1317,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Overview/Blueprint_5.0/" title="Blueprint 5.0" class="md-nav__link">
-      Blueprint 5.0
+    <a href="../../Overview/CNM_plugin/" title="CNM Plugin" class="md-nav__link">
+      CNM Plugin
     </a>
   </li>
 
@@ -1353,18 +1353,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../../Overview/Container_creation_lifecycle/" title="Container creation lifecycle" class="md-nav__link">
-      Container creation lifecycle
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../../Overview/Forwarding_extension/" title="Forwarding extension" class="md-nav__link">
       Forwarding extension
     </a>
@@ -1379,18 +1367,6 @@
   <li class="md-nav__item">
     <a href="../../Overview/Linux_Overview/" title="Contrail Controller" class="md-nav__link">
       Contrail Controller
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../Overview/Network_creation_lifecycle/" title="Network creation lifecycle" class="md-nav__link">
-      Network creation lifecycle
     </a>
   </li>
 
@@ -1671,7 +1647,7 @@ lifecycle, packet flow, communication channels and structures abstractions.</p>
 <h2 id="vrouter-structure-overview">vRouter structure overview</h2>
 <p>The vRouter module on Windows is implemented as NDIS modifying filter driver:
 the Hyper-V Extensible Switch forwarding extension
-(see <a href="/For developers/Supplementary knowledge/NDIS_driver_types_overview">NDIS types overview</a>
+(see <a href="../Supplementary knowledge/NDIS_driver_types_overview">NDIS types overview</a>
 for more details on NDIS driver types).</p>
 <p>The implementation consists of:</p>
 <ul>
@@ -1817,10 +1793,10 @@ to finish before calling <code>FilterDetach</code>. This issue is resolved here 
 explicitly freeing some resources and doing necessary deinitializations
 in <code>DriverUnload</code> before calling <code>NdisFDeregisterFilterDriver</code>.</p>
 <h2 id="packet-flow">Packet flow</h2>
-<p>Packet flow is described in <a href="/For developers/Packet_Flow">separate document</a>.</p>
+<p>Packet flow is described in <a href="../Packet_Flow">separate document</a>.</p>
 <h2 id="communication-channels">Communication channels</h2>
 <p>Communication channels between vRouter kernel driver and user space Agent are
-described in <a href="/Overview/Communication_Agent_Extension">separate document</a>.</p>
+described in <a href="../../Overview/Communication_Agent_Extension">separate document</a>.</p>
 <h2 id="windows-structures-abstraction">Windows structures abstraction</h2>
 <p>This section describes all structures used in vRouter as an abstrac
 wrappers around NDIS structures. All of them were introduced to enable easy
