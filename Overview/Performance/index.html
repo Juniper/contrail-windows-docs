@@ -36,7 +36,7 @@
     
     
       
-        <title>Communication: Agent ⇄ Extension - Windows Contrail documentation</title>
+        <title>Performance results - Windows Contrail documentation</title>
       
     
     
@@ -81,7 +81,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#communication-agent-extension" tabindex="1" class="md-skip">
+      <a href="#performance-results" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -106,7 +106,7 @@
               Windows Contrail documentation
             </span>
             <span class="md-header-nav__topic">
-              Communication: Agent ⇄ Extension
+              Performance results
             </span>
           
         </div>
@@ -1165,76 +1165,11 @@
           
           
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Communication: Agent ⇄ Extension
-      </label>
-    
-    <a href="./" title="Communication: Agent ⇄ Extension" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../Communication_Agent_Extension/" title="Communication: Agent ⇄ Extension" class="md-nav__link">
       Communication: Agent ⇄ Extension
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#ksync" title="Ksync" class="md-nav__link">
-    Ksync
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sandesh" title="Sandesh" class="md-nav__link">
-    Sandesh
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pkt0" title="pkt0" class="md-nav__link">
-    pkt0
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#shared-memory" title="Shared memory" class="md-nav__link">
-    Shared memory
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
         
@@ -1278,11 +1213,56 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../Performance/" title="Performance results" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Performance results
+      </label>
+    
+    <a href="./" title="Performance results" class="md-nav__link md-nav__link--active">
       Performance results
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tcp" title="TCP" class="md-nav__link">
+    TCP
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#udp" title="UDP" class="md-nav__link">
+    UDP
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
   </li>
 
         
@@ -1408,35 +1388,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#ksync" title="Ksync" class="md-nav__link">
-    Ksync
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sandesh" title="Sandesh" class="md-nav__link">
-    Sandesh
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#pkt0" title="pkt0" class="md-nav__link">
-    pkt0
+  <a href="#tcp" title="TCP" class="md-nav__link">
+    TCP
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#shared-memory" title="Shared memory" class="md-nav__link">
-    Shared memory
+  <a href="#udp" title="UDP" class="md-nav__link">
+    UDP
   </a>
   
 </li>
@@ -1458,45 +1418,368 @@
               
                 
                 
-                <h1 id="communication-agent-extension">Communication: Agent ⇄ Extension</h1>
-<p>There are three ways in which vRouter Agent exchanges information with the
-Forwarding Extension, which mimics their Linux behaviour.</p>
-<h2 id="ksync">Ksync</h2>
-<p>This communication channel is used for inserting forwarding rules into the
-Forwarding Extension, like routes, next hops and flows.</p>
-<p>On Linux, Netlink sockets are used for this.
-Equivalent Windows mechanism is a Named Pipe.</p>
-<p>Named pipe server is created by the Forwarding Extension.
-Only vRouter Agent and other userspace programs can initialize the communiation.
-Howerver, different programs (for example, Agent and utils) may talk via ksync
-at the same time, so process separation (session layer) is required.</p>
-<p>This communication is performed over a binary protocol called Sandesh
-(the same one which is used by Contrail Analytics Nodes).</p>
-<h3 id="sandesh">Sandesh</h3>
-<p>Sandesh is a binary protocol based on Apache Thrift. It's a set of header
-files to be included in projects that use it, but also a code generation tool.
-Sandesh uses own Interface Definition Language to generate code in many
-different languages, like Java, C, Python and Golang. Generated code consists
-of definitions of data structures and getter/setter functions.</p>
-<h2 id="pkt0">pkt0</h2>
-<p>This channel is asynchronous - both vRouter Agent and Forwarding Extension can
-send packets through it at arbitrary times.</p>
-<p>When a "new" packet arrives at Forwarding Extension
-(for example, ARP or DHCP request), it will transfer it using pkt0 to
-vRouter Agent. vRouter Agent will then analyze the packet and, basing on data
-from Contrail Controller, insert routes, flows or next hops into the
-Forwarding Extension using ksync. Then, it re-injects the packet into
-the Forwarding Extension.</p>
-<p>Pkt0 is implemented on Linux using a traditional networking interface,
-of AF_PACKET family. On Windows, this is done using a named pipe.
-The reason for this is that Windows implementation of BSD sockets does not
-allow any manipulation of any layer below IP.</p>
-<p>The named pipe server is created by the Forwarding Extension.</p>
-<h2 id="shared-memory">Shared memory</h2>
-<p>Shared memory is allocated inside Forwarding Extension,
-and can be read by Agent and utils. Currently there are two structures mapped
-to userspace using shared memory: flow table and bridge table.</p>
-<p>Only Agent and utils need access to shared memory from userspace.</p>
+                <h1 id="performance-results">Performance results</h1>
+<p>All tests were performed using the setup described
+<a href="../../For developers/Performance_testing">here</a>
+and two machines with the following specification:</p>
+<ul>
+<li>2x Intel® Xeon® E5-2640 @ 2.50GHz, 24 logical cores,</li>
+<li>64 GB of DDR3 RAM,</li>
+<li>2x Intel® 82599 10 Gb Ethernet Port,</li>
+<li>2x Intel® I350 1 Gb Ethernet Port.</li>
+</ul>
+<h2 id="tcp">TCP</h2>
+<p><img alt="TCP Throughput [Mbps]" src="../tcp-throughput.svg" /></p>
+<table>
+<thead>
+<tr>
+<th>Threads</th>
+<th>Raw Hyper-V - Sender [Mbps]</th>
+<th>Raw Hyper-V - Receiver [Mbps]</th>
+<th>Contrail - Sender [Mbps]</th>
+<th>Contrail - Receiver [Mbps]</th>
+<th>% of Hyper-V</th>
+<th>% of CPU - Hyper-V - Sender</th>
+<th>% of CPU - Hyper-V - Receiver</th>
+<th>% of CPU - Contrail - Sender</th>
+<th>% of CPU - Contrail - Receiver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1444.4524</td>
+<td>1444.122</td>
+<td>743.7092</td>
+<td>742.6128</td>
+<td>51.42%</td>
+<td>0.91%</td>
+<td>2.79%</td>
+<td>1.96%</td>
+<td>2.78%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2795.4788</td>
+<td>2795.0872</td>
+<td>1394.8996</td>
+<td>1394.8912</td>
+<td>49.91%</td>
+<td>1.61%</td>
+<td>5.32%</td>
+<td>3.78%</td>
+<td>5.17%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4460.9844</td>
+<td>4460.3996</td>
+<td>2404.3604</td>
+<td>2404.3528</td>
+<td>53.90%</td>
+<td>2.71%</td>
+<td>9.07%</td>
+<td>6.92%</td>
+<td>9.42%</td>
+</tr>
+<tr>
+<td>6</td>
+<td>5014.9336</td>
+<td>5014.9672</td>
+<td>3143.892</td>
+<td>3143.8708</td>
+<td>62.69%</td>
+<td>3.47%</td>
+<td>10.43%</td>
+<td>9.71%</td>
+<td>12.14%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>5135.414</td>
+<td>5134.9136</td>
+<td>3270.4656</td>
+<td>3270.4508</td>
+<td>63.69%</td>
+<td>3.65%</td>
+<td>11.06%</td>
+<td>10.27%</td>
+<td>12.74%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>5672.1464</td>
+<td>5672.0464</td>
+<td>3777.248</td>
+<td>3777.2276</td>
+<td>66.59%</td>
+<td>5.02%</td>
+<td>12.90%</td>
+<td>12.03%</td>
+<td>14.89%</td>
+</tr>
+<tr>
+<td>12</td>
+<td>6424.514</td>
+<td>6424.4568</td>
+<td>3714.9492</td>
+<td>3714.8936</td>
+<td>57.82%</td>
+<td>5.93%</td>
+<td>14.55%</td>
+<td>12.24%</td>
+<td>14.70%</td>
+</tr>
+<tr>
+<td>14</td>
+<td>6889.9208</td>
+<td>6889.7444</td>
+<td>4328.3296</td>
+<td>4328.2364</td>
+<td>62.82%</td>
+<td>6.41%</td>
+<td>15.46%</td>
+<td>15.06%</td>
+<td>17.45%</td>
+</tr>
+<tr>
+<td>16</td>
+<td>6943.7104</td>
+<td>6943.5716</td>
+<td>4061.5212</td>
+<td>4061.492</td>
+<td>58.49%</td>
+<td>6.60%</td>
+<td>15.87%</td>
+<td>14.66%</td>
+<td>17.16%</td>
+</tr>
+<tr>
+<td>18</td>
+<td>7041.1248</td>
+<td>7041.0632</td>
+<td>4237.8896</td>
+<td>4237.8916</td>
+<td>60.19%</td>
+<td>7.13%</td>
+<td>16.47%</td>
+<td>16.20%</td>
+<td>18.62%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>7160.0608</td>
+<td>7159.638</td>
+<td>4068.4088</td>
+<td>4068.4116</td>
+<td>56.82%</td>
+<td>7.23%</td>
+<td>16.89%</td>
+<td>16.01%</td>
+<td>17.79%</td>
+</tr>
+<tr>
+<td>22</td>
+<td>7087.648</td>
+<td>7087.3748</td>
+<td>3921.0916</td>
+<td>3921.0836</td>
+<td>55.32%</td>
+<td>7.43%</td>
+<td>16.91%</td>
+<td>15.28%</td>
+<td>17.64%</td>
+</tr>
+<tr>
+<td>24</td>
+<td>7113.6592</td>
+<td>7113.5276</td>
+<td>4675.3132</td>
+<td>4675.2832</td>
+<td>65.72%</td>
+<td>7.06%</td>
+<td>16.61%</td>
+<td>18.79%</td>
+<td>20.49%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="udp">UDP</h2>
+<p><img alt="UDP Throughput [Mbps]" src="../udp-throughput.svg" /></p>
+<table>
+<thead>
+<tr>
+<th>Threads</th>
+<th>Raw Hyper-V - Sender [Mbps]</th>
+<th>Raw Hyper-V - Receiver [Mbps]</th>
+<th>Contrail - Sender [Mbps]</th>
+<th>Contrail - Receiver [Mbps]</th>
+<th>% of Hyper-V</th>
+<th>% of CPU - Hyper-V - Sender</th>
+<th>% of CPU - Hyper-V - Receiver</th>
+<th>% of CPU - Contrail - Sender</th>
+<th>% of CPU - Contrail - Receiver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>225.2296</td>
+<td>225.346</td>
+<td>622.5044</td>
+<td>256.5688</td>
+<td>113.86%</td>
+<td>1.98%</td>
+<td>1.79%</td>
+<td>4.85%</td>
+<td>1.26%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>450.6592</td>
+<td>450.7124</td>
+<td>1079.654</td>
+<td>482.7032</td>
+<td>107.10%</td>
+<td>4.13%</td>
+<td>4.48%</td>
+<td>9.55%</td>
+<td>2.37%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>900.9856</td>
+<td>901.6464</td>
+<td>1850.5632</td>
+<td>898.2948</td>
+<td>99.63%</td>
+<td>8.14%</td>
+<td>6.30%</td>
+<td>17.64%</td>
+<td>4.44%</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1351.7572</td>
+<td>1352.2848</td>
+<td>2446.7216</td>
+<td>1221.2412</td>
+<td>90.31%</td>
+<td>12.91%</td>
+<td>8.36%</td>
+<td>25.94%</td>
+<td>7.00%</td>
+</tr>
+<tr>
+<td>8</td>
+<td>1801.6372</td>
+<td>1801.806</td>
+<td>2671.3668</td>
+<td>1448.594</td>
+<td>80.40%</td>
+<td>17.95%</td>
+<td>8.31%</td>
+<td>31.42%</td>
+<td>8.04%</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2253.2996</td>
+<td>2253.3708</td>
+<td>3052.776</td>
+<td>1706.3884</td>
+<td>75.73%</td>
+<td>21.31%</td>
+<td>10.42%</td>
+<td>38.97%</td>
+<td>10.18%</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2702.1204</td>
+<td>2704.1804</td>
+<td>3444.5848</td>
+<td>1839.2992</td>
+<td>68.02%</td>
+<td>22.60%</td>
+<td>12.84%</td>
+<td>45.27%</td>
+<td>11.92%</td>
+</tr>
+<tr>
+<td>14</td>
+<td>3151.0788</td>
+<td>3154.8836</td>
+<td>3784.9828</td>
+<td>2138.8664</td>
+<td>67.80%</td>
+<td>25.81%</td>
+<td>15.20%</td>
+<td>51.57%</td>
+<td>13.91%</td>
+</tr>
+<tr>
+<td>16</td>
+<td>3593.6164</td>
+<td>3398.0876</td>
+<td>3975.2216</td>
+<td>2207.3464</td>
+<td>64.96%</td>
+<td>38.06%</td>
+<td>17.64%</td>
+<td>57.90%</td>
+<td>16.39%</td>
+</tr>
+<tr>
+<td>18</td>
+<td>3589.344</td>
+<td>3589.8764</td>
+<td>4175.4916</td>
+<td>2220.9852</td>
+<td>61.87%</td>
+<td>40.00%</td>
+<td>18.77%</td>
+<td>64.57%</td>
+<td>17.74%</td>
+</tr>
+<tr>
+<td>20</td>
+<td>3516.6584</td>
+<td>3479.6724</td>
+<td>4406.2384</td>
+<td>2272.4316</td>
+<td>65.31%</td>
+<td>40.70%</td>
+<td>18.23%</td>
+<td>73.07%</td>
+<td>17.68%</td>
+</tr>
+<tr>
+<td>22</td>
+<td>3540.0012</td>
+<td>3492.4404</td>
+<td>4519.2404</td>
+<td>2358.2228</td>
+<td>67.52%</td>
+<td>43.16%</td>
+<td>18.31%</td>
+<td>81.53%</td>
+<td>20.30%</td>
+</tr>
+<tr>
+<td>24</td>
+<td>3646.9292</td>
+<td>3647.4112</td>
+<td>4162.3708</td>
+<td>2256.6728</td>
+<td>61.87%</td>
+<td>45.72%</td>
+<td>19.21%</td>
+<td>79.75%</td>
+<td>18.64%</td>
+</tr>
+</tbody>
+</table>
                 
                   
                 
@@ -1517,7 +1800,7 @@ to userspace using shared memory: flow table and bridge table.</p>
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../CNM_plugin/" title="CNM Plugin" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../Linux_Overview/" title="Contrail Controller" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -1526,19 +1809,19 @@ to userspace using shared memory: flow table and bridge table.</p>
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                CNM Plugin
+                Contrail Controller
               </span>
             </div>
           </a>
         
         
-          <a href="../Components_and_structure/" title="Components and structure" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../vRouter_Linux_implementation/" title="vRouter Linux implementation" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Components and structure
+                vRouter Linux implementation
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
