@@ -1,5 +1,0 @@
-On Linux, vRouter implementation consists of two parts: a userspace agent and a kernel module, along with all the userspace utility command line tools. The agent communicates with OpenContrail’s control nodes and receives configuration state, like forwarding information. Its main responsibility is installation of forwarding state into the kernel module.
-
-Functionality of the data plane, like flow tables, is contained in dp-core component. Translation between the agent’s object model and low-level data model used by datapath is realized by the KSync module, which is utilized by both the agent and the kernel module.
-
-On Linux, communication between the forwarding plane, which runs in kernel space, and the user space agent, is done via use of Netlink sockets and shared memory. However, neither BSD nor Windows support Netlink sockets. That’s why, on FreeBSD, they are emulated over raw sockets. 
