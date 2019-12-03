@@ -1,5 +1,0 @@
-site_name: Windows Contrail documentation
-theme: material
-docs_dir: doc
-extra_css: [highlight.css, theme.css, theme_extra.css]
-
